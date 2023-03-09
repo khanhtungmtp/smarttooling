@@ -1,0 +1,87 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>KAIZEN REPORT</strong>
+        </div>
+        <div class="card-body">
+          <form #form="ngForm" class="form-group row">
+            <label class="col-md-1 col-form-label" for="model"><strong class="float-right">Model</strong></label>
+            <div class="col-md-2">
+              <input type="text" [(ngModel)]="model_no" name="model" placeholder="Enter model" class="form-control input-upper">
+            </div>
+            <label class="col-md-1 col-form-label" for="Active"><strong class="float-right">Active</strong></label>
+            <div class="col-md-2">
+              <select [(ngModel)]="active" class="form-control" name="active">
+                <option value="all">All</option>
+                <option value="1">Active</option>
+                <option value="0">InActive</option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <button type="button" (click)="search()" class="btn btn-success button-width">
+                <i class="fa fa-search"></i>
+                Search
+              </button>
+              <button type="button" (click)="clear()" class="btn btn-danger button-width ml-0">
+                <i class="fa fa-ban"></i>
+                Clear
+              </button>
+              <button type="button" (click)="exportExcel()" class="btn btn-primary button-width ml-0">
+                <i class="fa fa-file-excel-o"></i>
+                Excel
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Model No</th>
+                <th>Model Name</th>
+                <th>Upper ID</th>
+                <th>Model Type</th>
+                <th>Dev Season</th>
+                <th>Prod Season</th>
+                <th>Volume</th>
+                <th>Volumn Percent</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="models.length === 0">
+              <tr>
+                <td colspan="9">
+                  <alert class="text-center" type='danger'>
+                    <strong>No Data matching!</strong>
+                  </alert>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr *ngFor="let model of models">
+                <td><button style="margin-left: 2rem;" (click)="modelDetail(model)" class="btn btn-primary">
+                  <i class="fa fa-eye fa-lg"></i></button></td>
+                <td>{{model.model_no}}</td>
+                <td>{{model.model_name}}</td>
+                <td>{{model.upper_id}}</td>
+                <td>{{model.model_type_id}}</td>
+                <td>{{model.dev_season}}</td>
+                <td>{{model.dev_season}}</td>
+                <td>{{model.volume_string}}</td>
+                <td>{{model.volume_percent}}%</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex">
+            <pagination *ngIf="models.length > 0" [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+            [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+            nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"></ngx-spinner>

@@ -1,0 +1,84 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Add New </strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addBLLayout="ngForm" (ngSubmit)="addBLLayout.valid && saveAndNext()">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="lineId">Pilot Line <span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 width="100%" name="lineno" id="lineNo" [(ngModel)]="data.line_id"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[0]" required>
+                </ng-select2>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="lineTypeId">Line Type<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 width="100%" name="lineTypeID" id="lineTypeID" [(ngModel)]="data.line_type_id"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[1]" required>
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Model no">Model No<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 width="100%" name="modelNo" id="modelNo" [(ngModel)]="data.model_no"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[2]" required>
+                </ng-select2>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="Model Name">Model Name<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="modelName" name="modelName" class="form-control"disabled >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Process Type ">Process Type <span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 [data]="arrProcessType" width="100%" [(ngModel)]="data.process_type_id" name="processType" placeholder="Select Process Type..." required>
+                </ng-select2>
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="Remarks">Remarks</label>
+              <div class="col-md-3">
+                <textarea name="before_remarks" [(ngModel)]="data.remarks" class="form-control" id="remarks"
+                  rows="3" ></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="upload_picture_before">Layout Process Before
+                <br><strong>(jpg,jpeg,png < 5MB)</strong>
+              </label>
+              <div class="col-md-3 pt-2">
+                <div class="ml-3">
+                  <media-upload #processBefore [acceptKey]="'image'" [url]="data.each_process_image_before" [isImageOrVideo]="true"></media-upload>
+                </div>
+              </div>
+                <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="upload_picture">Layout Process After
+                <br><strong>(jpg,jpeg,png < 5MB)</strong>
+              </label>
+              <div class="col-md-3 pt-1">
+                <div class="ml-3">
+                  <media-upload #processAfter [acceptKey]="'image'" [url]="data.each_process_image_after" [isImageOrVideo]="true"></media-upload>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-sm btn-success ml-1" [disabled]="!addBLLayout.valid"
+              (click)="save()"><i class="fa fa-check"></i> Save</button>
+            <button type="submit" class="btn btn-sm btn-primary ml-1" [disabled]="!addBLLayout.valid"><i
+               (click)="saveAndNext()" class="fa fa-check"></i> Save & Next</button>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

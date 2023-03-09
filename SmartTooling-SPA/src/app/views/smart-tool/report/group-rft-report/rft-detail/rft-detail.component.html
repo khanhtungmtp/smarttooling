@@ -1,0 +1,87 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="col-md-2 col-form-label" style="font-size: 20px"
+            >RFT Report</label
+          >
+          <button
+            type="button"
+            class="btn btn-sm btn-primary float-right"
+            (click)="backList()"
+          >
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <div>
+              <p>
+                FACTORY : {{ model.factory_id }}<br />
+                UPPER ID: {{ model.upper_id }}<br />MODEL NAME:
+                {{ model.model_name }}<br />MODEL NO: {{ model.model_no }}<br />
+              </p>
+            </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Measurements</th>
+                  <th>CR2</th>
+                  <th>SMS</th>
+                  <th>CS1</th>
+                  <th>CS2</th>
+                  <th>CS3</th>
+                  <th>PROD1</th>
+                  <th>PROD2</th>
+                  <th>MP1</th>
+                  <th>MP2</th>
+                  <th>MP3</th>
+                </tr>
+              </thead>
+              <tbody
+                id="list{{ idx }}"
+                *ngFor="let data of rftreportdetails; let idx = index"
+              >
+                <tr>
+                  <td>{{ idx + 1 }}</td>
+                  <td>{{ data.operation_name_local }}</td>
+                  <td>{{ data.cR2 }}</td>
+                  <td>{{ data.sms }}</td>
+                  <td>{{ data.cS1 }}</td>
+                  <td>{{ data.cS2 }}</td>
+                  <td>{{ data.cS3 }}</td>
+                  <td>{{ data.proD1 }}</td>
+                  <td>{{ data.proD2 }}</td>
+                  <td>{{ data.mP1 }}</td>
+                  <td>{{ data.mP2 }}</td>
+                  <td>{{ data.mP3 }}</td>
+                </tr>
+              </tbody>
+              <tr bgcolor="#E0E0E0">
+                <td colspan="2" align="center">Average</td>
+                <td>{{ cr2 }}</td>
+                <td>{{ sms }}</td>
+                <td>{{ cs1 }}</td>
+                <td>{{ cs2 }}</td>
+                <td>{{ cs3 }}</td>
+                <td>{{ prod1 }}</td>
+                <td>{{ prod2 }}</td>
+                <td>{{ mp1 }}</td>
+                <td>{{ mp2 }}</td>
+                <td>{{ mp3 }}</td>
+              </tr>
+            </table>
+          </div>
+          <div style="text-align: center">
+            <h2>AVERAGE RFT = {{ totalavg }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>

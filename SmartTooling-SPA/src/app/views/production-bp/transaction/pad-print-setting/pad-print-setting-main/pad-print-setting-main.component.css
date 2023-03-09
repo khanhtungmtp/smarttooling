@@ -1,0 +1,45 @@
+.opacity0 {
+    opacity: 0;
+}
+
+.opacity1 {
+    opacity: 1;
+}
+
+#input_uploadFile::file-selector-button {
+    display: none;
+}
+
+.custom-col-3 {
+    flex: 0 0 20%;
+}
+
+.custom-button {
+    flex: 0 0 8.3333333333%;
+    max-width: 8.3333333333%;
+    height: 100%;
+    margin-left: 15px;
+}
+
+input[type="file"] {
+    width: 350px;
+}
+
+.custom-file-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.form-group {
+    margin-right: 0;
+    margin-bottom: 0;
+    align-items: center;
+}
+
+.form-group.hidden {
+    width: 0;
+    margin: 0;
+    border: none;
+    padding: 0;
+}

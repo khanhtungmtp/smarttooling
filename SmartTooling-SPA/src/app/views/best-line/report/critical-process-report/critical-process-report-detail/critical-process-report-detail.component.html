@@ -1,0 +1,169 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            CRITICAL PROCESS REPORT
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Factory</label>
+                            <input type="text" [(ngModel)]="dataDetail.factory" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Pilot Line</label>
+                            <input type="text" [(ngModel)]="dataDetail.line_name" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Line Type</label>
+                            <input type="text" [(ngModel)]="dataDetail.line_type_name" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Model</label>
+                            <input type="text" [(ngModel)]="dataDetail.model_no" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Model Name</label>
+                            <input type="text" [(ngModel)]="dataDetail.model_name" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Stage</label>
+                            <input type="text" [(ngModel)]="dataDetail.stage_name" disabled class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Operation</label>
+                            <input type="text"
+                                [(ngModel)]="model.language === 'en' ? dataDetail.operation_name_en : model.language === 'vn' ? dataDetail.operation_name_local : dataDetail.operation_name_zh"
+                                disabled class="form-control">
+                        </div>
+                        <div class="col-md-1 ml-auto pr-0 button-block">
+                            <button type="button" class="btn btn-sm btn-primary float-right  mr-3" (click)="back()"><i
+                                    class="fa fa-chevron-left"></i>
+                                Back</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <tabset>
+                        <!--4M Analysis-->
+                        <tab heading="4M Analysis" id="tab1">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="table1">
+                                    <thead class="text-center">
+                                        <th>MAN</th>
+                                        <th>MACHINE</th>
+                                        <th>METHOD</th>
+                                        <th>MATERIAL</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <video *ngIf="manImageOrVideo && dataDetail.man_media_url_result" class="" controls
+                                                    [src]="dataDetail.man_media_url_result + '?v=' + random"></video>
+                                                <img *ngIf="!manImageOrVideo && dataDetail.man_media_url_result" class=""
+                                                    [src]="dataDetail.man_media_url_result + '?v=' + random">
+                                            </td>
+                                            <td>
+                                                <video *ngIf="machineImageOrVideo && dataDetail.machine_media_url_result" controls
+                                                    [src]="dataDetail.machine_media_url_result + '?v=' + random" class=""></video>
+                                                <img *ngIf="!machineImageOrVideo && dataDetail.machine_media_url_result"
+                                                    [src]="dataDetail.machine_media_url_result + '?v=' + random" class="">
+                                            </td>
+                                            <td>
+                                                <video *ngIf="methodImageOrVideo && dataDetail.method_media_url_result" controls
+                                                    [src]="dataDetail.method_media_url_result + '?v=' + random" class=""></video>
+                                                <img *ngIf="!methodImageOrVideo && dataDetail.method_media_url_result"
+                                                    [src]="dataDetail.method_media_url_result + '?v=' + random" class="">
+                                            </td>
+
+                                            <td>
+                                                <video *ngIf="materialImageOrVideo && dataDetail.material_media_url_result" controls
+                                                    [src]="dataDetail.material_media_url_result + '?v=' + random" class=""></video>
+                                                <img *ngIf="!materialImageOrVideo && dataDetail.material_media_url_result"
+                                                    [src]="dataDetail.material_media_url_result + '?v=' + random" class="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{dataDetail.man_remarks}}</td>
+                                            <td>{{dataDetail.machine_remarks}}</td>
+                                            <td>{{dataDetail.method_remarks}}</td>
+                                            <td>{{dataDetail.material_remarks}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tab>
+                        <!--4M Analysis-->
+                        <!-- Kaizen-->
+                        <tab heading="Kaizen">
+                            <table class="table table-bordered">
+                                <tr class="tdColor tr-font-bold">
+                                    <td class="center-content" rowspan="2"></td>
+                                    <td class="center-content" rowspan="2">No.</td>
+                                    <td class="center-content" rowspan="2">KAIZEN LIST</td>
+                                    <td class="center-content" rowspan="2">STAGE</td>
+                                    <td class="center-content" rowspan="2">START DATE</td>
+                                    <td class="center-content td-background tct-style" rowspan="2" colspan="2">TCT
+                                        BEFORE KAIZEN <br> (C2B | TRMNT | S/F)</td>
+                                    <td class="center-content td-background" colspan="3">CT</td>
+                                    <td class="center-content td-background" colspan="2">RFT</td>
+                                    <td class="center-content td-background line-click" rowspan="2">LINE ROLL <br>OUT%
+                                    </td>
+                                    <td class="center-content td-background line-click" rowspan="2">Clicks <br> Times
+                                    </td>
+                                </tr>
+                                <tr class="tdColor2">
+                                    <td class="border-td center-content">Before <br>(Sec)</td>
+                                    <td class="border-td center-content">After <br>(Sec)</td>
+                                    <td class="border-td center-content">Improv <br>(%)</td>
+                                    <td class="border-td center-content">Before <br>(%)</td>
+                                    <td class="border-td center-content">After <br>(%)</td>
+                                </tr>
+                                <ng-container *ngFor="let item of dataKaizen;let i = index">
+                                    <tr *ngIf="!!item.serial_no">
+                                        <td>
+                                            <button (click)="kaizenDetail(item)" class="btn btn-primary">
+                                                <i class="fa fa-eye fa-lg"></i></button>
+                                        </td>
+                                        <td>{{item.serial_no}}</td>
+                                        <td>{{item.kaizen_description}}</td>
+                                        <td>{{item.stage_id}}</td>
+                                        <td>{{item.start_date | date : 'yyyy/MM/dd'}}</td>
+                                        <td>{{item.process_type_name_en}}</td>
+                                        <td>{{item.process_tct_sec}}</td>
+                                        <td>{{item.ct_before_sec}}</td>
+                                        <td>{{item.ct_after_sec}}</td>
+                                        <td>{{item.improv !== null ? item.improv + "%" : ""}}</td>
+                                        <td>{{item.rft_before_percent !== null ? item.rft_before_percent + "%" : ""}}</td>
+                                        <td>{{item.rft_after_percent !== null ? item.rft_after_percent + "%" : ""}}</td>
+                                        <td>{{item.line_roll_out_percent !== null ? item.line_roll_out_percent + "%" : ""}}</td>
+                                        <td>{{item.clicks_times}}</td>
+                                    </tr>
+                                </ng-container>
+                                <tr *ngIf="dataKaizen.length === flag">
+                                    <td colspan="100%" class="table-warning text-center font-weight-bold">
+                                        {{message.NO_DATA}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="d-flex">
+                                <pagination *ngIf="pagination.totalPages > 1" [boundaryLinks]="true"
+                                    [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                                    [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                                    [maxSize]=5>
+                                </pagination>
+                            </div>
+                        </tab>
+                        <!-- Kaizen-->
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

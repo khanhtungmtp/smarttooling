@@ -1,0 +1,131 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header header-style">
+          <strong class="font-title">KAIZEN SINGLE MODEL TRACKING</strong>
+          <div class="float-right">
+            <button (click)="backForm()" type="button" class="btn btn-sm button-back">
+              <i class="fa fa-chevron-left"></i>
+              Back
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <div class="col-md-3">
+              <div class="content1 background-frame-small">
+                <div class="title-frame-small txt-modelname">
+                  <span >MODEL NAME: <u>{{model.model_name}}</u></span>
+                </div>
+                <div  class="div-image">
+                  <img class="img-first" [src]="url + model.model_picture + '?v=' + random" alt="">
+                </div>
+                <div class="block-one">
+                  <div class="block-one-1">
+                    <ul>
+                      <li>MODEL TYPE: </li>
+                      <li>UPPER ID: </li>
+                      <li>MODEL NO: </li>
+                      <li>DEV.SEASON: </li>
+                      <li>PROD.SEASON: </li>
+                      <li>VOLUME: </li>
+                      <li>VOLUME %: </li>
+                    </ul>
+                  </div>
+                  <div class="block-one-2">
+                    <ul class="content-block-2">
+                      <li><u>{{model.model_type_id}}</u></li>
+                      <li><u>{{model.upper_id}}</u></li>
+                      <li><u>{{model.model_no}}</u></li>
+                      <li><u>{{model.dev_season}}</u></li>
+                      <li><u>{{model.prod_season}}</u></li>
+                      <li><u>{{model.volume_string}}</u></li>
+                      <li><u>{{model.volume_percent}}%</u></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col content1">
+                <div class="frame-chart">
+                  <span class="txt-season">Season: </span>
+                  <select [(ngModel)]="season" name="season" (ngModelChange)="changeSeason()"
+                    class="form-control season-select">
+                    <option [value]="item" *ngFor="let item of seasons">{{item}}</option>
+                  </select>
+                </div>
+                <div *ngIf="chartOptions !== null">
+                  <highcharts-chart
+                    class="chart-style"
+                    [Highcharts]="highcharts"
+                    [options]="chartOptions">
+                </highcharts-chart>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 ">
+              <div class="content1 background-frame-small remark-block">
+                <div class="remark-text title-frame-small">
+                  <span class="remark-title"><u>REMARKS:</u></span>
+                </div>
+                <div class="remark-content">
+                  <p [innerHTML]="model.remarks" ></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <tr class="tdColor tr-font-bold">
+              <td class="center-content" rowspan="2"></td>
+              <td class="center-content" rowspan="2">No.</td>
+              <td class="center-content" rowspan="2">KAIZEN LIST</td>
+              <td class="center-content" rowspan="2">STAGE</td>
+              <td class="center-content" rowspan="2">START DATE</td>
+              <td class="center-content td-background tct-style" rowspan="2" colspan="2">TCT BEFORE KAIZEN <br> (C2B | TRMNT | S/F)</td>
+              <td class="center-content td-background" colspan="3">CT</td>
+              <td class="center-content td-background" colspan="2">RFT</td>
+              <td class="center-content td-background line-click" rowspan="2">LINE ROLL <br>OUT% </td>
+              <td class="center-content td-background line-click" rowspan="2">Clicks <br> Times</td>
+            </tr>
+            <tr class="tdColor2">
+              <td class="border-td center-content">Before <br>(Sec)</td>
+              <td class="border-td center-content">After <br>(Sec)</td>
+              <td class="border-td center-content">Improv <br>(%)</td>
+              <td class="border-td center-content">Before <br>(%)</td>
+              <td class="border-td center-content">After <br>(%)</td>
+            </tr>
+            <tr *ngFor="let item of dataTable;let i = index">
+              <td>
+                <button (click)="kaizenDetail(item)" class="btn btn-primary button-kaizen-detail">
+                  <i class="fa fa-eye fa-lg"></i></button>
+              </td>
+              <td>{{item.serial_no}}</td>
+              <td>{{item.kaizen_description}}</td>
+              <td>{{item.stage_id}}</td>
+              <td>{{item.start_date | date : 'yyyy/MM/dd'}}</td>
+              <td>{{item.process_type_id}}</td>
+              <td>{{item.process_tct_sec}}</td>
+              <td>{{item.ct_before_sec}}</td>
+              <td>{{item.ct_after_sec}}</td>
+              <td>{{item.improv}}%</td>
+              <td>{{item.rft_before_percent}}%</td>
+              <td>{{item.rft_after_percent}}%</td>
+              <td>{{item.line_roll_out_percent}}%</td>
+              <td>{{item.clicks_times}}</td>
+            </tr>
+          </table>
+          <div class="d-flex">
+            <pagination *ngIf="dataTable.length > 0" [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+            [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+            nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

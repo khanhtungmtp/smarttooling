@@ -1,0 +1,111 @@
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
+[navbarBrandText]="{
+  icon: '\<image src=assets/img/logo/LogoSYF.png width=44 height=30></image>',
+  text: '\<image src=assets/img/logo/LogoSYF.png width=44 height=30></image> \<span>' + currentFactory + '</span>'
+}" WH
+[sidebarToggler]="'xl'" [mobileAsideMenuToggler]="false" [asideMenuToggler]="false">
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3 text-color-white ">
+      <h3>Group Best Practice</h3>
+    </li>
+  </ul>
+  <div class="ml-auto"></div>
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown mr-30" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="false">
+        <span style="color: #fff;">{{currentUser.name}}</span>
+        <img src="assets/img/avatars/user.png" class="img-avatar" alt="admin@bootstrapmaster.com" />
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <a class="dropdown-item" href="javascript:;" (click)="modalChangePassword.show()"><i class="fa fa-key"></i> Change Password</a>
+        <a class="dropdown-item" href="javascript:;" (click)="logout()"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar #appSidebar [fixed]="true" [display]="'xl'" [minimized]="sidebarMinimized"
+    (minimizedChange)="toggleMinimize($event)">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <cui-breadcrumb>
+
+    </cui-breadcrumb>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+      <ng-snotify></ng-snotify>
+    </div><!-- /.container-fluid -->
+  </main>
+  <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
+    <tabset>
+      <tab>
+        <ng-template tabHeading><i class="icon-list"></i></ng-template>
+      </tab>
+      <tab>
+        <ng-template tabHeading><i class="icon-speech"></i></ng-template>
+      </tab>
+      <tab>
+        <ng-template tabHeading><i class="icon-settings"></i></ng-template>
+      </tab>
+    </tabset>
+  </app-aside>
+</div>
+<app-footer>
+  <span>Copyright &copy; 2020 <a href="javascript:;">SHYANG SHIN BAO INDUSTRIAL CO., LTD.</a> All rights reserved</span>
+  <span class="ml-auto">Powered by <a href="javascript:;">SD3</a></span>
+</app-footer>
+
+
+<div bsModal #modalChangePassword="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+aria-labelledby="dialog-sizes-name1">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Change Password</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalChangePassword.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row mb-2 mt-2">
+      <label class="col-md-4 col-form-label" for="password">
+        <strong class="float-right">Current Password</strong>
+      </label>
+      <div class="col-md-7">
+        <input type="password" name="password" class="form-control" [(ngModel)]="oldPassword" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-md-4 col-form-label" for="password">
+        <strong class="float-right">New Password</strong>
+      </label>
+      <div class="col-md-7">
+        <input type="password" name="password" class="form-control" [(ngModel)]="newPassword" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <label class="col-md-4 col-form-label" for="password">
+        <strong class="float-right">Confirm Password</strong>
+      </label>
+      <div class="col-md-7">
+        <input type="password" name="password" class="form-control" [(ngModel)]="confirmPassword" />
+      </div>
+    </div>
+    <div class="modal-footer justify-content-start">
+      <button class="btn btn-danger btn-sm" (click)="modalChangePassword.hide()">
+        <i class="fa fa-ban" aria-hidden="true"></i> Cancel
+      </button>
+      <button class="btn btn-success btn-sm" (click)="changePassword()">
+        <i class="fa fa-check" aria-hidden="true"></i> Save
+      </button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+

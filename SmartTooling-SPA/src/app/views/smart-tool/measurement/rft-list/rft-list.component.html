@@ -1,0 +1,138 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row mt-2">
+            <label class="col-md-1 col-form-label" for="audit_Type_ID">
+              Model No</label
+            >
+            <div class="col-md-2">
+              <ng-select2
+                [data]="listModelNo"
+                [(ngModel)]="modelNo"
+                (ngModelChange)="changeModelNo($event)"
+                width="100%"
+                name="active"
+                placeholder="Select"
+              >
+              </ng-select2>
+            </div>
+            <label class="col-md-1 col-form-label"> Model Name</label>
+            <div class="col-md-2">
+              <input
+                type="text"
+                name="modelName"
+                [(ngModel)]="modelName"
+                class="form-control model-search"
+                disabled
+              />
+            </div>
+
+            <label class="col-md-1 col-form-label"> Upper ID</label>
+            <div class="col-md-2">
+              <input
+                type="text"
+                name="upperID"
+                [(ngModel)]="upperID"
+                class="form-control model-search"
+                disabled
+              />
+            </div>
+
+            <label class="col-md-1 col-form-label" for="audit_Type_ID">
+              Stage
+            </label>
+            <div class="col-md-2">
+              <ng-select2
+                [disabled]="!conditionFlag"
+                [data]="listStage"
+                [(ngModel)]="stage"
+                (ngModelChange)="changeStage($event)"
+                width="100%"
+                name="active"
+                placeholder="Select"
+              >
+              </ng-select2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="add-new">
+            <button
+              type="button"
+              [(disabled)]="!isAddNew"
+              class="btn btn-sm btn-primary float-left mb-2"
+              (click)="addRFT()"
+            >
+              <!-- [disabled]="modelNo === 'none' || stage === 'none'" -->
+              <i class="fa fa-plus"></i> Add new
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Process Description</th>
+                  <th>Total Produced Qty</th>
+                  <th>Defect Qty</th>
+                  <th>Defect Reason</th>
+                  <th>RFT</th>
+                  <th>Defect pic</th>
+                  <th>Inspector</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="dataMesuar.length === 0">
+                <tr>
+                  <td colspan="10">
+                    <alert class="text-center" type="danger">
+                      <strong>No Data matching!</strong>
+                    </alert>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let item of dataMesuar">
+                  <td class="text-center">
+                    <button
+                      class="btn btn-primary"
+                      (click)="changeToEdit(item)"
+                    >
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </td>
+                  <td>4</td>
+                  <td>{{ item.total_produced_qty }}</td>
+                  <td>{{ item.defect_qty }}</td>
+                  <td>{{ item.defect_reason_id }}</td>
+                  <td>{{ item.rft_percent }}</td>
+                  <td>{{ item.defect_pic }}</td>
+                  <td>{{ item.inspector }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination
+              [boundaryLinks]="true"
+              [totalItems]="pagination.totalItems"
+              [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage"
+              (pageChanged)="pageChanged($event)"
+              previousText="&lsaquo;"
+              nextText="&rsaquo;"
+              firstText="&laquo;"
+              lastText="&raquo;"
+              [maxSize]="5"
+            >
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>

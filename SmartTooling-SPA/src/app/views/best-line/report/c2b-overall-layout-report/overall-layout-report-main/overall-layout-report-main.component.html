@@ -1,0 +1,95 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <form #searchForm="ngForm" (submit)="search()" class="form-horizontal" autocomplete="off">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                C2B OVERALL LAYOUT REPORT
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-2">
+                                <label class="badge badge-warning">Factory</label>
+                                <ng-select2 [data]="factories" width="100%" [(ngModel)]="searchParam.factory"
+                                    name="factory" id="factory" (ngModelChange)="changeFactory()">
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="badge badge-warning">Pilot Line</label>
+                                <ng-select2 [data]="listLineNo" width="100%" [(ngModel)]="searchParam.line_no"
+                                    name="line_no" id="line_no">
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="badge badge-warning">Line Type</label>
+                                <ng-select2 [data]="listLineType" width="100%" [(ngModel)]="searchParam.line_type"
+                                    name="line_type" id="line_type">
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="badge badge-warning">Model</label>
+                                <input type="text" [(ngModel)]="searchParam.model" name="model" id="model"
+                                    placeholder="Enter model" class="form-control input-upper" autocomplete="off">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="d-block">&nbsp;</label>
+                                <button type="submit" class="btn  btn-secondary float-left mr-2  ">
+                                    <i class="fa fa-search"></i> Query
+                                </button>
+                                <button type="button" class="btn  btn-danger float-left " (click)="clear()"><i
+                                        class="fa fa-ban"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="text-center">Factory</th>
+                                    <th class="text-center">Pilot Line</th>
+                                    <th class="text-center">Line Type</th>
+                                    <th class="text-center">Model No</th>
+                                    <th class="text-center">Model Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of dataModel; let i = index">
+                                <tr>
+                                    <td style="width: 5%;" class="text-center"><button type="button"
+                                            class="btn btn-primary btn-sm" (click)="goToDetail(item)"><i
+                                                class="fa fa-eye fa-lg"></i></button></td>
+                                    <td class="text-center">{{item.factory}}</td>
+                                    <td class="text-center">{{item.line_name}}</td>
+                                    <td class="text-center">{{item.line_type_name}}</td>
+                                    <td class="text-center">{{item.model_no}}</td>
+                                    <td class="text-center">{{item.model_name}}</td>
+
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="dataModel.length === 0">
+                                <tr>
+                                    <td colspan="100%" class="table-warning text-center font-weight-bold">
+                                        {{message.NO_DATA}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex" *ngIf="pagination.totalPages > 1">
+                        <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+                            [(ngModel)]="pagination.currentPage" [itemsPerPage]="pagination.itemsPerPage"
+                            (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

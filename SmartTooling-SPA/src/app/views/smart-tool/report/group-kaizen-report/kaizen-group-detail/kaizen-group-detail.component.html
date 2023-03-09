@@ -1,0 +1,171 @@
+<div *ngIf="kaizenDetail !== null" class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header header-style">
+          <strong class="font-title">KAIZEN DESCRIPTION: <span class="font-title" >
+              {{kaizenDetail.kaizen.kaizen_description}}</span></strong>
+          <div class="float-right">
+            <button (click)="backForm()" type="button" class="btn btn-sm button-back">
+              <i class="fa fa-chevron-left"></i>
+              Back
+            </button>
+          </div>
+          <div class="float-right pr-2">
+            <button (click)="addCross()" type="button" class="btn btn-sm btn-success" [disabled]='isCross'>
+              <i class="fa fa-plus"></i>
+              Cross Site Sharing
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="margin1">
+                <strong>UPPER ID:</strong> <span>{{kaizenDetail.model.upper_id}}</span>
+              </div>
+              <div class="margin2">
+                <strong>MODEL NAME:</strong> <span>{{kaizenDetail.model.model_name}}</span>
+              </div>
+              <div class=" row">
+                <div class="margin2"></div>
+                <div class="pl-3">
+                  <strong>PROCESS NAME:</strong> 
+                </div>
+                <div class="pl-1">
+                  <span>{{kaizenDetail.modelOperation.operation_name_local}} <br>
+                     {{kaizenDetail.modelOperation.operation_name_en}}</span>
+                </div>
+              </div>
+              <div>
+                <table class="mt-1">
+                  <tr>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <strong>Critical Quality:</strong>
+                        <input disabled [(ngModel)]="kaizenDetail.modelOperation.critical_quality" type="checkbox" name="criticalQuality" class="custom-control-input" id="criticalQuality">
+                        <label class="custom-control-label critical-checkbox"
+                          for="criticalQuality"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <strong>Eliminate:</strong>
+                        <input disabled [(ngModel)]="kaizenDetail.kaizen.kaizen_type_eliminate" type="checkbox" name="eliminate" class="custom-control-input" id="eliminate">
+                        <label class="custom-control-label margin-checkbox1"
+                          for="eliminate"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <strong>Reduce:</strong>
+                        <input disabled [(ngModel)]="kaizenDetail.kaizen.kaizen_type_reduce" type="checkbox" name="reduce" class="custom-control-input" id="reduce">
+                        <label class="custom-control-label reduce-checkbox" for="reduce"></label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <strong>Critical Efficiency:</strong>
+                        <input disabled [(ngModel)]="kaizenDetail.modelOperation.critical_efficiency" type="checkbox" name="criticalEfficiency" class="custom-control-input"
+                          id="criticalEfficiency">
+                        <label class="custom-control-label margin-checkbox1"
+                          for="criticalEfficiency"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <strong>Combine:</strong>
+                        <input disabled [(ngModel)]="kaizenDetail.kaizen.kaizen_type_combine" type="checkbox" name="combine" class="custom-control-input" id="combine">
+                        <label class="custom-control-label combine-checkbox" for="combine"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <strong>Smart Tool:</strong>
+                        <input disabled [(ngModel)]="kaizenDetail.kaizen.kaizen_type_smart_tool" type="checkbox" name="smartTool" class="custom-control-input" id="smartTool">
+                        <label class="custom-control-label margin-checkbox1"
+                          for="Smart Tool"></label>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td class="table-column1 border-table1 ct-rft-style" rowspan="2"><span
+                          class="center-content">CT</span></td>
+                      <td class="table-column2 border-table1">BEFORE</td>
+                      <td class="table-column2 border-table1"><span  >
+                        {{kaizenDetail.kaizen.ct_before_sec}}</span>sec
+                      </td>
+                      <td class="table-column2 border-table1 ct-rft-style" rowspan="2">
+                        <span class="center-content" *ngIf="improv !== undefined">{{improv}}%</span>
+                      </td>
+                    </tr>
+                    <tr class="table-column2">
+                      <td class="border-table1">AFTER</td>
+                      <td class="border-table1">
+                        <span  >{{kaizenDetail.kaizen.ct_after_sec}}</span>sec</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td class="table-column1 border-table1 ct-rft-style" rowspan="2"><span
+                          class="center-content">RFT</span></td>
+                      <td class="table-column2 border-table1">BEFORE</td>
+                      <td class="table-column2 border-table1"><span  >{{kaizenDetail.kaizen.rft_before_percent}}</span>%</td>
+                      <td  class="table-column2 border-table1 ct-rft-style" rowspan="2">
+                        <span class="center-content" *ngIf="rftDiff !== undefined">{{rftDiff}}%</span>
+                      </td>
+                    </tr>
+                    <tr class="table-column2">
+                      <td class="border-table1">AFTER</td>
+                      <td class="border-table1">
+                        <span>{{kaizenDetail.kaizen.rft_after_percent}}</span>%
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="style-content-1">
+                <span>BEFORE</span>
+              </div>
+              <div class="style-content-2">
+                <img *ngIf="isMediaBefore === 'picture'" class="center-content img-video-rp" [src]="url + kaizenDetail.kaizen.before_media" alt="">
+                <video *ngIf="isMediaBefore === 'mp4'" controls  class="center-content img-video-rp" [src]="url + kaizenDetail.kaizen.before_media" alt=""></video>
+              </div>
+              <div class="style-content-3">
+                <p [innerHTML]="kaizenDetail.kaizen.before_remarks"></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="style-content-1">
+                <span>AFTER</span>
+              </div>
+              <div class="style-content-2">
+                <img *ngIf="isMediaAfter === 'picture'" class="center-content img-video-rp" [src]="url + kaizenDetail.kaizen.after_media" alt="">
+                <video *ngIf="isMediaAfter === 'mp4'" controls class="center-content img-video-rp" [src]="url + kaizenDetail.kaizen.after_media" alt=""></video>
+              </div>
+              <div class="style-content-3">
+                <p [innerHTML]="kaizenDetail.kaizen.after_remarks"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

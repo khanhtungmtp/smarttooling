@@ -1,0 +1,144 @@
+<div class="card">
+  <div class="card-header">
+    <form class="form-horizontal" autocomplete="off" #searchForm="ngForm" (submit)="searchQuery()">
+      <div class="row form-group">
+        <!-- Factory -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="factory">Factory</label>
+          <span class="red_star"> *</span>
+          <ng-select2 [data]="factories" name="factory" [(ngModel)]="search.factory" width="100%"
+            (ngModelChange)="changeFactory()">
+          </ng-select2>
+        </div>
+        <!-- Line No -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="lineNo">Pilot Line</label>
+          <span class="red_star"> *</span>
+          <ng-select2 [data]="lineNos" name="lineNo" [(ngModel)]="search.lineID" width="100%" placeholder="Choose Line">
+          </ng-select2>
+        </div>
+        <!-- Line Type -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="lineType">Line Type</label>
+          <span class="red_star"> *</span>
+          <ng-select2 [data]="lineTypes" name="lineType" [(ngModel)]="search.lineTypeID" width="100%"
+            placeholder="Choose Line Type">
+          </ng-select2>
+        </div>
+        <!-- Model -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="model">Model</label>
+          <input type="text" name="model" class="form-control text-uppercase" [(ngModel)]="search.modelNo"
+            placeholder="Model..." />
+        </div>
+        <!-- Stage -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="stage">Stage</label>
+          <ng-select2 [data]="stages" name="stage" [(ngModel)]="search.stageID" width="100%" placeholder="Choose Stage">
+          </ng-select2>
+        </div>
+        <!-- Language -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="stage">Language</label>
+          <select [(ngModel)]="lang" class="form-control" name="language">
+            <option value="en">English</option>
+            <option value="vi">Local</option>
+            <option value="zh">Chinese</option>
+          </select>
+        </div>
+      </div>
+      <!-- Button -->
+      <div class="row mt-2">
+        <div class="col-md-12 ip">
+          <div class="form-group  d-flex" style="justify-content: flex-end;align-items: center; padding-right: 0;">
+            <button type="submit" class="btn btn-secondary mr-2">
+              <i class="fa fa-search"></i> Query
+            </button>
+            <button type="button" class="btn btn-danger mr-4" (click)="clear()">
+              <i class="fa fa-ban"></i> Clear
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="card-body">
+     <div class="form-group row">
+      <label for="rolloutTotal" class="col-sm-2 col-form-label">
+        # of Critical Operations Total
+      </label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="rolloutTotal" value="{{countRolloutTotal == 0 ? '' : countRolloutTotal}}" disabled>
+      </div>
+
+      <label for="beingAudit" class="col-sm-2 col-form-label">
+        # of Critical Operations Rollout Total
+      </label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="beingAudit" value="{{countBeingAudit == 0 ? '' : countBeingAudit}}" disabled>
+      </div>
+    <div class="table-responsive mt-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th rowspan="2">Rollout Line</th>
+            <th rowspan="2" width="90px">Rollout Date</th>
+            <th rowspan="2">Model No</th>
+            <th rowspan="2">Model Name</th>
+            <th rowspan="2">Stage</th>
+            <th rowspan="2">Operation</th>
+            <th colspan="4">KPIs</th>
+            <th rowspan="2">Machine Used</th>
+            <th rowspan="2">Tools Used</th>
+            <th rowspan="2">Operation Descriptions</th>
+            <th rowspan="2">Operation Video Link</th>
+            <th rowspan="2">Operation Layout Link</th>
+          </tr>
+          <tr>
+            <th>TT</th>
+            <th>CT</th>
+            <th>MP</th>
+            <th>Hourly Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of rollouts">
+            <td scope="col">{{item.line_name}}</td>
+            <td scope="col">{{item.rollout_date | date: 'yyyy-MM-dd'}}</td>
+            <td scope="col">{{item.model_no}}</td>
+            <td scope="col">{{item.model_name}}</td>
+            <td scope="col">{{item.stage_id}}</td>
+            <td scope="col">{{lang == 'en' ? item.operation_name_en : lang == 'vi' ? item.operation_name_local :
+              item.operation_name_zh}}</td>
+            <td scope="col">{{item.takt_time}}</td>
+            <td scope="col">{{item.ct_after_sec}}</td>
+            <td scope="col">{{item.mp_allocated}}</td>
+            <td scope="col">{{item.hourly_output}}</td>
+            <td scope="col">{{item.machines_qty}}</td>
+            <td scope="col">{{item.tool_qty}}</td>
+            <td scope="col">{{item.operation_descriptions}}</td>
+            <td scope="col">
+              <a [href]="item.operation_video_url_result" target="_blank" rel="noopener noreferrer">
+                <video class="video" [src]="item.operation_video_url_result + '?v=' + random" controls></video>
+              </a>
+            </td>
+            <td scope="col">
+              <a *ngIf="item.rollout_operation_layout_result" [href]="item.rollout_operation_layout_result + '?v=' + random"
+                target="_blank" rel="noopener noreferrer">
+                <img *ngIf="item.rollout_operation_layout_result" class="img" [src]="item.rollout_operation_layout_result + '?v=' + random">
+              </a>
+            </td>
+          </tr>
+          <tr *ngIf="rollouts.length === 0">
+            <td colspan="100%" class="table-warning text-center font-weight-bold"> {{message.NO_DATA}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination *ngIf="pagination.totalPages > 1" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+      [(ngModel)]="pagination.currentPage" [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+    </pagination>
+  </div>
+</div>

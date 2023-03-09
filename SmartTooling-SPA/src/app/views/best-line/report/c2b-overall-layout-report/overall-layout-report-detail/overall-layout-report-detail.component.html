@@ -1,0 +1,185 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <i class="fa fa-align-justify"></i> C2B OVERALL LAYOUT REPORT
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Factory</label>
+                            <input type="text" [(ngModel)]="editModel.factory" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Pilot Line</label>
+                            <input type="text" [(ngModel)]="editModel.line_name" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Line Type</label>
+                            <input type="text" [(ngModel)]="editModel.line_type_name" disabled class="form-control">
+                        </div>
+                        <div class="col-md-6 pr-3 button-block">
+                            <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()"><i
+                                    class="fa fa-chevron-left"></i>
+                                Back</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <tabset>
+                        <!--  Tab Over all -->
+                        <tab heading="Over all">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="table1">
+                                            <tbody>
+                                                <tr class="text-center">
+                                                    <td colspan="2" class="color-blue">Model Name</td>
+                                                    <td colspan="2">{{dataModel.model_name}}</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td colspan="2" class="color-blue">Model No</td>
+                                                    <td colspan="2">{{dataModel.model_no}}</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">Stage</td>
+                                                    <td class="color-blue">Before</td>
+                                                    <td class="color-blue">After</td>
+                                                    <td class="color-blue">Differ</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">No Of Process</td>
+                                                    <td>{{dataModel.no_of_process_before}}</td>
+                                                    <td>{{dataModel.no_of_process_after}}</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.no_of_process_after - dataModel.no_of_process_before > 0">+</span>{{dataModel.no_of_process_after
+                                                        -
+                                                        dataModel.no_of_process_before|
+                                                        number:'1.0-2'}}
+                                                    </td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">TCT</td>
+                                                    <td>{{dataModel.tct_before}}</td>
+                                                    <td>{{dataModel.tct_after}}</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.tct_after - dataModel.tct_before > 0">+</span>{{dataModel.tct_after
+                                                        - dataModel.tct_before|
+                                                        number:'1.0-2'}}</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">CPS MP</td>
+                                                    <td>{{dataModel.cps_mp_before}}</td>
+                                                    <td>{{dataModel.cps_mp_after}}</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.cps_mp_after - dataModel.cps_mp_before > 0">+</span>{{dataModel.cps_mp_after
+                                                        - dataModel.cps_mp_before|
+                                                        number:'1.0-2'}}</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">Assembly MP</td>
+                                                    <td>{{dataModel.assembly_mp_before}}</td>
+                                                    <td>{{dataModel.assembly_mp_after}}</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.assembly_mp_after - dataModel.assembly_mp_before > 0">+</span>{{dataModel.assembly_mp_after
+                                                        - dataModel.assembly_mp_before|
+                                                        number:'1.0-2'}}
+                                                    </td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">EOLR</td>
+                                                    <td>{{dataModel.eolr_before}}</td>
+                                                    <td>{{dataModel.eolr_after}}</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.eolr_after - dataModel.eolr_before > 0">+</span>{{dataModel.eolr_after
+                                                        - dataModel.eolr_before|
+                                                        number:'1.0-2'}}</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">LLER</td>
+                                                    <td>{{dataModel.ller_before_percent}} %</td>
+                                                    <td>{{dataModel.ller_after_percent}} %</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.ller_after_percent - dataModel.ller_before_percent > 0">+</span>{{(dataModel.ller_after_percent
+                                                        -
+                                                        dataModel.ller_before_percent)|
+                                                        number:'1.0-2'}} %</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">Tentative PPH</td>
+                                                    <td>{{dataModel.tentative_pph_before}}</td>
+                                                    <td>{{dataModel.tentative_pph_after}}</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.tentative_pph_after - dataModel.tentative_pph_before > 0">+</span>{{(dataModel.tentative_pph_after
+                                                        -
+                                                        dataModel.tentative_pph_before) |
+                                                        number:'1.0-2'}}</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td class="color-blue">Tentative Efficiency</td>
+                                                    <td>{{dataModel.tentative_efficiency_before_percent}} %</td>
+                                                    <td>{{dataModel.tentative_efficiency_after_percent}} %</td>
+                                                    <td><span
+                                                            *ngIf="dataModel.tentative_efficiency_after_percent - dataModel.tentative_efficiency_before_percent > 0">+</span>{{(dataModel.tentative_efficiency_after_percent
+                                                        -
+                                                        dataModel.tentative_efficiency_before_percent) |
+                                                        number:'1.0-2'}} %
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <img *ngIf="dataModel.c2b_overall_image_result" [src]="dataModel.c2b_overall_image_result + '?v=' + random">
+                                </div>
+                            </div>
+                        </tab>
+                        <!-- End of Tab Over all -->
+
+                        <!-- Tab Files -->
+                        <tab heading="Files">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Attachment Type</th>
+                                        <th>Attachment Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let item of files">
+                                    <tr class="text-center">
+                                        <td>{{item.attachment_type_id}}</td>
+                                        <td class="text-left"><a [href]="item.attachment_file_url"
+                                                target="_blank">{{item.attachment_name}}</a></td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="files.length === 0">
+                                    <tr>
+                                        <td colspan="100%" class="table-warning text-center font-weight-bold">
+                                            {{message.NO_DATA}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex">
+                                <pagination *ngIf="pagination.totalPages > 1" [boundaryLinks]="true"
+                                    [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                                    [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                                    [maxSize]=5>
+                                </pagination>
+                            </div>
+                        </tab>
+                        <!-- End of Tab Files -->
+                    </tabset>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

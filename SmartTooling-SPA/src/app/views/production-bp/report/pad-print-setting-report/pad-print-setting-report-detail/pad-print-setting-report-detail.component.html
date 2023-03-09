@@ -1,0 +1,280 @@
+<div class="animated fadeIn">
+  <form class="form-horizontal" #addcriticalForm="ngForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-border">
+          <div class="card-header">
+            <div class="row">
+              <div class="col">
+                <h5>Detail</h5>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+                  <i class="fa fa-chevron-left"></i> Back
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Model No <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="model_no" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.model_no" disabled required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Model Name <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="model_name" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.model_name" disabled required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Component Name <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="component_name" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.component_name" disabled required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Material Type <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <input type="text" name="materialType" id="materialType"
+                        [(ngModel)]="pbpPadPrintSettingData.material_type_name" class="form-control" [disabled]="true"
+                        required>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Chemical - Ink <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="chemical_ink" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.chemical_ink" disabled required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Material Description <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="material_description" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.material_description" required disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Dev. Season <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="dev_season" class="form-control input-upper" [maxLength]='4'
+                      [(ngModel)]="pbpPadPrintSettingData.dev_season" required disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Prod. Season <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="production_season" class="form-control input-upper" [maxLength]='4'
+                      [(ngModel)]="pbpPadPrintSettingData.production_season" required disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Pad Shape <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <input type="text" name="padShape" id="padShape"
+                        [(ngModel)]="pbpPadPrintSettingData.pad_shape_name" [disabled]="true" class="form-control"
+                        required>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label"># of Pad Hits <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="number" name="number_of_pad_hits" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.number_of_pad_hits" required disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Machine Vendor <span class="red_star">*</span></label>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <input type="text" name="machineVender" id="machineVender"
+                        [(ngModel)]="pbpPadPrintSettingData.machine_vendor_name" [disabled]="true" class="form-control"
+                        required>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label" for="article_no_is_general">Article No <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6 col-lg-6" style="margin-top: 15px;">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="article_no_is_general" id="article_no_is_general"
+                        class="custom-control-input" [(ngModel)]="pbpPadPrintSettingData.article_no_is_general"
+                        disabled>
+                      <label class="custom-control-label" for="article_no_is_general">General</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Machine Model<span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="machine_model" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.machine_model" required disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label mt-2">Rotary Table Used<span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <select name="rotary_table_used" id="rotary_table_used" class="form-control mt-2"
+                      [(ngModel)]="pbpPadPrintSettingData.is_rotary_table_used" required disabled>
+                      <option [ngValue]="true">Yes</option>
+                      <option [ngValue]="false">No</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label"></label>
+                  <div class="col-md-6 col-lg-6">
+                    <textarea name="article_no_remarks" id="article_no_remarks"
+                      [disabled]='pbpPadPrintSettingData.article_no_is_general' class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.article_no_remarks" disabled></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Chemical - Hardener <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="chemical_hardener" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.chemical_hardener" required disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label mt-2">Chemical - Additive <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="chemical_additive" class="form-control mt-2"
+                      [(ngModel)]="pbpPadPrintSettingData.chemical_additive" required disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Component Photo</label>
+                  <div class="col-md-6 col-lg-6 media">
+                    <div class="card">
+                      <img
+                        [src]="pbpPadPrintSettingData.component_photo_url == null || pbpPadPrintSettingData.component_photo_url == '' ? noImage : pbpPadPrintSettingData.component_photo_url_result + '?v=' + random"
+                        height="119px" />
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Chemical - Primer <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="chemical_primer" class="form-control"
+                      [(ngModel)]="pbpPadPrintSettingData.chemical_primer" required disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label mt-2">Chemical - Others <span class="red_star">
+                      *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="chemical_others" class="form-control mt-2"
+                      [(ngModel)]="pbpPadPrintSettingData.chemical_others" required disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label" for="operation_video">Operation Video</label>
+                  <div class="col-md-6 col-lg-6 media">
+                    <div class="card mr-2 ">
+                      <video class="img-fluid" style="height: 125px;" type="video/mp4" controls>
+                        <source
+                          [src]="pbpPadPrintSettingData.operation_video_url == null || pbpPadPrintSettingData.operation_video_url == '' ? noImage : pbpPadPrintSettingData.operation_video_url_result + '?v=' + random"
+                          type="video/mp4">
+                        <source
+                          [src]="pbpPadPrintSettingData.operation_video_url == null || pbpPadPrintSettingData.operation_video_url == '' ? noImage : pbpPadPrintSettingData.operation_video_url_result + '?v=' + random"
+                          type="video/ogg">
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

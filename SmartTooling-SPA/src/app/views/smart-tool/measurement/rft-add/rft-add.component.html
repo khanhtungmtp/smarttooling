@@ -1,0 +1,204 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Add New</strong>
+          RFT
+          <button
+            type="button"
+            class="btn btn-sm btn-primary float-right"
+            (click)="backList()"
+          >
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <form
+          class="form-horizontal"
+          #addModelForm="ngForm"
+          (ngSubmit)="addModelForm.valid && saveAndNext()"
+        >
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Model No<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  name="modelNo"
+                  [(ngModel)]="rftcondition.modelNo"
+                  disabled
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label">Model Name<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  name="modelName"
+                  [(ngModel)]="rftcondition.modelName"
+                  disabled
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Stage<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  name="stage"
+                  [(ngModel)]="rftcondition.stage"
+                  disabled
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label">Upper ID<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  name="upperID"
+                  [(ngModel)]="rftcondition.upperID"
+                  disabled
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Process Type <span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2
+                  [data]="processTypeList"
+                  [(ngModel)]="process"
+                  (ngModelChange)="getListOpera()"
+                  width="100%"
+                  name="process_type"
+                  placeholder="Select"
+                  required
+                >
+                </ng-select2>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label">Operation Name <span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2
+                  [data]="operationnameTypeList"
+                  [(ngModel)]="operation"
+                  width="100%"
+                  name="operation_name"
+                  placeholder="Select"
+                  required
+                >
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Total Produced Qty<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="number"
+                  [(ngModel)]="rft.total_produced_qty"
+                  (input)="countRFTPercent($event.target.value, 'L')"
+                  name="total_produced_qty"
+
+                  class="form-control"
+                  required
+                  min="0" oninput="validity.valid||(value='');"
+                />
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label">Defect Qty<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="number"
+                  [(ngModel)]="rft.defect_qty"
+                  (input)="countRFTPercent($event.target.value, 'R')"
+                  name="defect_qty"
+                  class="form-control"
+                  required
+                  min="0" oninput="validity.valid||(value='');"
+                />
+                <!-- (keyup)="countRFTPercent()" -->
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Defect Reason<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2
+                  width="100%"
+                  [data]="defectreasonTypeList"
+                  [(ngModel)]="rft.defect_reason_id"
+                  name="defect_reason_id"
+                  placeholder="Select"
+                  required
+                >
+                </ng-select2>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label">RFT (%)<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="number"
+                  name="rft_percent"
+                  [value]="rftpercent"
+                  disabled
+                  class="form-control"
+                  required
+                />
+                <!-- [(ngModel)]="rft.rft_percent" -->
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Defect Pic<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  [(ngModel)]="rft.defect_pic"
+                  name="defect_pic"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label">Inspector<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  [(ngModel)]="rft.inspector"
+                  name="inspector"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              (click)="clearInput()"
+            >
+              <i class="fa fa-ban"></i> Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+              [disabled]="!addModelForm.valid"
+            >
+              <i class="fa fa-check"></i> Save & Next
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-success"
+              [disabled]="!addModelForm.valid"
+              (click)="save()"
+            >
+              <i class="fa fa-check"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

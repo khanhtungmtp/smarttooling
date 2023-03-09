@@ -1,0 +1,256 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="d-inline">Add New</h4>
+      <button type="button" (click)="back()" class="btn btn-sm btn-primary float-right">
+        <i class="fa fa-chevron-left"></i> Back
+      </button>
+    </div>
+    <div class="card-body">
+      <form class="form-horizontal" #addComputerForm="ngForm">
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Model No <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="modelNo" [(ngModel)]="itemAdd.model_no"
+                  (ngModelChange)="changeModel($event)" [data]="models" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Model Name <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <input type="text" name="modelName" class="form-control" [(ngModel)]="itemAdd.model_name" disabled
+                  required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Stage <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="stage" id="stage" [(ngModel)]="itemAdd.stage_id"
+                  (ngModelChange)="changeStage($event)" [data]="stages" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">CS Operation <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="csOperation" [data]="csOperations" [(ngModel)]="itemAdd.operation_id"
+                  (ngModelChange)="changeCSOperation($event)" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">CS Type <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="csType" [data]="csTypes" [(ngModel)]="itemAdd.cs_type_id" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">CS Machine Type <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="csMachineType" [data]="csMachineTypes"
+                  [(ngModel)]="itemAdd.cs_machine_type_id" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Dev. Season <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <input type="text" name="devSeason" class="form-control text-uppercase" [(ngModel)]="itemAdd.dev_season"
+                  maxlength="4" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Prod. Season <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <input type="text" name="productionSeason" class="form-control text-uppercase"
+                  [(ngModel)]="itemAdd.production_season" maxlength="4" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">SOP Setup <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="sopSetup" [data]="yesNo" [(ngModel)]="itemAdd.sop_setup" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Production Adoption <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="productionAdoption" [data]="yesNo"
+                  [(ngModel)]="itemAdd.production_adoption" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Critical Process <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="criticalProcess" [data]="yesNo" [(ngModel)]="itemAdd.is_critical_process"
+                  required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Article No <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <div class="custom-control custom-checkbox mt-2">
+                  <input type="checkbox" class="custom-control-input" id="article_no_is_general"
+                    name="article_no_is_general" [(ngModel)]="itemAdd.article_no_is_general"
+                    (ngModelChange)="changeArticleNo()" [required]="itemAdd.article_no_is_general">
+                  <label class="custom-control-label" for="article_no_is_general">General</label>
+                </div>
+                <!-- <textarea [(ngModel)]="itemAdd.article_no_remarks" [disabled]="itemAdd.article_no_is_general" name="article_no_remarks" class="form-control mt-2" rows="3" placeholder="Article No Remarks.."></textarea> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Main Upper Material Type <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="mainUpperMaterialType" [data]="mainUpperMaterialTypes"
+                  [(ngModel)]="itemAdd.main_upper_material_type_id" required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"></label>
+              <div class="col-md-6">
+                <textarea [(ngModel)]="itemAdd.article_no_remarks" [required]="!itemAdd.article_no_is_general"
+                  [disabled]="itemAdd.article_no_is_general" name="article_no_remarks" class="form-control" rows="3"
+                  placeholder="Article No Remarks.."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">CS Machine Model <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <input type="text" name="csMachineModel" class="form-control text-uppercase"
+                  [(ngModel)]="itemAdd.cs_machine_model" required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">
+                Jig Photo <br><strong>(jpg, jpeg, png < 5MB)</strong>
+              </label>
+              <div class="col-md-6">
+                <div class="ml-3">
+                  <media-upload #mediaUploadImage [acceptKey]="'image'" [url]="itemAdd.jig_photo_url"
+                    [isImageOrVideo]="true"></media-upload>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">CS Speed Setting (rpm) <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <input type="number" name="csSpeedSetting" class="form-control"
+                  [(ngModel)]="itemAdd.cs_speed_setting_rpm" required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">
+                CS Video <br><strong>(mp4 < 20MB)</strong>
+              </label>
+              <div class="col-md-6">
+                <div class="ml-3">
+                  <media-upload #mediaUploadVideo [acceptKey]="'video'" [url]="itemAdd.cs_video_url"
+                    [isImageOrVideo]="false"></media-upload>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"># of Size Group <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <input type="number" name="ofSizeGroup" class="form-control" [(ngModel)]="itemAdd.number_of_size_group"
+                  required>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Jig Desig <span class="red_star"> *</span></label>
+              <div class="col-md-6">
+                <ng-select2 width="100%" name="jigDesign" [data]="jigDesigns" [(ngModel)]="itemAdd.jig_design_id"
+                  required>
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-sm btn-primary mr-1" [disabled]="!addComputerForm.valid"
+        (click)="btnSave(false)">
+        <i class="fa fa-check"></i> Save & Next
+      </button>
+      <button type="button" class="btn btn-sm btn-success mr-1" [disabled]="!addComputerForm.valid"
+        (click)="btnSave(true)">
+        <i class="fa fa-check"></i> Save
+      </button>
+    </div>
+  </div>
+</div>

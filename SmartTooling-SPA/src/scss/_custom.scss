@@ -1,0 +1,77 @@
+// Here you can add other styles
+.mr-30 {
+  margin-right: 30px !important;
+}
+
+thead {
+  background-color: #20a8d8;
+  color: #fff;
+}
+
+.navbar {
+  // background-color: #2F353A;
+  background-color: #364150;
+}
+
+// Text color nav
+.sidebar .nav-link {
+  color: #b4bcc8!important;
+}
+
+.vertical-middle {
+  vertical-align: middle !important;
+}
+.menu-margin a {
+  padding-left: 40px !important;
+}
+
+// sửa lại màu menu lúc active
+.sidebar .nav-link.active {
+  color: #fff;
+  // background: #20a8d8;
+}
+
+.sidebar .nav-link.active .nav-icon {
+  color:#fff;
+}
+
+.input-upper{
+  text-transform: uppercase;
+}
+
+.red_star {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: red;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+  -webkit-appearance: none;
+  appearance: textfield;
+}
+
+// Style Nav Header
+.text-color-white {
+  font-size: 1.53125rem !important;
+  color: white;
+  font-weight: 500; font-family: "Century Gothic Regular", sans-serif;
+  margin-top: 0;
+}
+.style-header {
+  background-color: #364150;
+  color: white !important;
+}
+.navbar-brand-full {
+  color: white !important;
+}
+app-sidebar {
+  background-color: #364150 !important;
+}
+app-sidebar-nav-link-content {
+  color: #b4bcc8!important;
+}
+.sidebar .nav-link:hover {
+  color: #fff;
+  background:black !important;
+}

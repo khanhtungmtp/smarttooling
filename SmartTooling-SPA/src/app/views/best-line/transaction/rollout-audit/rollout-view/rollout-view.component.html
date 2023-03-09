@@ -1,0 +1,135 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>View</strong>
+                    <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <form class="form-horizontal" >
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="line_no">Rollout Line No<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataLine" [value]="dataLine[0]" required
+                                    [(ngModel)]="params_rollout_audit.rollout_line_id" name="line_no" id="line_no" [disabled]="true" >
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="line_type">Line Type<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataLine" [value]="dataLine[1]" required
+                                [(ngModel)]="params_rollout_audit.line_type_id"  name="line_type" id="line_type" disabled="true" >
+                                </ng-select2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="model_no">Model No<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataModelNo" [(ngModel)]="params_rollout_audit.model_no"
+                                (valueChanged)="changeModelNo($event)" name="model_no" disabled id="model_no" required>
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="model_name">Model Name<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <input type="text" id="model_name" [(ngModel)]="modelName" name="model_name" class="form-control input-upper" required disabled >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="stage">Stage<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataStage" [(ngModel)]="params_rollout_audit.stage_id" required disabled
+                                (valueChanged)="changeStage($event)" name="stage" id="stage">
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="operation_name">Operation Name<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataOperationName" [(ngModel)]="params_rollout_audit.operation_id" required
+                                 name="operation_name" id="operation_name" disabled>
+                                </ng-select2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="rollout_date">Audit Date<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <input class="form-control date_picker" autocomplete="off" name="rolloutdate" placeholder="" disabled [(ngModel)]="bL_Rollout_Audit.audit_date" type="text" bsDatepicker  required
+                                        [bsConfig]="{isAnimated: true, dateInputFormat: 'YYYY-MM-DD'}" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="audit_count">Audit Count<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <input type="text" id="audit_count" [(ngModel)]="audit_count" name="audit_count" class="form-control input-upper" required disabled >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="man_remarks">Man Remarks </label>
+                            <div class="col-md-3">
+                                <textarea class="form-control" name="man_remarks" [value]="bl_Critical_Process_Analysis?.man_remarks" disabled id="man_remarks" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="machine_remarks">Machine Remarks </label>
+                            <div class="col-md-3">
+                                <textarea class="form-control" name="machine_remarks" [value]="bl_Critical_Process_Analysis?.machine_remarks" disabled  id="machine_remarks" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="method_remarks">Method Remarks </label>
+                            <div class="col-md-3">
+                                <textarea class="form-control" name="method_remarks" [value]="bl_Critical_Process_Analysis?.method_remarks" disabled  id="method_remarks" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="material_remarks">Material_Remarks </label>
+                            <div class="col-md-3">
+                                <textarea class="form-control" name="material_remarks" [value]="bl_Critical_Process_Analysis?.material_remarks" disabled  id="material_remarks" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="audit_result_line">Audit Result-Line<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <select [(ngModel)]="audit_result_line_is_pass" value="1" name="line" required disabled class="form-control" id="audit_line">
+                                    <option value="1">PASS</option>
+                                    <option value="0">FAIL</option>
+                                  </select>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="audit_result_opera">Audit Result-Operation<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <select [(ngModel)]="audit_result_operation_is_pass" value="1" required name="opera" disabled class="form-control" id="audit_opera">
+                                    <option value="1">PASS</option>
+                                    <option value="0">FAIL</option>
+                                  </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="operation_gap_des">Operation Gap Description<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <textarea class="form-control" name="desc" [(ngModel)]="bL_Rollout_Audit.operation_gap_description" disabled required id="operation_gap_des" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

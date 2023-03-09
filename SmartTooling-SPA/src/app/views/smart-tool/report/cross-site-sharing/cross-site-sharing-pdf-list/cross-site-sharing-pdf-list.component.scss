@@ -1,0 +1,43 @@
+// .print{
+//     height: 1530px;
+// }
+@media print {
+    .print {
+      display: block;
+      page-break-before: always;
+      margin: 0;
+      
+    }
+    .style-content-1 {
+      position: relative;
+      min-width: 300px;
+      max-width: 350px;
+      background: #5b9bd5;
+      color: white;
+      text-align: center;
+      font-size: 15px;
+      border: 1px solid #0b7de4;
+  }
+  .style-content-2 {
+      //position: relative;
+      min-width: 300px;
+      max-width: 350px;
+      height: 150px;
+      border-right: 1px solid #0b7de4;
+      border-left: 1px solid #0b7de4;
+      border-bottom: 1px solid #0b7de4;
+  }
+  .style-content-3 {
+      min-width: 120px;
+      // position: relative;
+      height: 250px;
+      border: 1px solid #0b7de4;
+      font-weight: bold;
+  
+  }
+  .style-content-3-text {
+      min-width: 80px;
+       position: relative;
+      margin-top: 10px !important;
+  }
+  }

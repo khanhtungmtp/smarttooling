@@ -1,0 +1,104 @@
+<div class="card">
+  <div class="card-header">
+    <div class="form-group row">
+      <!-- Factory -->
+      <label for="factory" class="col-sm-1 col-form-label">
+        Factory
+      </label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="factory" value="{{searchParam.factory}}" disabled>
+      </div>
+      <!-- Line No -->
+      <label for="lineNo" class="col-sm-1 col-form-label">
+        Pilot Line
+      </label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="lineNo" value="{{searchParam.lineID}}" disabled>
+      </div>
+      <!-- Line Type -->
+      <label for="LineTypeID" class="col-sm-1 col-form-label">
+        Line Type
+      </label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="LineTypeID" value="{{searchParam.lineTypeID}}" disabled>
+      </div>
+      <div class="col-sm-3 pr-0">
+        <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()"><i class="fa fa-chevron-left"></i>
+        Back</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="form-group row">
+      <label for="bestPracticeUrl" class="col-sm-2 col-form-label">
+        Best Practice Video Link
+      </label>
+      <div class="col-sm-3">
+        <video *ngIf="bestPracticeUrl" [src]="bestPracticeUrl + '?v=' + random" id="bestPracticeUrl" class="video-detial" controls></video>
+      </div>
+
+      <label for="layoutLink" class="col-sm-2 col-form-label">
+        Layout Link
+      </label>
+      <div class="col-sm-3">
+        <img *ngIf="layoutLink" [src]="layoutLink + '?v=' + random" id="layoutLink" class="img-detail">
+      </div>
+    </div>
+    <div class="table-responsive mt-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th rowspan="2" width="90px">Audit Date</th>
+            <th rowspan="2">Rollout Line</th>
+            <th rowspan="2">Line Type</th>
+            <th rowspan="2">Audit Count</th>
+            <th rowspan="2">Model No</th>
+            <th rowspan="2">Model Name</th>
+            <th rowspan="2">Stage</th>
+            <th rowspan="2">Operation</th>
+            <th rowspan="2">Audit Result Line</th>
+            <th rowspan="2">Audit Result Operation</th>
+            <th rowspan="2">Operation Gap Descriptions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of auditDetails">
+            <td scope="col">{{item.audit_date | date: 'yyyy-MM-dd'}}</td>
+            <td scope="col">{{item.line_name}}</td>
+            <td scope="col">{{item.line_type_name}}</td>
+            <td scope="col">{{item.audit_count}}</td>
+            <td scope="col">{{item.model_no}}</td>
+            <td scope="col">{{item.model_name}}</td>
+            <td scope="col">{{item.stage_name}}</td>
+            <td scope="col">{{lang == 'en' ? item.operation_name_en : lang == 'vi' ? item.operation_name_local : item.operation_name_zh}}</td>
+            <!-- Audit Result Line -->
+            <td scope="col" *ngIf="item.audit_result_line_is_pass == true; else fail" class="audit-pass">
+              {{item.audit_result_line_is_pass ? 'Pass' : 'Fail'}}
+            </td>
+            <ng-template #fail>
+              <td scope="col" class="audit-fail">{{item.audit_result_line_is_pass ? 'Pass' : 'Fail'}}</td>
+            </ng-template>
+            <!-- Audit Result Operation -->
+            <td scope="col" *ngIf="item.audit_result_operation_is_pass == true; else fail" class="audit-pass">
+              {{item.audit_result_operation_is_pass ? 'Pass' : 'Fail'}}
+            </td>
+            <ng-template #fail>
+              <td scope="col" class="audit-fail">{{item.audit_result_operation_is_pass ? 'Pass' : 'Fail'}}</td>
+            </ng-template>
+
+            <td scope="col">{{item.operation_gap_description}}</td>
+          </tr>
+          <tr *ngIf="auditDetails.length === 0">
+            <td class="table-warning text-center font-weight-bold" colspan="100%">DATA NOT FOUND</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination *ngIf="pagination.totalPages > 1" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+      [(ngModel)]="pagination.currentPage" [itemsPerPage]="pagination.itemsPerPage"
+      (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+      lastText="&raquo;" [maxSize]=5>
+    </pagination>
+  </div>
+</div>

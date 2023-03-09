@@ -1,0 +1,159 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Add new</strong>
+                    <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <form class="form-horizontal" autocomplete="off" #addNew="ngForm" (ngSubmit)="addNew.valid">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="line_no">Pilot Line <span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataLine" [value]="dataLine[0]" required
+                                    [(ngModel)]="params_rollout_progress.line_id" name="line_no" id="line_no" [disabled]="true" >
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="line_type">Line Type<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataLine" [value]="dataLine[1]" required
+                                [(ngModel)]="params_rollout_progress.line_type_id"  name="line_type" id="line_type" disabled="true" >
+                                </ng-select2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="model_no">Model No<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataModelNo" [(ngModel)]="params_rollout_progress.model_no"
+                                    (valueChanged)="changeModelNo($event)" name="model_no" id="model_no" required>
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="model_name">Model Name<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <input type="text" id="model_name" [(ngModel)]="modelName" name="model_name" class="form-control input-upper" required disabled >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="stage">Stage<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataStage" [(ngModel)]="params_rollout_progress.stage_id" required
+                                (valueChanged)="changeStage($event)" name="stage" id="stage">
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="operation_name">Operation Name<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataOperationName" [(ngModel)]="params_rollout_progress.operation_id" required
+                                (valueChanged)="changeOperationName($event)" name="operation_name" id="operation_name">
+                                </ng-select2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="rollout_line">Rollout Line<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <ng-select2 width="100%" [data]="dataRolloutLine" [(ngModel)]="bl_rollout_prrogress.rollout_line_id" name="rollout_line" id="rollout_line" required>
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="ct_after">CT After<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <input type="text" id="ct_after" [(ngModel)]="cTAfter" name="ct_after" class="form-control input-upper" required disabled >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="rollout_date">Rollout Date<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <input class="form-control date_picker" readonly name="rolloutdate" placeholder="" type="text" bsDatepicker [(ngModel)]="bl_rollout_prrogress.rollout_date" required
+                                        [bsConfig]="{isAnimated: true, dateInputFormat: 'YYYY-MM-DD'}" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="mp_allocated">MP Allocated<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <input type="number" (change)="changeH()" (keyup)="changeH()"  id="mp_allocated" [(ngModel)]="bl_rollout_prrogress.mp_allocated" name="mp_allocated" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="machines_name">Machines Name</label>
+                            <div class="col-md-3">
+                                <input type="text" id="machines_name" [(ngModel)]="bl_rollout_prrogress.machines_name" name="machines_name" class="form-control">
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="machines_qty">Machines Qty</label>
+                            <div class="col-md-3">
+                                <input type="number" id="machines_qty" [(ngModel)]="bl_rollout_prrogress.machines_qty" name="machines_qty" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="tool_name">Tool Name</label>
+                            <div class="col-md-3">
+                                <input type="text" id="tool_name" [(ngModel)]="bl_rollout_prrogress.tool_name" name="tool_name" class="form-control">
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="tool_qty">Tool Qty</label>
+                            <div class="col-md-3">
+                                <input type="number" id="tool_qty" [(ngModel)]="bl_rollout_prrogress.tool_qty" name="tool_qty" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="hourly">Hourly Output <br> <strong>((3600)/CT*MP Allocated)</strong>
+                            </label>
+                            <div class="col-md-3">
+                                <div class="form-control disable" name="desc" >{{hour | number :'1.0-2'}}</div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="pph">PPH <br> <strong>(Hourly Output / MP Allocated)</strong>
+                            </label>
+                            <div class="col-md-3">
+                                <div class="form-control disable" name="desc" >{{bl_rolloutHourlyPPH?.pph | number :'1.0-2'}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="operation_des">Operation Description<span class="red_star">  *</span>
+                            </label>
+                            <div class="col-md-3">
+                                <textarea class="form-control" name="desc" [(ngModel)]="bl_rollout_prrogress.operation_descriptions" required id="operation_des" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="operation_video">Operation Video <br><strong>(mp4<20MB)</strong></label>
+                            <div class="col-md-3">
+                                <media-upload class="media" #mediaUploadVideo [acceptKey]="'video'" [url]="bl_rollout_prrogress.operation_video_url == null? noImage: bl_rollout_prrogress.operation_video_url" [isImageOrVideo] ="false"></media-upload>
+                            </div>
+                            
+                            <div class="col-md-1"></div>
+                            <label class="col-md-2 col-form-label" for="rollout_opera">Rollout Operation Layout <br><strong>(jpg,jpeg,npg<5MB)</strong></label>
+                            <div class="col-md-3">
+                                <media-upload class="media" #mediaUploadImage [acceptKey]="'image'"  [url]="bl_rollout_prrogress.rollout_operation_layout == null? noImage : bl_rollout_prrogress.rollout_operation_layout" [isImageOrVideo] ="true"></media-upload>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-success mr-1" [disabled]="!addNew.valid" (click)="save('SAVE')"><i class="fa fa-check"></i> Save</button>
+                        <button type="submit" class="btn btn-sm btn-primary" [disabled]="!addNew.valid" (click)="save('SAVE_AND_NEXT')"><i class="fa fa-check"></i> Save & Next</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

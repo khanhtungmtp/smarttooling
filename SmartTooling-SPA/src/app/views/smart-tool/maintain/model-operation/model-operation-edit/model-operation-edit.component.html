@@ -1,0 +1,135 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Update </strong> Model Operation
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <form class="form-horizontal" #addModelOperationForm="ngForm">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="model_no">
+                Model No <span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="modelOperation.model_no" id="model_no" disabled name="model_no"
+                  class="form-control" placeholder="Enter Model No.." required>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="model_name">
+                Model Name <span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <input type="text" id="model_name" [(ngModel)]="modelOperationEditParam.model_name" disabled
+                  name="model_name" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="operation_id">
+                Operation ID <span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <input type="text" disabled [(ngModel)]="modelOperation.operation_id" id="operation_id"
+                  name="operation_id" class="form-control" placeholder="Enter Operation Id.." required>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="stage">
+                Stage <span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <ng-select2 [data]="stageList" width="100%" id="stage" [(ngModel)]="modelOperation.stage_id" disabled
+                  name="model_type_id" required>
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="operation-name-local">
+                Operation Name (LL)<span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="modelOperation.operation_name_local" id="operation-name-local"
+                  name="operation-name-local" class="form-control" placeholder="Enter Operation Name (Local).."
+                  required>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="process_type">
+                Process Type<span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <ng-select2 [data]="processTypeList" width="100%" id="process_type"
+                  [(ngModel)]="modelOperation.process_type_id" name="process_type" required>
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="operation-name-en">
+                Operation Name (En) <span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="modelOperation.operation_name_en" id="operation-name-en"
+                  name="operation-name-en" class="form-control" placeholder="Enter Operation Name (En).." required>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="sop_no">SOP No</label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="modelOperation.sop_no" id="sop_no" name="sop_no" class="form-control"
+                  placeholder="Enter Sop No..">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="operation-name-zh">
+                Operation Name (Zh)<span class="red_star"> *</span>
+              </label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="modelOperation.operation_name_zh" id="operation-name-zh"
+                  name="operation-name-zh" class="form-control" placeholder="Enter Operation Name (Zn).." required>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="critical-quality">
+                Critical Quality
+              </label>
+              <div class="col-md-3">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox"
+                    [(ngModel)]="modelOperation.critical_quality" name="critical-quality" id="critical-quality"
+                    class="custom-control-input" [checked]="modelOperation.critical_quality">
+                  <label class="custom-control-label" for="critical-quality"></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="sequence">Sequence</label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="modelOperation.sequence" id="sequence" name="sequence"
+                  class="form-control" min="0" oninput="validity.valid||(value='');">
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="critical-efficiency">Critical Efficiency</label>
+              <div class="col-md-3">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox"
+                    [(ngModel)]="modelOperation.critical_efficiency"
+                    name="critical-efficiency" id="critical-efficiency"
+                    class="custom-control-input"
+                    [checked]="isCheckedEfficiency">
+                  <label class="custom-control-label" for="critical-efficiency"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-sm btn-danger mr-1">
+              <i class="fa fa-ban"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-sm btn-success mr-1" (click)="save()">
+              <i class="fa fa-check"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

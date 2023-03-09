@@ -1,0 +1,8 @@
+.disable{
+    background-color: #E4E7EA;
+    cursor:default;
+}
+.img{
+    width: 200px;
+    object-fit: fill;
+}

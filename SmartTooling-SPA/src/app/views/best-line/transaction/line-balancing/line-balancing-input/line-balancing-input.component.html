@@ -1,0 +1,62 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Input Data </strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #inputData="ngForm" (ngSubmit)="inputData.valid ">
+          <div class="card-body">
+            <label class="col-md-2 col-form-label" for="lineId">Pilot Line <span class="red_star">  *</span></label>
+              <div class="col-md-4">
+                <ng-select2 width="100%" name="lineno" id="lineNo" [(ngModel)]="lineId"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[0]" required>
+                </ng-select2>
+              </div>
+              <label class="col-md-2 col-form-label" for="lineTypeId">Line Type<span class="red_star">  *</span></label>
+              <div class="col-md-4">
+                <ng-select2 width="100%" name="lineTypeID" id="lineTypeID" [(ngModel)]="lineTypeId"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[1]" required>
+                </ng-select2>
+              </div>
+              <label class="col-md-2 col-form-label" for="modelNo">Model No<span class="red_star">  *</span></label>
+              <div class="col-md-4">
+                <ng-select2 width="100%" name="modelNo" id="modelNo" [(ngModel)]="modelNo"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[2]" required>
+                </ng-select2>
+              </div>
+              <label class="col-md-2 col-form-label" for="modelName">Model Name<span class="red_star">  *</span></label>
+              <div class="col-md-4">
+                <input type="text" [(ngModel)]="modelName" name="modelName" class="form-control"disabled >
+              </div>
+              <label class="col-md-2 col-form-label" for="processType">Process Type<span class="red_star">  *</span></label>
+              <div class="col-md-4">
+                <ng-select2 width="100%" name="processType" id="processType" [(ngModel)]="processType"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[3]" required>
+                </ng-select2>
+              </div>
+              <label  class="col-md-2 col-form-label" for="processType">Input Data<span class="red_star">  *</span></label>
+              <div class="form-group col-md-4">
+                <div class="custom-file b-form-file">
+                  <label data-browse="Browse" class="custom-file-label">
+                    <p *ngIf="fileImportExcel === null">Choose a file...</p>
+                    <input id="input_uploadFile"
+                      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                      type="file" (change)="onSelectFile($event)" style="line-height: 1 !important; outline: none;"
+                      [ngClass]="(fileImportExcel !== null) ? 'opacity1' : 'opacity0'">
+                  </label>
+                </div>
+              </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-sm btn-success ml-1" [disabled]="fileImportExcel == null"
+              (click)="save()"><i class="fa fa-check"></i> Save</button>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

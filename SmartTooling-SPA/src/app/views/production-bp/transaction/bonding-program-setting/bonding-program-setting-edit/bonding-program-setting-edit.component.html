@@ -1,0 +1,220 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Edit</strong>
+          <button type="button" class="btn btn-primary float-right btn-sm"
+            [routerLink]="['/production-bp/transaction/bonding-program-setting/main']"
+            routerLinkActive="router-link-active">
+            <i class="fa fa-chevron-left"></i>
+            Back
+          </button>
+        </div>
+
+        <form class="form-horizontal" [formGroup]="editForm" autocomplete="off">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Model No<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="model_no" name="model_no" [data]="modelNoList" width="100%"
+                  [options]="optionsSelectModelNo" formControlName="model_no">
+                </ng-select2>
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Model Name <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="text" name="model_name" id="model_name" class="form-control"
+                  formControlName="model_name" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Chemical Process Type<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="chemical_process_type_id" name="chemical_process_type_id"
+                  [data]="chemicalProcessTypeList" width="100%" [options]="optionsSelectChemicalProcessType"
+                  formControlName="chemical_process_type_id">
+                </ng-select2>
+              </div>
+
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Auto Tech. Type<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="auto_tech_id" name="auto_tech_id" [data]="autoTechList" width="100%"
+                  [options]="optionsSelectAutoTech" formControlName="auto_tech_id">
+                </ng-select2>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Chemical Name<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="text" name="chemical_name" id="chemical_name" class="form-control"
+                  formControlName="chemical_name" oninput="this.value = this.value.toUpperCase()" />
+              </div>
+
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Adoption Component Type<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="adoption_component_id" name="adoption_component_id" [data]="adoptionComponentTypeList"
+                  width="100%" [options]="optionsSelectAdoptionComponentType" formControlName="adoption_component_id">
+                </ng-select2>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Dev. Season<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="text" name="dev_season" id="dev_season" maxlength="4" class="form-control"
+                  formControlName="dev_season" oninput="this.value = this.value.toUpperCase()" disabled />
+              </div>
+
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Prod. Season<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="text" name="production_season" maxlength="4" id="production_season" class="form-control"
+                  formControlName="production_season" oninput="this.value = this.value.toUpperCase()" disabled />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Chemical Supplier<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <!-- <input type="text" name="chemical_supplier" id="chemical_supplier" class="form-control"
+                  formControlName="chemical_supplier" oninput="this.value = this.value.toUpperCase()" /> -->
+                <ng-select2 id="chemical_supplier_id" name="chemical_supplier_id" [data]="chemicalSupplierTypeList"
+                  width="100%" [options]="optionsSelectChecmicalSupplierType" formControlName="chemical_supplier_id">
+                </ng-select2>
+              </div>
+
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Article No<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2 p-2">
+                <div class="form-check">
+                  <input type="checkbox" name="article_no_is_general" id="article_no_is_general"
+                    class="form-check-input" formControlName="article_no_is_general" />
+                  <label class="form-check-label" for="article_no_is_general">General</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Process Adoption ScopeType<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="process_adoption_scope_id" name="process_adoption_scope_id"
+                  [data]="processAdoptionScopeTypeList" width="100%" [options]="optionsSelectProcessAdoptionScopeType"
+                  formControlName="process_adoption_scope_id">
+                </ng-select2>
+              </div>
+
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">
+                  <!-- Article No<font color="red">*</font> -->
+                </span>
+              </label>
+              <div class="col-md-2">
+                <textarea type="text" name="article_no_remarks" id="article_no_remarks" class="form-control"
+                  formControlName="article_no_remarks">
+                </textarea>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Main Upper Material Type<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="main_upper_material_type_id" name="main_upper_material_type_id"
+                  [data]="mainUpperMaterialTypeList" width="100%" [options]="optionsSelectMainUpperMaterialType"
+                  formControlName="main_upper_material_type_id">
+                </ng-select2>
+              </div>
+
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Main Bottom Material Type<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="main_bottom_material_type_id" name="main_bottom_material_type_id"
+                  [data]="mainBottomMaterialTypeList" width="100%" [options]="optionsSelectMainBottomMaterialType"
+                  formControlName="main_bottom_material_type_id">
+                </ng-select2>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">1<sup>st</sup> Month of Production Adoption<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input class="form-control" name="first_month_of_production_adoption"
+                  formControlName="first_month_of_production_adoption" placeholder="" type="text" bsDatepicker required
+                  (onShown)="onOpenCalendar($event)" [bsConfig]="{isAnimated: true, dateInputFormat: 'YYYY/MM'}" />
+              </div>
+
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Shoe Photo<br>
+                  <strong>(jpg,jpeg,png < 5MB)</strong>
+                </span>
+              </label>
+
+              <div class="col-md-2">
+                <img [src]="
+                  editForm.value.shoes_photo_url === ''
+                    ? defaultImage
+                    : editForm.value.shoes_photo_url + '?v=' + random
+                " width="100%" width="60" />
+                <label class="btn btn-primary upload">
+                  Upload
+                  <input type="file" class="uploadFile img" value="Upload Photo"
+                    style="width: 0px; height: 0px; overflow: hidden" (change)="onSelectFile($event)" #fileImageB5 />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="form-group row">
+              <div class="col">
+                <button type="button" class="btn btn-sm btn-success mr-1" (click)="save()" [disabled]="!editForm.valid">
+                  <i class="fa fa-check"></i>
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

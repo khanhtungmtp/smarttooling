@@ -1,0 +1,50 @@
+section.card.card-upload {
+    min-width: 8.2rem;
+    width: 50%;
+    margin-bottom: unset;
+}
+
+section.card.card-upload .card-img-top {
+    width: 100%;
+    cursor: pointer;
+}
+
+section.card.card-upload .card-body {
+    padding: 0;
+}
+
+section.card.card-upload .card-body .btn-group {
+    width: 100%;
+}
+
+section.card.card-upload .card-body .btn {
+    border-radius: unset;
+    margin: 0;
+    cursor: pointer;
+    border-bottom-left-radius: calc(0.25rem - 1px);
+    border-bottom-right-radius: calc(0.25rem - 1px);
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+section.card.card-upload .card-body .btn {
+    border-radius: unset;
+    margin: 0;
+    cursor: pointer;
+}
+
+section.card.card-upload .card-body .btn:first-child {
+    border-bottom-left-radius: calc(0.25rem - 1px);
+}
+
+section.card.card-upload .card-body .btn:last-child {
+    border-bottom-right-radius: calc(0.25rem - 1px);
+}
+
+section.card.card-upload .card-body .btn input {
+    display: none;
+}
+
+.media-upload {
+    margin-left: 12px;
+}

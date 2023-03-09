@@ -1,0 +1,13 @@
+<div class="row media">
+    <div class="card mr-2">
+        <img #imageRef *ngIf="isImageOrVideo" [src]="url" width="100%" />
+        <video #videoRef *ngIf="!isImageOrVideo" width="100%" height="120px" [src]="url" controls></video>
+    </div>
+    <div>
+        <label class="btn btn-primary upload m-0 w-100">
+            Upload
+            <input accept="{{accpet}}" #inputRef type="file" class="uploadFile img" value="Upload File"
+                (change)="onSelectFile($event)" />
+        </label>
+    </div>
+</div>

@@ -1,0 +1,231 @@
+<div class="animated fadeIn">
+  <form class="form-horizontal" #addcriticalForm="ngForm" (ngSubmit)="addcriticalForm.valid && saveAndNext()">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-border">
+          <div class="card-header">
+            <div class="row">
+              <div class="col">
+                <h5>Add New</h5>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+                  <i class="fa fa-chevron-left"></i> Back
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Pilot Line <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <ng-select2 width="100%" name="lineno" id="lineNo" [(ngModel)]="criticalProcessData.line_id"
+                      [disabled]="true" [data]="dataLine" [value]="dataLine[0]" required>
+                    </ng-select2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Line Type <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <ng-select2 width="100%" name="lineType" id="lineType" [disabled]="true" [data]="dataLine"
+                      [value]="dataLine[1]" [(ngModel)]="criticalProcessData.line_type_id" required>
+                    </ng-select2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Model No <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <ng-select2 width="100%" name="modelNo" id="modelNo" (valueChanged)="changeModelNo($event)"
+                      [data]="dataListModel" [(ngModel)]="criticalProcessData.model_no" required>
+                    </ng-select2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Model Name <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="modelName" class="form-control" [(ngModel)]="modelName" disabled required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Stage <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <ng-select2 width="100%" name="stage" [(ngModel)]="criticalProcessData.stage_id"
+                      (valueChanged)="changeStage($event)" id="stage" [data]="dataListStage" required>
+                    </ng-select2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Operation Name <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <ng-select2 width="100%" [data]="dataOperationName" [(ngModel)]="criticalProcessData.operation_id"
+                      (valueChanged)="changeOperationName($event)" name="operationName" id="operationName" required>
+                    </ng-select2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">CT Before (Sec.) <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <input type="number" name="cTBefore" id="cTBefore" min="0" step="1" (keydown)="checkValue($event)"
+                      [(ngModel)]="criticalProcessData.ct_before_sec" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">CT After (Sec.) <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <input type="number" name="cTAfter" id="cTAfter" min="0" step="1" (keydown)="checkValue($event)"
+                      [(ngModel)]="criticalProcessData.ct_after_sec" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Takt Time <span class="red_star"> *</span></label>
+                  <div class="col-md-6">
+                    <input type="number" name="cTTaktTime" in="0" step="1" (keydown)="checkValue($event)"
+                      [(ngModel)]="criticalProcessData.takt_time" id="cTTaktTime" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">
+                    Best Practice Video<br>
+                    (mp4 < 20MB) </label>
+                      <div class="col-md-6 media-upload">
+                        <media-upload #BestPractice [acceptKey]="'video'"></media-upload>
+                      </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Man Remarks
+                  </label>
+                  <div class="col-md-6">
+                    <textarea name="manRemark" id="manRemark" [(ngModel)]="criticalProcessData.man_remarks"
+                      class="form-control" placeholder="Remark..."></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">
+                    Man Media<br>
+                    (jpg,jpeg,png,mp4 < 20MB) </label>
+                      <div class="col-md-6 media-upload">
+                        <media-upload #ManMedia></media-upload>
+                      </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">
+                    Machine Remarks
+                  </label>
+                  <div class="col-md-6">
+                    <textarea name="machineRemark" id="machineRemark" [(ngModel)]="criticalProcessData.machine_remarks"
+                      class="form-control" placeholder="Remark..."></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">
+                    Machine Media<br>
+                    (jpg,jpeg,png,mp4 < 20MB) </label>
+                      <div class="col-md-6 media-upload">
+                        <media-upload #MachineMedia></media-upload>
+                      </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">
+                    Method Remarks
+                  </label>
+                  <div class="col-md-6">
+                    <textarea name="methodRemark" id="methodRemark" [(ngModel)]="criticalProcessData.method_remarks"
+                      class="form-control" placeholder="Remark..."></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">
+                    Method Media<br>
+                    (jpg,jpeg,png,mp4 < 20MB) </label>
+                      <div class="col-md-6 media-upload">
+                        <media-upload #MethodMedia></media-upload>
+                      </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Material Remarks
+                  </label>
+                  <div class="col-md-6">
+                    <textarea name="materialRemark" id="materialRemark"
+                      [(ngModel)]="criticalProcessData.material_remarks" class="form-control"
+                      placeholder="Remark..."></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">
+                    Material Media<br>
+                    (jpg,jpeg,png,mp4 < 20MB) </label>
+                      <div class="col-md-6 media-upload">
+                        <media-upload #MaterialMedia></media-upload>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-sm btn-primary mr-1" [disabled]="!addcriticalForm.valid">
+              <i class="fa fa-check"></i> Save & Next
+            </button>
+            <button type="button" class="btn btn-sm btn-success mr-1" [disabled]="!addcriticalForm.valid"
+              (click)="save()">
+              <i class="fa fa-check"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,75 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            C2B LAYOUT BY PROCESS REPORT
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Factory</label>
+                            <input type="text" [(ngModel)]="editModel.factory_id" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Pilot Line</label>
+                            <input type="text" [(ngModel)]="editModel.line_name" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Line Type</label>
+                            <input type="text" [(ngModel)]="editModel.line_type_name" disabled class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="badge badge-warning">Process</label>
+                            <input type="text" [(ngModel)]="editModel.process_type_name_en" disabled
+                                class="form-control">
+                        </div>
+                        <div class="col-md-4 pr-3 button-block">
+                            <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()"><i
+                                    class="fa fa-chevron-left"></i>
+                                Back</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row ml-1">
+                        <label class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i>Before</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 frame">
+                            <img *ngIf="dataModel.each_process_image_before_result" [src]="dataModel.each_process_image_before_result + '?v=' + random" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="chart">
+                                <canvas baseChart height="346" class="chart" [datasets]="beforeChartData"
+                                    [labels]="beforeLabels" [chartType]="beforeChartType" [options]="chartOptions"
+                                    [plugins]="beforeChartPlugins"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ml-1 mt-3">
+                        <label class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i>After</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 frame">
+                            <img *ngIf="dataModel.each_process_image_after_result" [src]="dataModel.each_process_image_after_result + '?v=' + random" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="chart">
+                                <canvas baseChart height="346" class="chart" [datasets]="afterChartData"
+                                    [labels]="afterLabels" [chartType]="afterChartType" [options]="chartOptions"
+                                    [plugins]="afterChartPlugins"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <textarea class="form-control" name="remarks" id="remarks"
+                            rows="5">{{dataModel.remarks}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.disable {
+    background-color: #e4e7ea;
+    cursor: default;
+}
+
+.media {
+    display: flex;
+    align-items: center;
+}
+
+.media .card {
+    width: 200px;
+    height: 120px;
+    margin-bottom: 0;
+    min-height: 100px;
+}

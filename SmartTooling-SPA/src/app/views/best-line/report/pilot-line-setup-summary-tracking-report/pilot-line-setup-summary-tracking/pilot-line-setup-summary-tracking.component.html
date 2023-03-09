@@ -1,0 +1,97 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <form class="form-horizontal" #searchForm="ngForm" (submit)="search()" autocomplete="off">
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label class="badge badge-warning"> Prod. Season </label>
+                                <ng-select2 [data]="prodSeasons" width="100%" [(ngModel)]="prodSeason"
+                                    name="prodSeason">
+                                </ng-select2>
+                            </div>
+                            <div class="col-md-4 button-block">
+                                <label class="d-block">&nbsp;</label>
+                                <button type="submit" class="btn btn-secondary float-left mr-2">
+                                    <i class="fa fa-search"></i> Query
+                                </button>
+                                <button type="button" class="btn  btn-danger float-left " (click)="clear()"><i
+                                        class="fa fa-ban"></i>
+                                    Clear
+                                </button>
+                                <button type="button" class="btn btn-success ml-2" [disabled]="dataGroups.length == 0"
+                                    (click)="exportExcel()">
+                                    <i class="fa fa-file-excel-o"></i>
+                                    Excel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                    <th rowspan="2">Factory</th>
+                                    <th rowspan="2">Prod. Season</th>
+                                    <th colspan="3">Top Model Setup Progress</th>
+                                    <th colspan="4">Pilot Line Kaizen Rollout Progress</th>
+                                </tr>
+                                <tr class="text-center">
+                                    <th>Target # of top model setup</th>
+                                    <th>Actual # of top model setup</th>
+                                    <th>Top Model setup %</th>
+                                    <th>Pilot lines</th>
+                                    <th>Target # of kaizen rollout from pilot lines</th>
+                                    <th>Actual # of kaizen rollout from pilot lines</th>
+                                    <th>Kaizen Rollout % from pilot lines</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of dataGroups">
+                                <tr class="text-center" *ngFor="let data of item.data, let i = index">
+                                    <td *ngIf="item.factory == data.factory && i == 0" [attr.rowspan]="item.data.length"
+                                        class="align-middle">
+                                        {{data.factory}}
+                                    </td>
+                                    <td *ngIf="item.factory == data.factory && i == 0" [attr.rowspan]="item.data.length"
+                                        class="align-middle">
+                                        {{data.prod_season}}
+                                    </td>
+                                    <td *ngIf="item.factory == data.factory && i == 0" [attr.rowspan]="item.data.length"
+                                        class="align-middle">
+                                        {{data.target_number_of_pilot_lines_setup | number:'.0-2' }}
+                                    </td>
+                                    <td *ngIf="item.factory == data.factory && i == 0" [attr.rowspan]="item.data.length"
+                                        class="align-middle">
+                                        {{data.actual_number_of_pilot_lines_setup | number:'.0-2' }}
+                                    </td>
+                                    <td *ngIf="item.factory == data.factory && i == 0" [attr.rowspan]="item.data.length"
+                                        class="align-middle">
+                                        {{data.pilot_lines_setup_percent | number:'.0-2' }} %
+                                    </td>
+                                    <td>{{data.pilot_line }}</td>
+                                    <td>{{data.target_number_of_rollout_lines_setup_for_pilot_lines | number:'.0-2' }}
+                                    </td>
+                                    <td>{{data.actual_number_of_rollout_lines_setup_for_pilot_lines | number:'.0-2' }}
+                                    </td>
+                                    <td>{{data.rollout_lines_setup_percent_for_pilot_lines | number:'.0-2' }} %</td>
+                                </tr>
+
+
+                            </tbody>
+                            <tfoot *ngIf="dataGroups.length == 0">
+                                <tr>
+                                    <td colspan="100%" class="table-warning text-center font-weight-bold">
+                                        {{message.NO_DATA}}
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

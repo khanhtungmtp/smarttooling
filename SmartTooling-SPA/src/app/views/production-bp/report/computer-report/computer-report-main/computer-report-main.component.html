@@ -1,0 +1,130 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form class="card-header" #searchForm="ngForm" autocomplete="off">
+          <div class="row">
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Factory</label>
+              <ng-select2 width="100%" [data]="factories" [(ngModel)]="searchParam.factory" name="factory" id="factory"
+                (ngModelChange)="changeFactory()" placeholder="Factory...">
+              </ng-select2>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Dev. Season</label>
+              <input type="text" name="dev" id="dev" class="form-control input-upper"
+                [(ngModel)]="searchParam.dev_season" placeholder="Dev. Season..." />
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Prod. Season</label>
+              <input type="text" name="prod" id="prod" class="form-control input-upper"
+                [(ngModel)]="searchParam.prod_season" placeholder="Prod. Season..." />
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Model</label>
+              <input type="text" name="model" id="model" class="form-control input-upper"
+                [(ngModel)]="searchParam.model" placeholder="Model..." />
+            </div>
+            <!-- Production Adoption -->
+            <div class="col-md-2 ip">
+              <label class="badge badge-warning" for="stage">Production Adoption</label>
+              <select [(ngModel)]="searchParam.production_adoption" class="form-control" name="productionAdoption">
+                <option value="">All</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Language</label>
+              <select [(ngModel)]="searchParam.changeLang" name="lang" value="0" class="form-control" id="active">
+                <option value="0">English</option>
+                <option value="1">Local</option>
+                <option value="2">Chinese</option>
+              </select>
+            </div>
+            <div class="col-md-12 col-sm-12 btn-search-clear mt-2">
+              <!-- <label class="d-block">&nbsp;</label> -->
+              <div class="float-right">
+                <button type="submit" class="btn btn-secondary mr-1" (click)="search()">
+                  <i class="fa fa-search"></i> Query
+                </button>
+                <button type="button" class="btn btn-danger" (click)="clear()">
+                  <i class="fa fa-ban"></i> Clear
+                </button>
+                <button type="button" (click)="exportExcel()" class="btn btn-primary button-width ml-1">
+                  <i class="fa fa-file-excel-o"></i>
+                  Excel
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Dev. Season</th>
+                  <th>Prod. Season</th>
+                  <th>Model No</th>
+                  <th>Model Name</th>
+                  <th>Stage</th>
+                  <th>CS Operation</th>
+                  <th>Critical Operation</th>
+                  <th>CS Type</th>
+                  <th>CS Machine Type</th>
+                  <th>Speed Setting (rpm)</th>
+                  <th>Jig Photo</th>
+                  <th>CS Video</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dataComputerstitchingsetting">
+                  <td>
+                    <button class="btn btn-primary btn-sm" (click)="detail(item)">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </td>
+                  <td>{{item.dev_season}}</td>
+                  <td>{{item.production_season}}</td>
+                  <td>{{item.model_no}}</td>
+                  <td>{{item.model_name}}</td>
+                  <td>{{item.stage_name}}</td>
+                  <td>{{ searchParam.changeLang =='0'? item.operation_name_en : searchParam.changeLang == '1'?
+                    item.operation_name_local :item.operation_name_zh}}</td>
+                  <td>{{item.is_critical_process == true? 'YES' :'NO'}}</td>
+                  <td>{{item.cs_type_name}}</td>
+                  <td>{{item.cs_machine_type_name}}</td>
+                  <td>{{item.cs_speed_setting_rpm | number :'1.0-2'}}</td>
+                  <td>
+                    <a [href]="item.jig_photo_url == null || item.jig_photo_url == '' ? noImage : item.jig_photo_urlResult + '?v=' + random"
+                      target="_blank" rel="noopener noreferrer">
+                      <img class="img"
+                        [src]="item.jig_photo_url == null || item.jig_photo_url == '' ? noImage : item.jig_photo_urlResult + '?v=' + random">
+                    </a>
+                  </td>
+                  <td>
+                    <a [href]="item.cs_video_urlResult + '?v=' + random" target="_blank" rel="noopener noreferrer">
+                      <video class="img video" [src]="item.cs_video_urlResult + '?v=' + random" controls> </video>
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="dataComputerstitchingsetting.length == 0 ">
+                  <td colspan="100%" class="table-warning text-center font-weight-bold"> {{message.NO_DATA}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPage > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalCount" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.pageSize" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5></pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

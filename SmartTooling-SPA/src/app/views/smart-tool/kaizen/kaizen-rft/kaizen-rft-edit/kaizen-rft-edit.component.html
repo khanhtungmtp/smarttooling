@@ -1,0 +1,198 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Modify </strong>Kaizen RFT
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i
+              class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addAuditTypeForm="ngForm" (ngSubmit)="addAuditTypeForm.valid ">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Model no">Model No<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="dataKaizen.model_no" name="Model_no" class="form-control" disabled>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="Model Name">Model Name<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" [(ngModel)]="modelName" name="ModelName" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Kaizen Description<span class="red_star">  *</span></label>
+              <div class="col-md-4">
+                <input type="text" [(ngModel)]="dataKaizen.kaizen_description" name="kaizen_description" disabled
+                  class="form-control" required>
+              </div>
+              <label class="col-md-2 col-form-label">Kaizen Type<span class="red_star">  *</span></label>
+              <div class="col-md-2 mt-1">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox"
+                  [(ngModel)]="dataKaizen.kaizen_type_eliminate"
+                  name="is_Eliminate" id="is_Eliminate"
+                  class="custom-control-input" disabled>
+                  <label class="custom-control-label" for="is_Eliminate">Eliminate</label>
+                </div>
+                 </div>
+              <div class="col-md-2 mt-1">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox"
+                  [(ngModel)]="dataKaizen.kaizen_type_reduce"
+                  name="is_Reduce" id="is_Reduce"
+                  class="custom-control-input" disabled>
+                  <label class="custom-control-label" for="is_Reduce">Reduce</label>
+                </div>
+                 </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Stage<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 [data]="stages" width="100%" [(ngModel)]="dataKaizen.stage_id" disabled
+                  [value]="dataKaizen.stage_id" name="stage" required>
+                </ng-select2>
+              </div>
+              <div class="col-3"></div>
+              <div class="col-md-2 mt-1">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox"
+                  [(ngModel)]="dataKaizen.kaizen_type_combine"
+                  name="is_Combine" id="is_Combine"
+                  class="custom-control-input" disabled>
+                  <label class="custom-control-label" for="is_Combine">Combine</label>
+                </div>
+              </div>
+              <div class="col-md-2 mt-1">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox"
+                  [(ngModel)]="dataKaizen.kaizen_type_smart_tool"
+                  name="is_Smart" id="is_Smart"
+                  class="custom-control-input" disabled>
+                  <label class="custom-control-label" for="is_Smart">Smart Tool</label>
+                </div>
+                 </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Process Type ">Process Type <span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 [data]="processList" width="100%" [(ngModel)]="dataKaizen.process" disabled
+                  [value]="dataKaizen.process" name="process" required>
+                </ng-select2>
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="Line Roll Out (%)">Line Roll Out (%)<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="dataKaizen.line_roll_out_percent" name="Line Roll Out" disabled
+                  class="form-control" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Operation Name">Operation Name<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 [data]="Operations" width="100%" [(ngModel)]="dataKaizen.operation_id" disabled
+                  [value]="dataKaizen.operation_id" name="operation_id" required>
+                </ng-select2>
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="Start Date">Start Date<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <div class="input-group">
+                  <input class="form-control" name="Record_Time" placeholder="Start date"
+                    [(ngModel)]="dataKaizen.start_date" type="text" bsDatepicker
+                    [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}" disabled required>
+                  <span class="input-group-text">
+                    <span class="fa fa-calendar"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="CT Before (Sec.)">CT Before (Sec.)<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="dataKaizen.ct_before_sec" name="ct_before_sec" disabled
+                  class="form-control" required>
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="CT After (Sec.)">CT After (Sec.)<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="dataKaizen.ct_after_sec" name="ct_after_sec" class="form-control"
+                  disabled required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="RFT Before (%)">RFT Before (%)</label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="dataKaizen.rft_before_percent" name="rft_before_percent"
+                  class="form-control" min="0" step="0.01" oninput="validity.valid||(value='');">
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="RFT After (%)">RFT After (%)</label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="dataKaizen.rft_after_percent" name="rft_after_percent"
+                  class="form-control" min="0" step="0.01" oninput="validity.valid||(value='');">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Kaizen From">Kaizen From<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 [data]="kaizenFrom" width="100%" [(ngModel)]="dataKaizen.kaizen_from"
+                  [value]="dataKaizen.kaizen_from" name="kaizen_from" disabled required>
+                </ng-select2>
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="Process TCT (Sec.)">Process TCT (Sec.)<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="number" [(ngModel)]="dataKaizen.process_tct_sec" name="process_tct_sec"
+                  class="form-control" disabled required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Before Remarks">Before Remarks<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <textarea name="before_remarks" [(ngModel)]="dataKaizen.before_remarks" class="form-control"
+                  id="before_remarks" rows="3" disabled required></textarea>
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="After Remarks">After Remarks<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <textarea name="after_remarks" [(ngModel)]="dataKaizen.after_remarks" class="form-control"
+                  id="audit_Item_ZW" rows="3" disabled required></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="upload_picture">Before Kaizen</label>
+              <div class="col-md-3">
+                <div class="row">
+
+                  <div class="col-md-12">
+                    <img *ngIf="!isvideoB4 && isLoaddata==true" [src]="url_before" width="100%" height="70%" />
+                    <video *ngIf="isvideoB4 && isLoaddata==true" [src]="url_before" width="100%" height="80%" controls width="100%"></video>
+                  </div>
+                </div>
+              </div>
+              <div class="col-1"></div>
+              <label class="col-md-2 col-form-label" for="upload_picture">After Kaizen</label>
+              <div class="col-md-3">
+                <div class="row">
+                  <div class="col-md-12">
+                    <img *ngIf="!isvideoAfter && isLoaddata==true" [src]="url_after" width="100%" height="70%" />
+                    <video *ngIf="isvideoAfter && isLoaddata==true" [src]="url_after" width="100%" height="80%" controls
+                      width="100%"></video>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-sm btn-danger " (click)="cancel()"><i class="fa fa-ban"></i>
+                Cancel</button>
+              <button type="button" class="btn btn-sm btn-success ml-1" [disabled]="!addAuditTypeForm.valid"
+                (click)="save()"><i class="fa fa-check"></i> Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

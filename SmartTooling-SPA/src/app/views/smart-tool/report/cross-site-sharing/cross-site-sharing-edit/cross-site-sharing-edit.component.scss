@@ -1,0 +1,127 @@
+// -------------------------------------Start CSS Header-------------------------------------//
+.header-style {
+    background-color: #ffc000;
+}
+.font-title {
+    font-size: 22px;
+}
+.button-back {
+    color: white;
+    background: #828e98;
+}
+.button-back:hover {
+    background:  #707c86;
+    color: white;
+}
+.header-div-right {
+    margin-top: 3px;
+}
+.header-docno-text {
+    margin-right: 5px;
+}
+//-----------------------------------------------END-----------------------------------------//
+
+
+// -------------------------------------Start CSS Body-------------------------------------//
+.body1 {
+    min-width: 900px;
+    overflow: hidden;
+    margin-top: -30px;
+}
+
+.table1 > tr > td {
+    border: 1px solid black;
+}
+.table1 > th {
+    border: 1px solid black;
+}
+.tr1-td1 {
+    width: 50px;
+}
+.tr1-td3 {
+    width: 500px;
+}
+.tr1-td4 {
+    min-width: 150px;
+    width: 20em;
+}
+.tr1-td5 {
+    min-width: 160px;
+    max-width: 160px;
+    // width: 15em;
+}
+.tr1-td6 {
+    min-width: 120px;
+    width: 10em;
+}
+.tr1-td7 {
+    min-width: 120px;
+    width: 10em;
+}
+.kitu {
+    color: red;
+}
+.body-style-list {
+    list-style: none;
+}.center-content {
+    vertical-align: middle;
+    text-align: center;
+}
+.textarea1 {
+    width: 450px;
+    height: 120px;
+}
+.ul-li-text {
+    font-size: 12px!important;
+}
+.ul-li-margin1 {
+    margin-top: 10px;
+}
+.ul-li-margin2 {
+    margin-top: 3px;
+}
+
+.style-content-1 {
+    position: relative;
+    min-width: 350px;
+    background: #5b9bd5;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    border: 1px solid #0b7de4;
+}
+.style-content-2 {
+    //position: relative;
+    min-width: 350px;
+    height: 200px;
+    border-right: 1px solid #0b7de4;
+    border-left: 1px solid #0b7de4;
+    border-bottom: 1px solid #0b7de4;
+}
+.style-content-3 {
+    min-width: 80px;
+    position: relative;
+    height: 380x;
+    border: 1px solid #0b7de4;
+    font-weight: bold;
+
+}
+.style-content-3-text {
+    min-width: 80px;
+     position: relative;
+    margin-top: 10px !important;
+}
+.img-style1 {
+    width: 15em;
+    margin-top: 20px;
+}
+.img-style2 {
+    width: 200px;
+    margin-top: 20px;
+}
+.right--icon {
+    font-size: 40px;
+    color: #0203f7;
+    margin-top: 65px;
+}
+  @page { size: landscape; }

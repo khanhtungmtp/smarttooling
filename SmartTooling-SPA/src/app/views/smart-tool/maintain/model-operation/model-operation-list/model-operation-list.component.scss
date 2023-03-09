@@ -1,0 +1,26 @@
+#input_uploadFile::file-selector-button {
+  display: none;
+}
+
+input[type="file"] {
+  width: 350px;
+}
+
+.custom-file-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.form-group {
+  margin-right: 0;
+  margin-bottom: 0;
+  align-items: center;
+}
+
+.form-group.hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}

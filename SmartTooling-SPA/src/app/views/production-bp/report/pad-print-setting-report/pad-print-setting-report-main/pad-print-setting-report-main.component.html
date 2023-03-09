@@ -1,0 +1,95 @@
+<div class="card">
+  <div class="card-header">
+    <form class="form-horizontal" autocomplete="off" #searchForm="ngForm">
+      <div class="row form-group">
+        <!-- Factory -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="factory">Factory</label>
+          <ng-select2 name="factory" width="100%" [data]="factories" [(ngModel)]="searchParam.factory_id"
+            (ngModelChange)="changeFactory()">
+          </ng-select2>
+        </div>
+        <!-- Dev. Season -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="model">Dev. Season</label>
+          <input type="text" name="DevSeason" [(ngModel)]="searchParam.dev_season" class="form-control text-uppercase"
+            placeholder="Dev. Season.." />
+        </div>
+        <!-- Prod. Season -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="model">Prod. Season</label>
+          <input type="text" name="ProdSeason" class="form-control text-uppercase"
+            [(ngModel)]="searchParam.production_season" placeholder="Prod. Season.." />
+        </div>
+        <!-- Model -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="model">Model</label>
+          <input type="text" name="model" class="form-control text-uppercase" [(ngModel)]="searchParam.model"
+            placeholder="Model..." />
+        </div>
+        <!-- Button -->
+        <div class="col-md-2">
+          <label class="badge badge-warning"></label>
+          <br>
+          <button type="button" class="btn btn-secondary mr-1 mt-1" (click)="search()">
+            <i class="fa fa-search"></i> Query
+          </button>
+          <button type="button" class="btn btn-danger mr-1 mt-1" (click)="clear()">
+            <i class="fa fa-ban"></i> Clear
+          </button>
+          <button type="button" (click)="exportExcel()" class="btn btn-primary mt-1">
+            <i class="fa fa-file-excel-o"></i>
+            Excel
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive mt-3">
+      <table class="table table-bordered align-middle">
+        <thead>
+          <tr class="align-middle">
+            <th></th>
+            <th>Dev. Season</th>
+            <th>Prod. Season</th>
+            <th>Model No</th>
+            <th>Model Name</th>
+            <th>Article No.</th>
+            <th>Component Name</th>
+            <th>Material Description</th>
+            <th>Pad Shape</th>
+            <th># of Pad Hits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pbpPadPrintSettingData" class="align-middle">
+            <td scope="col">
+              <button type="button" class="btn btn-primary" (click)="detail(item)">
+                <i class="fa fa-eye"></i>
+              </button>
+            </td>
+            <td scope="col">{{item.dev_season}}</td>
+            <td scope="col">{{item.production_season}}</td>
+            <td scope="col">{{item.model_no}}</td>
+            <td scope="col">{{item.model_name}}</td>
+            <td scope="col">{{item.article_no_remarks}}</td>
+            <td scope="col">{{item.component_name}}</td>
+            <td scope="col">{{item.material_description}}</td>
+            <td scope="col">{{item.pad_shape_name}}</td>
+            <td scope="col">{{item.number_of_pad_hits}}</td>
+          </tr>
+          <tr *ngIf="pbpPadPrintSettingData.length ==0">
+            <td colspan="100%" class="table-warning text-center font-weight-bold"> {{message.NO_DATA}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination *ngIf="pagination.totalPage > 1" [boundaryLinks]="true" [totalItems]="pagination.totalCount"
+      [(ngModel)]="pagination.currentPage" [itemsPerPage]="pagination.pageSize" (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+    </pagination>
+  </div>
+</div>

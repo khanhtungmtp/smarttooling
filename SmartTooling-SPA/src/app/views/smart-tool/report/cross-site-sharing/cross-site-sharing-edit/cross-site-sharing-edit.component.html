@@ -1,0 +1,426 @@
+
+<div class="animated fadeIn">
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header header-style">
+          <strong class="font-title">SMART TOOLING & KAIZEN APPLICATION</strong>
+          <div class="float-right header-div-right">
+            <span class="header-docno-text">(DOC NO:{{models.doc_no}} )</span>
+            <button type="button" (click) ="back()" class="btn btn-sm button-back">
+              <i class="fa fa-chevron-left"></i>
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+      <form class="form-horizontal" #addAuditTypeForm="ngForm" (ngSubmit)="addAuditTypeForm.valid ">
+      <div class="card-body table-responsive body1">
+        <div class="table-responsive">
+          <table class="table table1">
+            <tr style="font-weight: bold;">
+              <td class="center-content tr1-td1">Date</td>
+              <td class="center-content">Proposed By <span class="kitu">*</span></td>
+              <td class="center-content tr1-td3">Team Member <span class="kitu">*</span></td>
+              <td class="center-content tr1-td4">Kaizen Type</td>
+              <td class="center-content tr1-td5">Benefits Category <span class="kitu">*</span></td>
+              <td class="center-content tr1-td6">From</td>
+              <td class="center-content tr1-td7">To</td>
+            </tr>
+            <tr style="background-color: #e0dcd5;">
+              <td class="center-content">
+                <p>{{models.fill_in_date| date: "yyyy/MM/dd"}}</p>
+              </td>
+              <td>
+                <div style="display: flex;margin-top: 15px;">
+                  <div>
+                    <div class="body-style-list">
+                      <li>Facility <span class="kitu">*</span></li>
+                      <li class="ul-li-margin1">Dept <span class="kitu">*</span></li>
+                      <li class="ul-li-margin1">Name/ID <span class="kitu">*</span></li>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="body-style-list">
+                      <li><input type="text" [(ngModel)]="models.proposed_by_facility" name="proposed_by_facility"
+                         required></li>
+                      <li class="ul-li-margin2"><input type="text" name ="proposed_by_dept" required
+                        [(ngModel)]="models.proposed_by_dept"></li>
+                      <li class="ul-li-margin2"><input type="text" name ="proposed_by_name_id" required
+                         [(ngModel)]="models.proposed_by_name_id"></li>
+                      </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <textarea class="textarea1" placeholder="Name/ID; Name/ID; Name/ID" name="team_member" id="" 
+                required [(ngModel)]="models.team_member"></textarea>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  disabled type="checkbox" name="smartTool" class="custom-control-input"
+                        id="smartTool" [checked]="kaizen.kaizen_type_smart_tool">
+                      <label class="custom-control-label" for="smartTool"></label>
+                      <span class="ul-li-text"> SMART TOOLING</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="eliminate" class="custom-control-input" id="eliminate"
+                      [checked]="kaizen.kaizen_type_eliminate">
+                      <label class="custom-control-label" for="eliminate"></label>
+                      <span class="ul-li-text"> ELIMINATE</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="combine" class="custom-control-input" id="combine"
+                      [checked]="kaizen.kaizen_type_combine">
+                      <label class="custom-control-label" for="combine"></label>
+                      <span class="ul-li-text"> COMBINE</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="reduce" class="custom-control-input" id="reduce"
+                      [checked]="kaizen.kaizen_type_reduce">
+                      <label class="custom-control-label" for="reduce"></label>
+                      <span class="ul-li-text"> REDUCE</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" name="hse" class="custom-control-input" id="hse"
+                      [checked]="models.benefits_category_hse" [(ngModel)] ="models.benefits_category_hse">
+                      <label class="custom-control-label" for="hse"></label>
+                      <span class="ul-li-text"> HSE</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" name="quality" class="custom-control-input" id="quality"
+                      [checked]="models.benefits_category_quality"  [(ngModel)] ="models.benefits_category_quality">
+                      <label class="custom-control-label" for="quality"></label>
+                      <span class="ul-li-text"> QUALITY</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" name="delivery" class="custom-control-input" id="delivery"
+                      [checked]="models.benefits_category_delivery" [(ngModel)] ="models.benefits_category_delivery">
+                      <label class="custom-control-label" for="delivery"></label>
+                      <span class="ul-li-text"> DELIVERY</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" name="efficiency" class="custom-control-input" id="efficiency"
+                      [checked]="models.benefits_category_efficiency" [(ngModel)] ="models.benefits_category_efficiency">
+                      <label class="custom-control-label" for="efficiency"></label>
+                      <span class="ul-li-text"> EFFICIENCY</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" name="others" class="custom-control-input" id="others"
+                      [checked]="models.benefits_category_others" [(ngModel)] ="models.benefits_category_others">
+                      <label class="custom-control-label" for="others"></label>
+                      <span class="ul-li-text"> OTHERS</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  disabled type="checkbox" name="fromSHW" class="custom-control-input" id="fromSHW"
+                      [checked]="models.factory_id=='SHC'">
+                      <label class="custom-control-label" for="fromSHW"></label>
+                      <span class="ul-li-text"> SHW</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="fromSHD" class="custom-control-input" id="fromSHD"
+                      [checked]="models.factory_id=='CB'">
+                      <label class="custom-control-label" for="fromSHD"></label>
+                      <span class="ul-li-text"> SHD</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="fromSHB" class="custom-control-input" id="fromSHB"
+                      [checked]="models.factory_id=='SPC'">
+                      <label class="custom-control-label" for="fromSHB"></label>
+                      <span class="ul-li-text"> SHB</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="fromSHI" class="custom-control-input" id="fromSHI"
+                      [checked]="models.factory_id=='TSH'">
+                      <label class="custom-control-label" for="fromSHI"></label>
+                      <span class="ul-li-text"> SHI</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="toSHW" class="custom-control-input" id="toSHW"
+                      [checked]="models.to_factory_id=='SHC'">
+                      <label class="custom-control-label" for="toSHW"></label>
+                      <span class="ul-li-text"> SHW</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input  disabled type="checkbox" name="toSHD" class="custom-control-input" id="toSHD"
+                      [checked]="models.to_factory_id=='CB'">
+                      <label class="custom-control-label" for="toSHD"></label>
+                      <span class="ul-li-text"> SHD</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="toSHB" class="custom-control-input" id="toSHB"
+                      [checked]="models.to_factory_id=='SPC'">
+                      <label class="custom-control-label" for="toSHB"></label>
+                      <span class="ul-li-text"> SHB</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="toSHI" class="custom-control-input" id="toSHI"
+                      [checked]="models.to_factory_id=='TSH'">
+                      <label class="custom-control-label" for="toSHI"></label>
+                      <span class="ul-li-text"> SHI</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+      <div class="card-body body1">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="body-content1">
+              <div>
+                <strong>KAIZEN DESCRIPTION: </strong>
+                <span> <u>{{kaizen.kaizen_description}}</u> </span>
+              </div>
+              <div style="display: flex;">
+                <div>
+                  <strong>MODEL NAME: </strong>
+                  <span><u>{{kaizen.model_name}}</u></span>
+                </div>
+                <div style="margin-left: 50px;">
+                  <strong>PROCESS NAME: </strong>
+                </div>
+                  <div class="ml-1">
+                    <span> <u>{{kaizen.operation_name_en}}</u>  <br>
+                      <u>{{kaizen.operation_name_zh}}</u></span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-md-6 center-content">
+                <div class="style-content-1">
+                  <span>CURRENT PROCESS/SETUP</span>
+                </div>
+                <div class="style-content-2 center-content">
+                      <img class="mt-5" *ngIf="!isvideoB4 " [src]="url_before" width="90%" height="90%"  width="120"height="100"/>
+                      <video class="mt-5" *ngIf="isvideoB4 " [src]="url_before" width="100%" height="100%" controls 
+                      width="120"height="100"></video>
+                    <!-- <div class="col-md-2 ">
+                      <i class="fa fa-arrow-right right--icon"></i>
+                    </div>
+                    <div class="col-md-5 mt-5">
+                      <img *ngIf="!isvideoAfter" [src]="url_after" width="90%" height="90%" width="120"height="100" />
+                    <video *ngIf="isvideoAfter " [src]="url_after" width="100%" height="100%" controls
+                      width="120" height="100"></video>
+                    </div> -->
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="style-content-1">
+                  <span>FUTURE PROCESS/SETUP</span>
+                </div>
+                <div class="style-content-2 center-content">
+                    <img class="mt-5" *ngIf="!isvideoAfter" [src]="url_after" width="90%" height="90%" width="120"height="100" />
+                    <video class="mt-5" *ngIf="isvideoAfter " [src]="url_after" width="100%" height="100%" controls
+                      width="120" height="100"></video>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 style-content-3">
+            <div>
+              <span>Benefits Descriptions: </span>
+            </div>
+            <div class="style-content-3-text">
+              <span>Efficlency: </span>
+            </div>
+            <div class="style-content-3-text">
+              <span>CT: <u>{{kaizen.ct_before_sec}}</u> to <u>{{kaizen.ct_after_sec}}</u> sec</span>
+            </div>
+            <div class="style-content-3-text">
+              <span>Quanlity: </span>
+              <span>RFT: <u>{{kaizen.rft_before_percent}}</u> to <u>{{kaizen.rft_after_percent}}</u> %</span>
+            </div>
+            <div class="style-content-3-text">
+              <span>Estimated Savings per month: </span>
+            </div>
+            <div class="style-content-3-text">
+              <span>$</span> <input type="number" [(ngModel)]="models.estimated_savings_per_month" 
+              name ="estimated_savings_per_month"  class="form-control" step="0.01"  min="0" oninput="validity.valid||(value='');">
+            </div>
+            <div class="style-content-3-text">
+              <span>Estimated ROI: </span>
+            </div>
+            <div class="style-content-3-text">
+              <input type="number" [(ngModel)]="models.estimated_roi" name ="estimated_roi"
+              class="form-control" step="0.01"  min="0"  oninput="validity.valid||(value='');"> <span> years</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" style="margin-top: -35px !important; overflow: scroll;">
+        <table class="table table-bordered">
+          <thead style="background-color: #5b9bd5;">
+            <tr>
+              <th></th>
+              <th class="center-content">DEPARTMENT/CENTER HEAD</th>
+              <th class="center-content">ADM HEAD</th>
+              <th class="center-content">SEA HEAD</th>
+              <th class="center-content">ME HEAD</th>
+              <th class="center-content">FACTORY HEAD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Feedbacks/ <br> Comments</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Feasibility/ <br>Benefits</td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-sm btn-danger " (click)="cancel()"><i class="fa fa-ban"></i>
+          Cancel</button>
+        <button type="button" class="btn btn-sm btn-success ml-1" [disabled]="!addAuditTypeForm.valid"
+          (click)="save()"><i class="fa fa-check"></i> Save</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

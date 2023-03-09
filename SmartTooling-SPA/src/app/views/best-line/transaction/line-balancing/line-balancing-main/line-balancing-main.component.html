@@ -1,0 +1,81 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-2">
+              <label class="badge badge-warning">Pilot Line </label><span class="red_star">  *</span>
+              <ng-select2 width="100%" [data]="arrLineId" [(ngModel)]="lineId" name="lineID"
+                (ngModelChange)="lineIDChange($event)" placeholder="Select Line...">
+              </ng-select2>
+            </div>
+            <div class="col-md-2">
+              <label class="badge badge-warning">Line Type</label><span class="red_star">  *</span>
+              <ng-select2 width="100%" [disabled]="!lineId" [data]="arrLineTypeId" [(ngModel)]="lineTypeId"
+                name="lineTypeID" (ngModelChange)="lineTypeIDChange($event)" placeholder="Select Line Type...">
+              </ng-select2>
+            </div>
+            <div class="col-md-2">
+              <label class="badge badge-warning">Model No</label><span class="red_star">  *</span>
+              <ng-select2 width="100%" [disabled]="!lineTypeId" [data]="arrModelNo" [(ngModel)]="modelNo"
+                name="modelNo" (ngModelChange)="modelNoChange($event)" placeholder="Select Model No...">
+              </ng-select2>
+            </div>
+            <div class="col-md-2">
+              <label class="badge badge-warning">Model Name</label><span class="red_star"> </span>
+              <input placeholder="Model Name..." [(ngModel)]="modelName" type="text" name="modelName" class="form-control" disabled />
+            </div>
+            <div class="col-md-2">
+              <label class="badge badge-warning">Process Type</label><span class="red_star">  *</span>
+              <ng-select2 width="100%" [disabled]="!modelNo" [data]="arrProcess" [(ngModel)]="processType"
+                name="processType" (ngModelChange)="processTypeChange($event)" placeholder="Select Process Type...">
+              </ng-select2>
+            </div>
+            <div class="col-md-2">
+              <label class="d-block">&nbsp;</label>
+              <button type="button" class="btn btn-success button-width ml-0" [disabled]="!processType"
+                (click)="getExportExcel()">
+                <i class="fa fa-file-excel-o"></i>
+                Excel
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="add-new row ml-4">
+            <button type="button" class="btn btn-primary float-left mb-2" (click)="inputData()"
+              [disabled]="!processType">
+              <i class="fa fa-plus"></i> Input Data
+            </button>
+          </div>
+          <div [hidden]="!processType">
+            <div class="row ml-4" >
+              <label class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i>Before</label>
+            </div>
+            <div class="row ml-4">
+              <div class="chart-wrapper">
+                <canvas baseChart class="chart" [datasets]="beforeChartData" [labels]="beforeLabels"
+                  [chartType]="beforeChartType" [options]="chartOptions" [plugins]="beforeChartPlugins">
+                </canvas>
+              </div>
+            </div>
+            <div class="row ml-4 mt-3">
+              <label class="btn btn-warning"><i class="fa fa-bar-chart" aria-hidden="true"></i>After</label>
+            </div>
+            <div class="row ml-4">
+              <div class="chart-wrapper">
+                <canvas baseChart class="chart" [datasets]="afterChartData" [labels]="afterLabels"
+                  [chartType]="afterChartType" [options]="chartOptions" [plugins]="afterChartPlugins">
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>

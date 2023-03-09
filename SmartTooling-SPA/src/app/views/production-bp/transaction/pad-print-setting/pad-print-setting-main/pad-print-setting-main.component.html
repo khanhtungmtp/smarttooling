@@ -1,0 +1,104 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form class="card-header" #searchForm="ngForm" autocomplete="off">
+          <div class="row">
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Dev. Season</label>
+              <input type="text" name="dev_season" id="dev_season" class="form-control input-upper"
+                [(ngModel)]="searchParam.dev_season" placeholder="Dev. Season..." />
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Prod. Season</label>
+              <input type="text" name="production_season" id="production_season" class="form-control input-upper"
+                [(ngModel)]="searchParam.production_season" placeholder="Prod. Season..." />
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Model</label>
+              <input type="text" name="model_no" id="model_no" class="form-control input-upper"
+                [(ngModel)]="searchParam.model_no" placeholder="Model..." />
+            </div>
+            <div class="col-md-4">
+              <label class="d-block">&nbsp;</label>
+              <button type="submit" class="btn btn-secondary mr-1" (click)="search()">
+                <i class="fa fa-search"></i> Query
+              </button>
+              <button type="button" class="btn btn-danger" (click)="clear()">
+                <i class="fa fa-ban"></i> Clear
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="card-body">
+          <div class="input-group">
+            <button type="button" (click)="add()" class="btn btn-primary mb-1 mr-5">
+              <i class="fa fa-plus"></i> Add new
+            </button>
+            <form id="form-input-file" class="mr-3">
+              <div class="custom-file b-form-file">
+                <input id="input_uploadFile" accept="{{accept}}" type="file" (change)="onSelectFile($event)">
+                <label class="custom-file-label" for="input_uploadFile" id="labelFile">Choose a
+                  file...</label>
+
+              </div>
+            </form>
+            <button type="button" (click)="uploadExcel()" class="btn btn-success mb-1 mr-2">
+              <i class="fa fa-upload"></i> Upload
+            </button>
+
+            <a [href]="downloadFileSample" class="btn btn-success mb-1">
+              <i class="fa fa-file-excel-o"></i> Sample File
+            </a>
+          </div>
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Dev. Season</th>
+                  <th>Prod. Season</th>
+                  <th>Model No</th>
+                  <th>Model Name</th>
+                  <th>Article No.</th>
+                  <th>Component Name</th>
+                  <th>Material Description</th>
+                  <th>Pad Shape</th>
+                  <th># of Pad Hits</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" *ngFor="let item of dataModel">
+                  <td>
+                    <button class="btn btn-primary btn-sm" (click)="edit(item)">
+                      <i class="fa fa-edit fa-lg"></i>
+                    </button>
+                  </td>
+                  <td>{{item.dev_season}}</td>
+                  <td>{{item.production_season}}</td>
+                  <td>{{item.model_no}}</td>
+                  <td>{{item.model_name}}</td>
+                  <td>{{item.article_no_remarks}}</td>
+                  <td>{{item.component_name}}</td>
+                  <td>{{item.material_description}}</td>
+                  <td>{{item.pad_shape_name}}</td>
+                  <td>{{item.number_of_pad_hits}}</td>
+                </tr>
+                <tr *ngIf="dataModel.length == 0 ">
+                  <td colspan="100%" class="table-warning text-center font-weight-bold">
+                    {{message.NO_DATA}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

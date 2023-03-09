@@ -1,0 +1,12 @@
+.table thead th {
+  vertical-align: middle;
+}
+td {
+  vertical-align: middle;
+  text-align: center;
+}
+table tbody tr td .img {
+width: 100px;
+height: 100px;
+object-fit: fill;
+}

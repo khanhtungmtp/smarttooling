@@ -1,0 +1,17 @@
+.table thead th {
+    vertical-align: middle;
+  }
+td {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+.pass{
+    font-weight: 700;
+}
+.fail{
+    font-weight: 700;
+}
+.btn-search-clear{
+  margin-top: 5px;
+}

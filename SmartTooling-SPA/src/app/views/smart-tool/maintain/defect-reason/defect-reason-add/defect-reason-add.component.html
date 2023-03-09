@@ -1,0 +1,112 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong *ngIf="flag === '0'; else elseBlock">Add new</strong>
+          <!-- *ngIf="!defectreason.defect_reason_id -->
+          <ng-template #elseBlock><strong>Update</strong></ng-template>
+          Defect Reason
+          <button
+            type="button"
+            class="btn btn-sm btn-primary float-right"
+            (click)="backList()"
+          >
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <form
+          class="form-horizontal"
+          #addDefectReasonForm="ngForm"
+          (ngSubmit)="addDefectReasonForm.valid && saveAndNext()"
+        >
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="hf-password"
+                >Defect Reason ID <span class="red_star">  *</span></label
+              >
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  [disabled]="flag == '1'"
+                  [(ngModel)]="defectreason.defect_reason_id"
+                  name="defect_reason_id"
+                  class="form-control"
+                  placeholder="Enter defect reason id..."
+                  required
+                />
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="hf-password"
+                >Defect Reason Name<span class="red_star">  *</span></label
+              >
+              <div class="col-md-3">
+                <input
+                  type="text"
+                  [(ngModel)]="defectreason.defect_reason_name"
+                  name="defect_reason_name"
+                  class="form-control"
+                  placeholder="Enter defect reason name..."
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="hf-password"
+                >Sequence</label
+              >
+              <div class="col-md-3">
+                <input
+                  type="number"
+                  [(ngModel)]="defectreason.sequence"
+                  name="sequence"
+                  class="form-control"
+                  min="0" oninput="validity.valid||(value='');"
+                />
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label">Active</label>
+              <div class="col-md-3">
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="defectreason.is_active"
+                    name="is_active"
+                    id="is_active"
+                    class="custom-control-input"
+                  />
+                  <label class="custom-control-label" for="is_active"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              (click)="clear()"
+            >
+              <i class="fa fa-ban"></i> Cancel
+            </button>
+            <button
+              type="submit"
+              *ngIf="flag === '0'"
+              class="btn btn-sm btn-primary"
+              [disabled]="!addDefectReasonForm.valid"
+            >
+              <i class="fa fa-check"></i> Save & Next
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-success"
+              [disabled]="!addDefectReasonForm.valid"
+              (click)="save()"
+            >
+              <i class="fa fa-check"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

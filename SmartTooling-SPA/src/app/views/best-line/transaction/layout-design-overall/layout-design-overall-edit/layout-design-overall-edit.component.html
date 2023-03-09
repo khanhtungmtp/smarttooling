@@ -1,0 +1,261 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Edit </strong>
+          <button type="button" class="btn btn-primary float-right btn-sm"
+            [routerLink]="['/best-line/transaction/layout-design-overall/main']"
+            routerLinkActive="router-link-active">
+            <i class="fa fa-chevron-left"></i>
+            Back
+          </button>
+        </div>
+
+        <form class="form-horizontal" [formGroup]="editForm" autocomplete="off">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Pilot Line <font color="red">*
+                  </font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="line_id" name="line_id" [data]="lineNoList"
+                  width="100%" formControlName="line_id">
+                </ng-select2>
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Line Type <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="line_type_id" name="line_type_id"
+                  [data]="lineTypeList" formControlName="line_type_id"
+                  width="100%">
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Model No<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="model_no" name="model_no" [data]="modelNoList"
+                  width="100%" formControlName="model_no">
+                </ng-select2>
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Model Name<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="text" name="model_name" class="form-control"
+                  autocomplete="off" formControlName="model_name" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">No of Process Before
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="no_of_process_before"
+                  id="no_of_process_before" class="form-control"
+                  formControlName="no_of_process_before" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">No of Process After
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="no_of_process_after"
+                  id="no_of_process_after" class="form-control"
+                  autocomplete="off" formControlName="no_of_process_after" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">TCT Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tct_before" id="tct_before"
+                  class="form-control" autocomplete="off"
+                  formControlName="tct_before" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">TCT After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tct_after" id="tct_after"
+                  class="form-control" autocomplete="off"
+                  formControlName="tct_after" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">CPS MP Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="cps_mp_before" id="cps_mp_before"
+                  class="form-control" autocomplete="off"
+                  formControlName="cps_mp_before" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">CPS MP After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="cps_mp_after" id="cps_mp_after"
+                  class="form-control" autocomplete="off"
+                  formControlName="cps_mp_after" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Assembly MP Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="assembly_mp_before"
+                  id="assembly_mp_before" class="form-control"
+                  autocomplete="off" formControlName="assembly_mp_before" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Assembly MP After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="assembly_mp_after"
+                  id="assembly_mp_after" class="form-control" autocomplete="off"
+                  formControlName="assembly_mp_after" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">EOLR Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="eolr_before" id="eolr_before"
+                  class="form-control" autocomplete="off"
+                  formControlName="eolr_before" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">EOLR After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="eolr_after" id="eolr_after"
+                  class="form-control" autocomplete="off"
+                  formControlName="eolr_after" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">LLER Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="ller_before_percent"
+                  id="ller_before_percent" class="form-control"
+                  autocomplete="off" formControlName="ller_before_percent" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">LLER After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="ller_after_percent"
+                  id="ller_after_percent" class="form-control"
+                  autocomplete="off" formControlName="ller_after_percent" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative PPH Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_pph_before"
+                  id="tentative_pph_before" class="form-control"
+                  autocomplete="off" formControlName="tentative_pph_before" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative PPH After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_pph_after"
+                  id="tentative_pph_after" class="form-control"
+                  autocomplete="off" formControlName="tentative_pph_after" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative Efficiency Before
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_efficiency_before_percent"
+                  id="tentative_efficiency_before_percent" class="form-control"
+                  autocomplete="off"
+                  formControlName="tentative_efficiency_before_percent" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative Efficiency After
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_efficiency_after_percent"
+                  id="tentative_efficiency_after_percent" class="form-control"
+                  autocomplete="off"
+                  formControlName="tentative_efficiency_after_percent" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">C2B Overall image
+                  <strong>(jpg,jpeg,png < 5MB)</strong>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <media-upload #image [acceptKey]="'image'"
+                  [isImageOrVideo]="true"
+                  [url]="editForm.value.c2b_overall_image"></media-upload>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="form-group row">
+              <div class="col">
+                <button type="button" class="btn btn-sm btn-success mr-1"
+                  (click)="save()" [disabled]="!editForm">
+                  <i class="fa fa-check"></i>
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

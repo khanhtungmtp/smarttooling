@@ -1,0 +1,111 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form class="form-horizontal" #layoutDesignOverall="ngForm"
+          autocomplete="off">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-3">
+                <label class="badge badge-warning">Pilot Line</label>
+                <ng-select2 name="lineNoList" [data]="lineNoList" width="100%"
+                  [options]="optionsSelectLineNo"
+                  [(ngModel)]="paramSearch.line_no">
+                </ng-select2>
+              </div>
+              <div class="col-md-3">
+                <label class="badge badge-warning">Line Type</label>
+                <ng-select2 name="lineTypeList" [data]="lineTypeList"
+                  [options]="optionsSelectLineType"
+                  [(ngModel)]="paramSearch.line_type" width="100%">
+                </ng-select2>
+              </div>
+              <div class="col-md-3">
+                <label class="badge badge-warning">Model</label>
+                <input type="text" name="model"
+                  class="form-control text-uppercase"
+                  [(ngModel)]="paramSearch.model" autocomplete="off"
+                  placeholder="Enter Model..." />
+              </div>
+              <div class="col-md-3">
+                <label class="badge badge-warning">Prod. Season</label>
+                <ng-select2 name="ProdSeason" [data]="prodSeasonList"
+                  width="100%" [options]="optionsSelectProdSeason"
+                  [(ngModel)]="paramSearch.prodSeason">
+                </ng-select2>
+              </div>
+              <div class="col-md-3">
+                <label class="d-block">&nbsp;</label>
+                <button type="submit" class="btn btn-secondary"
+                  (click)="search()">
+                  <i class="fa fa-search"></i> Query
+                </button>
+                <button type="button" class="btn btn-danger ml-1"
+                  (click)="clear()">
+                  <i class="fa fa-ban"></i> Clear
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-body">
+          <div class="form-group row">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" (click)="add()">
+                <i class="fa fa-plus"></i> Add new
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Pilot Line</th>
+                  <th>Line Type</th>
+                  <th>Model No</th>
+                  <th>Model Name</th>
+                  <th>Prod. Season</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of data; let i = index">
+                  <tr>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-sm"
+                        (click)="update(item)">
+                        <i class="fa fa-edit fa-lg"></i>
+                      </button>
+                    </td>
+                    <td>{{ item.line_name }}</td>
+                    <td>{{ item.line_type_name }}</td>
+                    <td>{{ item.model_no }}</td>
+                    <td>{{ item.model_name }}</td>
+                    <td>{{ item.prod_season }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <tbody>
+                <tr *ngIf="data.length === 0">
+                  <td colspan="100%"
+                    class="table-warning text-center font-weight-bold">
+                    {{message.NO_DATA}} </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex mt-3" *ngIf="pagination.totalPages > 1">
+              <pagination [boundaryLinks]="true"
+                [totalItems]="pagination.totalItems"
+                [(ngModel)]="pagination.currentPage"
+                [itemsPerPage]="pagination.itemsPerPage"
+                (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+                nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                [maxSize]="5">
+              </pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

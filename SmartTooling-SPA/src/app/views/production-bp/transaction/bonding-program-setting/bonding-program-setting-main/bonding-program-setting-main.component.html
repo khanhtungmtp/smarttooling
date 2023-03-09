@@ -1,0 +1,154 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form class="form-horizontal" #layoutDesignOverall="ngForm" autocomplete="off">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-2">
+                <label class="badge badge-warning">Prod. Season</label>
+                <input type="text" name="production_season" maxlength="4" class="form-control"
+                  oninput="this.value = this.value.toUpperCase()" [(ngModel)]="paramSearch.production_season"
+                  autocomplete="off" placeholder="Enter Prod. Season..." />
+              </div>
+              <div class="col-md-2">
+                <label class="badge badge-warning">Model</label>
+                <input type="text" name="model" class="form-control" oninput="this.value = this.value.toUpperCase()"
+                  [(ngModel)]="paramSearch.model" autocomplete="off" placeholder="Enter Model..." />
+              </div>
+              <div class="col-md-2">
+                <label class="badge badge-warning">Auto Tech. Type</label>
+                <ng-select2 name="autoTechList" [data]="autoTechList" width="100%" [options]="optionsSelectAutoTech"
+                  [(ngModel)]="paramSearch.auto_tech_id">
+                </ng-select2>
+              </div>
+              <div class="col-md-3">
+                <label class="badge badge-warning">Chemical Process Type</label>
+                <ng-select2 name="chemicalProcessTypeList" [data]="chemicalProcessTypeList"
+                  [options]="optionsSelectChemicalProcessType" [(ngModel)]="paramSearch.chemical_process_type_id"
+                  width="100%">
+                </ng-select2>
+              </div>
+              <div class="col-md-3">
+                <label class="d-block">&nbsp;</label>
+                <div class="pull-right">
+                  <button type="submit" class="btn btn-secondary" (click)="search()">
+                    <i class="fa fa-search"></i> Query
+                  </button>
+                  <button type="button" class="btn btn-danger ml-1" (click)="clear()">
+                    <i class="fa fa-ban"></i> Clear
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-body">
+          <!-- <div class="form-group row">
+            <div class="col-md-1">
+              <button type="button" class="btn btn-primary" (click)="add()">
+                <i class="fa fa-plus"></i> Add new
+              </button>
+            </div>
+            <div class="col-md-10">
+              <div class="row">
+                <div class="col-4">
+                  <div class="custom-file b-form-file">
+                    <label data-browse="Browse" class="custom-file-label">
+                      <p *ngIf="fileImportExcel === null">Choose a file...</p>
+                      <input id="input_uploadFile" accept="{{accept}}" type="file" (change)="onSelectFile($event)"
+                        style="line-height: 1 !important; outline: none;  "
+                        [ngClass]="(fileImportExcel !== null) ? 'opacity1' : 'opacity0'">
+                    </label>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <button class="btn btn-success btn-block" (click)="uploadExcel()">
+                    <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                  </button>
+                </div>
+                <div class="custom-col-2">
+                  <button class="btn btn-success btn-block" (click)="exportExcel()">
+                    <i class="fa fa-file-excel-o" aria-hidden="true"></i> Sample File
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="input-group">
+            <button type="button" (click)="add()" class="btn btn-primary mb-1 mr-5">
+              <i class="fa fa-plus"></i> Add new
+            </button>
+
+            <form id="form-input-file" class="mr-2">
+              <div class="custom-file">
+                <input type="file" (change)="onSelectFile($event)" class="custom-file-input" id="input_uploadFile"
+                  name="input-file" accept="{{accept}}">
+                <label class="custom-file-label" for="input_uploadFile" id="labelFile">Choose file...</label>
+              </div>
+            </form>
+
+            <button type="button" (click)="uploadExcel()" class="btn btn-success mb-1 mr-2">
+              <i class="fa fa-upload"></i> Upload
+            </button>
+
+            <a [href]="downloadFileSample" class="btn btn-success mb-1">
+              <i class="fa fa-file-excel-o"></i> Sample File
+            </a>
+          </div>
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Prod. Season</th>
+                  <th>Model No</th>
+                  <th>Model Name</th>
+                  <th>Chemical Process Type</th>
+                  <th>Auto Tech.</th>
+                  <th>Chemical Used</th>
+                  <th>1 <sup>st</sup> Month of Production</th>
+                  <th>Process Scope</th>
+                  <th>Adoption Component</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of data; let i = index">
+                  <tr>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-sm" (click)="update(item)">
+                        <i class="fa fa-edit fa-lg"></i>
+                      </button>
+                    </td>
+                    <td>{{ item.production_season }}</td>
+                    <td>{{ item.model_no }}</td>
+                    <td>{{ item.model_name }}</td>
+                    <td>{{ item.chemical_process_type_name }}</td>
+                    <td>{{ item.auto_tech_name }}</td>
+                    <td>{{ item.chemical_name }}</td>
+                    <td>{{ item.first_month_of_production_adoption | date:'y/M' }}</td>
+                    <td>{{ item.process_adoption_scope_name }}</td>
+                    <td>{{ item.adoption_component_name }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <tbody>
+                <tr *ngIf="data.length === 0">
+                  <td colspan="100%" class="table-warning text-center font-weight-bold"> {{message.NO_DATA}} </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex mt-3" *ngIf="pagination.totalPages > 1">
+              <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+                [(ngModel)]="pagination.currentPage" [itemsPerPage]="pagination.itemsPerPage"
+                (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                lastText="&raquo;" [maxSize]="5">
+              </pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

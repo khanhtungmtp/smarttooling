@@ -1,0 +1,125 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Add new</strong>
+           model
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()" ><i class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" [formGroup]="addModelForm">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="model_no">Model No<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" formControlName="model_no" id="model_no" name="model_no" class="form-control input-upper" placeholder="Enter Model No..">
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="upper_id">Upper ID<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" formControlName="upper_id" id="upper_id"  name="upper_id" class="form-control" placeholder="Enter Upper ID.." maxlength="6">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="model_name">Model Name<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" formControlName="model_name" id="model_name" name="model_name" class="form-control input-upper" placeholder="Enter Model Name.." >
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="model_family">Model Family</label>
+              <div class="col-md-3">
+                <input type="text" formControlName="model_family" id="model_family" name="model_family" class="form-control input-upper" placeholder="Enter Model Family..">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="model_type_id">Model Type <span class="red_star">  *</span></label>
+              <div class="col-md-3" >
+                <ng-select2 [data]="modelTypeList" formControlName="model_type_id" width="100%" id="model_type_id" name="model_type_id">
+                </ng-select2 >
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="is_active">Active</label>
+              <div class="col-md-3">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox"
+                  name="is_active" id="is_active"
+                  class="custom-control-input"
+                  formControlName="is_active" >
+                  <label class="custom-control-label" for="is_active"></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="volume">Volume</label>
+              <div class="col-md-3">
+                <input type="number" #volume formControlName="volume" id="volume"
+                name="volume" min="0" class="form-control" placeholder="Enter Volume.."
+                min="0" oninput="validity.valid||(value='');" >
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="volume_percent">Volume (%)</label>
+              <div class="col-md-3">
+                <input type="number" formControlName="volume_percent" id="volume_percent"
+                name="volume_percent" class="form-control" placeholder="Enter Volume Percent.."
+                min="0" step="0.01" oninput="validity.valid||(value='');"
+                max="100">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="dev_season">Dev Season<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" formControlName="dev_season" id="dev_season" name="dev_season" class="form-control input-upper" placeholder="Ex: SS20, FW20 ...">
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="prod_season">Prod Season<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <input type="text" formControlName="prod_season" id="prod_season" name="prod_season" class="form-control input-upper" placeholder="Ex: SS20, FW20 ...">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="top_modal">Top Model<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 formControlName="top_model" width="100%" id="top_model" name="top_model"  placeholder="please select ...">
+                  <option [value]="false">NO</option>
+                  <option [value]="true">YES</option>
+                </ng-select2 >
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="piot_line">Pilot Line<span class="red_star">  *</span></label>
+              <div class="col-md-3">
+                <ng-select2 formControlName="pilot_line" width="100%" id="pilot_line" name="pilot_line" placeholder="please select ...">
+                  <option [value]="false">NO</option>
+                  <option [value]="true">YES</option>
+                </ng-select2 >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="remarks">Remarks</label>
+              <div class="col-md-3">
+                <textarea formControlName="remarks" id="remarks" name="remarks" class="form-control" rows="5" placeholder="Enter Remarks.."></textarea>
+              </div>
+              <div class="col-md-1"></div>
+              <label class="col-md-2 col-form-label" for="model_picture">Model Picture</label>
+              <div class="col-md-2">
+                <label class="btn btn-primary upload">
+                  Upload
+                  <input type="file" class="uploadFile img" value="Upload Photo"
+                    style="width: 0px; height: 0px; overflow: hidden;" (change)="onSelectFile($event)" #fileImageB4 />
+                </label>
+                <img [src]="addModelForm.value.model_picture === '' ? defaultImage   : addModelForm.value.model_picture " width="100%" width="60" />
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+        <button type="button" class="btn btn-sm btn-danger" (click)="cancel()"><i class="fa fa-ban" ></i> Cancel</button>
+        <button type="button"  class="btn btn-sm btn-primary" [disabled]="!addModelForm.valid" (click)="saveAndNext()"><i class="fa fa-check"></i> Save & Next</button>
+        <button type="button" class="btn btn-sm btn-success" [disabled]="!addModelForm.valid" (click)="save()"><i class="fa fa-check"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

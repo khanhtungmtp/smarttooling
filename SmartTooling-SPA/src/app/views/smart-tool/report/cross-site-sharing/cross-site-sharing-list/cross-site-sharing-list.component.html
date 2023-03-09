@@ -1,0 +1,97 @@
+<div class="animated fadeIn">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header">
+                  <strong>CROSS SITE SHARING</strong>
+              </div>
+              <div class="card-body">
+                  <form #form="ngForm" class="form-group row">
+                    <label class="col-md-1 col-form-label" for="model"><strong
+                      class="float-right">Model</strong></label>
+                    <div class="col-md-2">
+                        <input type="text" [(ngModel)]="model_no" name="model" placeholder="Enter model"
+                            class="form-control input-upper">
+                    </div>
+                      <label class="col-md-1 col-form-label" for="model"><strong
+                              class="float-right">To Factory</strong></label>
+                      <div class="col-md-2">
+                          <select [(ngModel)]="factory" class="form-control" name="factory">
+                              <option [value]="factory.factory_id" *ngFor="let factory of factories">
+                                  {{factory.factory_name}}</option>
+                          </select>
+                      </div>
+                      <div class="col-md-3">
+                          <button type="button" (click)="search()" class="btn btn-primary">
+                              <i class="fa fa-search"></i>
+                              Search
+                          </button>
+                          <button type="button" (click)="clear()" class="btn btn-danger ml-1">
+                            <i class="fa fa-ban"></i>
+                            Clear
+                        </button>
+                          <button type="button" (click)="exportPDF()" class="btn btn-success ml-1">
+                              <i class="fa fa-file-excel-o"></i>
+                              PDF
+                          </button>
+                      </div>
+                  </form>
+              </div>
+              <div class="card-body">
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th></th>
+                              <th></th>
+                              <th>Doc No</th>
+                              <th>Model No</th>
+                              <th>Model Name</th>
+                              <th>No.</th>
+                              <th>Kaizen Description</th>
+                              <th>To Factory</th>
+                          </tr>
+                      </thead>
+                      <tbody *ngIf="models.length === 0">
+                          <tr>
+                              <td colspan="10">
+                                  <alert class="text-center" type='danger'>
+                                      <strong>No Data matching!</strong>
+                                  </alert>
+                              </td>
+                          </tr>
+                      </tbody>
+                      <tbody>
+                          <tr *ngFor="let model of models">
+                            <td>
+                                <div class="custom-control custom-checkbox">
+                                  <input [disabled]="model.doc_no==null" type="checkbox" class="custom-control-input" 
+                                  [id]="model.model_no + model.to_factory_id + model.serial_no" 
+                                  [checked]="model.isChoise" (change) ="changeChoise(model)">
+                                  <label class="custom-control-label" [for]="model.model_no + model.to_factory_id + model.serial_no"></label>
+                                </div>
+                              </td>
+                              <td><button (click)="edit(model)"
+                                      class="btn btn-primary">
+                                      <i class="fa fa-eye fa-lg"></i></button></td>
+                              <td>{{model.doc_no}}</td>
+                              <td>{{model.model_no}}</td>
+                              <td>{{model.model_name}}</td>
+                              <td>{{model.serial_no}}</td>
+                              <td>{{model.kaizen_description}}</td>
+                              <td>{{model.to_factory_id}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <div class="d-flex">
+                      <pagination *ngIf="models.length > 0" [boundaryLinks]="true"
+                          [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                          [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)"
+                          previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                          [maxSize]=5>
+                      </pagination>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+export interface PBPBondingProgramSetting {
+    factory_id: string;
+    model_no: string;
+    chemical_process_type_id: string;
+    auto_tech_id: string;
+    chemical_name: string;
+    adoption_component_id: string;
+    chemical_supplier_id: string;
+    chemical_supplier_name: string;
+    process_adoption_scope_id: string;
+    first_month_of_production_adoption: string;
+    main_upper_material_type_id: string;
+    main_bottom_material_type_id: string;
+    article_no_is_general: boolean;
+    article_no_is_general_result: string;
+    article_no_remarks: string;
+    production_season: string;
+    dev_season: string;
+    shoes_photo_url: string;
+    shoes_photo_url_result: string;
+    create_by: string;
+    create_time: string;
+    update_by: string;
+    update_time: string;
+    model_name: string;
+    chemical_process_type_name: string;
+    auto_tech_name: string;
+    process_adoption_scope_name: string;
+    adoption_component_name: string;
+    main_upper_material_type_name: string;
+    main_bottom_material_type_name: string;
+}

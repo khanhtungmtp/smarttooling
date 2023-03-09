@@ -1,0 +1,269 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Detail</strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i
+              class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-md-5">
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="model">Model No<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="model_no" [(ngModel)]="dataComputerstitchingsetting.model_no"
+                        name="model_no" class="form-control" required disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="Stage">Stage<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="Stage" [(ngModel)]="dataComputerstitchingsetting.stage_name" name="Stage"
+                        class="form-control" required disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="cs_type">CS Type<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="cs_type" [(ngModel)]="dataComputerstitchingsetting.cs_type_name"
+                        name="cs_type" class="form-control" required disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="dev">Dev. Season<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="dev_season" [(ngModel)]="dataComputerstitchingsetting.dev_season"
+                        name="dev_season" class="form-control" required disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="sop_setup">SOP Setup<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="sop_setup" [value]="dataComputerstitchingsetting.sop_setup ? 'YES' : 'NO'"
+                        name="sop_setup" class="form-control" required disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="critical_process">Critical Process<span class="red_star">
+                      *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <div class="form-control disable" name="desc">{{dataComputerstitchingsetting.is_critical_process
+                        == true? 'YES': 'NO'}}</div>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label aaa" for="material">Main Upper Material Type<span
+                      class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="material"
+                        [(ngModel)]="dataComputerstitchingsetting.main_upper_material_type_name" name="material"
+                        class="form-control" required disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label aaa" for="cs_machine">CS Machine Model<span class="red_star">
+                      *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="cs_machine" [(ngModel)]="dataComputerstitchingsetting.cs_machine_model"
+                        name="cs_machine" class="form-control" required disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label aaa" for="cs_speed">CS Speed Setting (rpm)<span
+                      class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <div class="form-control disable" name="cs_opera">
+                        {{dataComputerstitchingsetting.cs_speed_setting_rpm | number :'1.0-2'}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label aaa" for="group"># of Size Group<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <div class="form-control disable" name="cs_opera">
+                        {{dataComputerstitchingsetting.number_of_size_group | number :'1.0-2'}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label aaa" for="jig_design">Jig Design<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="jig_design" [(ngModel)]="dataComputerstitchingsetting.jig_design_name"
+                        name="jig_design" class="form-control" required disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="model_name">Model Name<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="model_name" [(ngModel)]="dataComputerstitchingsetting.model_name"
+                        name="model_name" class="form-control" required disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="cs_opera">CS Operation<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <div class="form-control disable" name="cs_opera">{{ searchParam.changeLang =='0'?
+                        dataComputerstitchingsetting.operation_name_en : searchParam.changeLang == '1'?
+                        dataComputerstitchingsetting.operation_name_local
+                        :dataComputerstitchingsetting.operation_name_zh}}</div>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="machine_type">CS Machine Type<span class="red_star">
+                      *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="machine_type"
+                        [(ngModel)]="dataComputerstitchingsetting.cs_machine_type_name" name="machine_type"
+                        class="form-control" required disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text disable"> <i class="fa fa-caret-down"></i> </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="prod">Prod. Season<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="prod_season" [(ngModel)]="dataComputerstitchingsetting.production_season"
+                        name="prod_season" class="form-control" required disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="production_adoption">Production Adoption<span
+                      class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="text" id="production_adoption"
+                        [value]="dataComputerstitchingsetting.production_adoption? 'YES' : 'NO'"
+                        name="production_adoption" class="form-control" required disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="article">Article No<span class="red_star"> *</span>
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <input type="checkbox" class="mt-1" onclick="return false"
+                        [checked]="dataComputerstitchingsetting.article_no_is_general" id="article" name="article"
+                        required>
+                      <div class="input-group-append ml-2">
+                        <span> General </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="article_des">
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <textarea id="article_des" rows="4" [(ngModel)]="dataComputerstitchingsetting.article_no_remarks"
+                        name="article_des" class="form-control" required disabled>
+                                            </textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="prod">Jig Photo
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <img class="img"
+                        [src]="dataComputerstitchingsetting.jig_photo_url == null || dataComputerstitchingsetting.jig_photo_url == '' ? noImage : dataComputerstitchingsetting.jig_photo_urlResult + '?v=' + random">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-5 col-form-label" for="prod">CS Video
+                  </label>
+                  <div class="col-xl-7">
+                    <div class="input-group">
+                      <video class="img"
+                        [src]="dataComputerstitchingsetting.cs_video_url == null || dataComputerstitchingsetting.cs_video_url == '' ? noImage : dataComputerstitchingsetting.cs_video_urlResult + '?v=' + random"
+                        controls>
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

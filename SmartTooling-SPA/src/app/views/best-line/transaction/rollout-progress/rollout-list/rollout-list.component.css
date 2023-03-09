@@ -1,0 +1,10 @@
+.table thead th {
+    vertical-align: middle;
+  }
+td {
+    vertical-align: middle;
+    text-align: center;
+  }
+.btn-search-clear{
+  margin-top: 5px;
+}

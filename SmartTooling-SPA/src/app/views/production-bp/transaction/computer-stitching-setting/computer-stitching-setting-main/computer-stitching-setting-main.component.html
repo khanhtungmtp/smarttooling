@@ -1,0 +1,134 @@
+<div class="card">
+  <div class="card-header">
+    <form class="form-horizontal" autocomplete="off" #searchForm="ngForm" (submit)="searchQuery()">
+      <div class="row">
+        <!-- Dev. Season -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="devSeason">Dev. Season</label>
+          <input type="text" name="devSeason" [(ngModel)]="search.devSeason" class="form-control text-uppercase"
+            placeholder="Dev. Season..." maxlength="4" />
+        </div>
+        <!-- Prod. Season -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="productionSeason">Prod. Season</label>
+          <input type="text" name="productionSeason" [(ngModel)]="search.productionSeason"
+            class="form-control text-uppercase" placeholder="Prod. Season..." maxlength="4" />
+        </div>
+        <!-- Model -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="model">Model</label>
+          <input type="text" name="model" [(ngModel)]="search.model" class="form-control text-uppercase"
+            placeholder="Model..." />
+        </div>
+        <!-- Production Adoption -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="stage">Production Adoption</label>
+          <select [(ngModel)]="search.productionAdoption" class="form-control" name="productionAdoption">
+            <option value="">All</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <!-- Language -->
+        <div class="col-md-2 ip">
+          <label class="badge badge-warning" for="stage">Language</label>
+          <select [(ngModel)]="lang" class="form-control" name="language">
+            <option value="en">English</option>
+            <option value="vi">Local</option>
+            <option value="zh">Chinese</option>
+          </select>
+        </div>
+        <!-- Button -->
+        <div class="col-md-2 ip">
+          <button type="submit" class="btn btn-secondary mr-2" style="margin-top: 28px;">
+            <i class="fa fa-search"></i> Query
+          </button>
+          <button type="button" (click)="clear()" class="btn btn-danger mr-4" style="margin-top: 28px;">
+            <i class="fa fa-ban"></i> Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="card-body">
+    <div class="input-group">
+      <button type="button" (click)="btnAdd()" class="btn btn-primary mb-1 mr-5">
+        <i class="fa fa-plus"></i> Add new
+      </button>
+
+      <form id="form-input-file" class="mr-2">
+        <div class="custom-file">
+          <input type="file" (change)="chooseFile($event)" class="custom-file-input" id="inputFile" name="input-file"
+            accept="{{accept}}">
+          <label class="custom-file-label" for="inputFile" id="labelFile">Choose file...</label>
+        </div>
+      </form>
+
+      <button type="button" (click)="uploadExcel()" class="btn btn-success mb-1 mr-2">
+        <i class="fa fa-upload"></i> Upload
+      </button>
+
+      <a [href]="downloadFileSample" class="btn btn-success mb-1">
+        <i class="fa fa-file-excel-o"></i> Sample File
+      </a>
+    </div>
+
+    <div class="table-responsive mt-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Dev. Season</th>
+            <th>Prod. Season</th>
+            <th>Model No</th>
+            <th>Model Name</th>
+            <th>Stage</th>
+            <th>CS Operation</th>
+            <th>Critical Operation</th>
+            <th>CS Type</th>
+            <th>CS Machine Type</th>
+            <th>Speed Setting (rpm)</th>
+            <th>Jig Photo</th>
+            <th>CS Video</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of computers">
+            <td>
+              <button type="button" class="btn btn-primary" (click)="btnEdit(item)">
+                <i class="fa fa-edit fa-lg"></i>
+              </button>
+            </td>
+            <td>{{item.dev_season}}</td>
+            <td>{{item.production_season}}</td>
+            <td>{{item.model_no}}</td>
+            <td>{{item.model_name}}</td>
+            <td>{{item.stage_name}}</td>
+            <td>{{lang == 'en' ? item.operation_name_en : lang == 'vi' ? item.operation_name_local :
+              item.operation_name_zh}}</td>
+            <td>{{item.is_critical_process}}</td>
+            <td>{{item.cs_type_name}}</td>
+            <td>{{item.cs_machine_type_name}}</td>
+            <td>{{item.cs_speed_setting_rpm}}</td>
+            <td>
+              <img class="img"
+                [src]="item.jig_photo_url == null || item.jig_photo_url == '' ? noImage : imageUrl + item.jig_photo_url + '?v=' + random">
+            </td>
+            <td>
+              <video class="img"
+                [src]="item.cs_video_url == null || item.cs_video_url == '' ? noImage : imageUrl + item.cs_video_url + '?v=' + random"
+                controls>
+              </video>
+            </td>
+          </tr>
+          <tr *ngIf="computers.length === 0">
+            <td class="table-warning text-center font-weight-bold" colspan="100%">DATA NOT FOUND</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination *ngIf="pagination.totalPages > 1" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+      [(ngModel)]="pagination.currentPage" [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+    </pagination>
+  </div>
+</div>

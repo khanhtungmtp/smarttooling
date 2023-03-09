@@ -1,0 +1,98 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row mt-2">
+            <label class="col-md-1 col-form-label" for="audit_Type_ID"> Model No</label>
+            <div class="col-md-2 pt-1">
+              <ng-select2 [data]="listModelNo" [(ngModel)]="modelNo" (ngModelChange)="changeModelNo($event)"  width="100%" name="active">
+              </ng-select2>
+            </div>
+            <label class="col-md-1 col-form-label" for="audit_Type_ID"> Model Name</label>
+            <div class="col-md-2">
+              <input type="text" [(ngModel)]="modelName" class="form-control" disabled >
+            </div>
+
+            <label class="col-md-1 col-form-label" for="audit_Type_ID"> Upper ID</label>
+            <div class="col-md-2">
+              <input type="text" name="model-search" [(ngModel)]="upperID" id="model" class="form-control model-search" disabled >
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="add-new">
+            <button type="button" class="btn btn-sm btn-primary float-left mb-2" (click)="addNew()" [(disabled)] ="!checkAddnew"><i
+                class="fa fa-plus"></i>
+              Add new</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr class="title-parent">
+                  <th rowspan="2"></th>
+                 
+                  <th class="text-title" rowspan="2">No.</th>
+                  <th rowspan="2">KAIZEN-LIST</th>
+                  <th rowspan="2">STAGE</th>
+                  <th rowspan="2">START DATE</th>
+                  <th rowspan="2" colspan="2"> TCT BEFORE KAIZEN
+                    (C2B | TRMNT | S/F)</th>
+                    <th colspan="3">CT</th>
+                    <th colspan="2">RFT</th>
+                  <th rowspan="2">LINE ROLL OUT %</th>
+                </tr>
+                <tr>
+                  <th class ="title-chilrdren">Before (Sec)</th>
+                  <th class ="title-chilrdren">After (Sec)</th>
+                  <th class ="title-chilrdren">Improv.(%)</th>
+                  <th class ="title-chilrdren">Before (%)</th>
+                  <th class ="title-chilrdren">After (%) </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="dataKaizen.length === 0">
+                <tr>
+                    <td colspan="13">
+                        <alert class="text-center" type='danger'>
+                            <strong>No Data matching!</strong>
+                        </alert>
+                    </td>
+                </tr>
+            </tbody>
+              <tbody>
+                <tr *ngFor="let item of dataKaizen">
+                  <td class="text-center">
+                    <button class="btn btn-primary" (click)="edit(item)">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </td>
+                  <td>{{item.serial_no}}</td>
+                  <td>{{item.kaizen_description}}</td>
+                  <td>{{item.stage_id}}</td>
+                  <td>{{item.start_date | date: "yyyy/MM/dd"}}</td>
+                  <td>{{item.process}}</td>
+                  <td>{{item.process_tct_sec}}</td>
+                  <td>{{item.ct_before_sec}}</td>
+                  <td>{{item.ct_after_sec}}</td>
+                  <td>{{100-(item.ct_before_sec==0?0:item.ct_after_sec/item.ct_before_sec*100)|number : '1.0-0'}}%</td>
+                  <td>{{item.rft_before_percent==null?0:item.rft_before_percent}}%</td>
+                  <td>{{item.rft_after_percent ==null?0:item.rft_after_percent}}%</td>
+                  <td>{{item.line_roll_out_percent}}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex">
+            <pagination *ngIf="dataKaizen.length > 0" [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>

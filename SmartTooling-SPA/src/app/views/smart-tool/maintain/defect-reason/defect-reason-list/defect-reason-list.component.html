@@ -1,0 +1,135 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row mt-2">
+            <label class="col-md-2 col-form-label">Defect Reason</label>
+            <div class="col-md-2">
+              <input
+                type="text"
+                id="defectreasonid"
+                [(ngModel)]="paramSearch.defect_Reason"
+                class="form-control model-search"
+                placeholder="search"
+                required
+              />
+            </div>
+            <label class="col-md-1 col-form-label" for="active"> Active </label>
+            <div class="col-md-2">
+              <select
+                [(ngModel)]="paramSearch.active"
+                value="all"
+                class="form-control"
+                id="active"
+              >
+                <option value="all">All</option>
+                <option value="1">Active</option>
+                <option value="0">InActive</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="search()"
+              >
+                <i class="fa fa-search"></i> Search
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="clearSearch()"
+              >
+                <i class="fa fa-ban"></i>
+                <span>Clear</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="add-new">
+            <button
+              type="button"
+              class="btn btn-sm btn-primary float-left mb-2"
+              (click)="addDefectReason()"
+            >
+              <i class="fa fa-plus"></i> Add new
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Edit</th>
+                  <th>Defect Reason ID</th>
+                  <th>Defect Reason Name</th>
+                  <th>Sequence</th>
+                  <th>Active</th>
+                  <th>Update By</th>
+                  <th>Update Time</th>
+                </tr>
+              </thead>
+              <tbody
+                id="list{{ idx }}"
+                *ngFor="let defectreason of defectreasons; let idx = index"
+              >
+                <tr>
+                  <td>
+                    <!-- edit btn -->
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm ml-4"
+                      (click)="changeToEdit(defectreason)"
+                    >
+                      <i class="fa fa-edit fa-lg"></i>
+                    </button>
+                  </td>
+                  <td>{{ defectreason.defect_reason_id }}</td>
+                  <td>{{ defectreason.defect_reason_name }}</td>
+                  <td>{{ defectreason.sequence }}</td>
+                  <td>
+                    <div class="col-md-3">
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          name="is_active"
+                          id="is_active"
+                          class="custom-control-input"
+                          [(ngModel)]="defectreason.is_active"
+                        />
+                        <label class="custom-control-label"></label>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ defectreason.update_by }}</td>
+                  <td>
+                    {{ defectreason.update_time | date: "yyyy/MM/dd HH:mm" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages >= 1">
+            <pagination
+              [boundaryLinks]="true"
+              [totalItems]="pagination.totalItems"
+              [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage"
+              (pageChanged)="pageChanged($event)"
+              previousText="&lsaquo;"
+              nextText="&rsaquo;"
+              firstText="&laquo;"
+              lastText="&raquo;"
+              [maxSize]="5"
+            >
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>

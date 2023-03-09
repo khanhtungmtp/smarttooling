@@ -1,0 +1,41 @@
+.form-group {
+  margin-right: 0;
+  margin-bottom: 0;
+  align-items: center;
+}
+
+.form-group.hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.table thead th {
+  vertical-align: middle;
+}
+
+th {
+  color: #fff;
+  text-align: center;
+  padding: 8px !important;
+}
+
+td {
+  vertical-align: middle;
+  text-align: center;
+  padding: 0.5rem;
+}
+.ip {
+  padding-right: 0;
+}
+
+table tbody tr td .img {
+  width: 100px;
+  height: 80px;
+  object-fit: fill;
+}
+
+table tbody tr td .video {
+  width: 250px;
+}

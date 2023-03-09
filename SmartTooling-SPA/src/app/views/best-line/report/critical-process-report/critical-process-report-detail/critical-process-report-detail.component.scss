@@ -1,0 +1,17 @@
+@import "~scss/kaizen-report-model-detail.scss";
+img {
+    width: 400px;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    object-fit: fill;
+}
+
+video {
+    width: 400px;
+    height: 300px;
+    object-fit: fill;
+}
+.button-block {
+    margin-top: 30px;
+}

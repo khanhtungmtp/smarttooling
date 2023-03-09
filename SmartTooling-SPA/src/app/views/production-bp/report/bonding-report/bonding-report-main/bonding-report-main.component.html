@@ -1,0 +1,114 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <form class="card-header" #searchForm="ngForm" autocomplete="off">
+          <div class="row">
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Factory</label>
+              <ng-select2 width="100%" [data]="factories" 
+                  [(ngModel)]="searchParam.factory" name="factory" id="factory"
+                  (ngModelChange)="changeFactory()" placeholder="Factory...">
+              </ng-select2>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <label class="badge badge-warning">Prod. Season</label>
+              <input type="text"  name="prod_season" id="prod_season" class="form-control input-upper"
+               [(ngModel)]="searchParam.prod_season" placeholder="Prod. Season..." />
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <label class="badge badge-warning">Model</label>
+              <input type="text"  name="model" id="model" class="form-control input-upper"
+               [(ngModel)]="searchParam.model" placeholder="Model..." />
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Chemical Process Type</label>
+              <ng-select2 width="100%" [data]="processTypeList"
+                  [(ngModel)]="searchParam.chemical_process_type_id" name="chemical" id="chemical" 
+                  placeholder="Select Chemical Process Type...">
+              </ng-select2>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <label class="badge badge-warning">Auto Tech.</label>
+              <ng-select2 width="100%" [data]="autoTechList"
+                  [(ngModel)]="searchParam.auto_tech_id" name="auto" id="auto" 
+                  placeholder="Select Auto Tech...">
+              </ng-select2>
+            </div>
+            <div class="col-12 col-12 btn-search-clear mt-2">
+              <div class="float-right">
+                <button type="submit" class="btn btn-secondary mr-1" (click)="search()">
+                  <i class="fa fa-search"></i> Query
+                </button>
+                <button type="button" class="btn btn-danger" (click)="clear()">
+                  <i class="fa fa-ban"></i> Clear
+                </button>
+                <button type="button" (click)="exportExcel()" class="btn btn-primary button-width ml-1">
+                  <i class="fa fa-file-excel-o"></i>
+                  Excel
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Prod. Season</th>
+                  <th>Model No</th>
+                  <th>Model Name</th>
+                  <th>Chemical Process Type</th>
+                  <th>Auto Tech.</th>
+                  <th>Chemical Name</th>
+                  <th>Chemical Supplier</th>
+                  <th>1<sup>st</sup> Month Of Production</th>
+                  <th>Process Scope</th>
+                  <th>Adoption Component</th>
+                  <th>Shoe Photo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dataBondingProgramSetting">
+                  <td>
+                    <button class="btn btn-primary btn-sm"
+                    (click)="detail(item)" >
+                    <i class="fa fa-eye"></i>
+                    </button>
+                  </td>
+                  <td>{{item.production_season}}</td>
+                  <td>{{item.model_no}}</td>
+                  <td>{{item.model_name}}</td>
+                  <td>{{item.chemical_process_type_name}}</td>
+                  <td>{{item.auto_tech_name}}</td>
+                  <td>{{item.chemical_name}}</td>
+                  <td>{{item.chemical_supplier_name}}</td>
+                  <td>{{item.first_month_of_production_adoption | date: 'yyyy/MM'}}</td>
+                  <td>{{item.process_adoption_scope_name}}</td>
+                  <td>{{item.adoption_component_name}}</td>
+                  <td>
+                    <a [href]="item.shoes_photo_url_result + '?v=' + random" target="_blank" rel="noopener noreferrer">
+                      <img class="img" [src]="item.shoes_photo_url_result + '?v=' + random">
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="dataBondingProgramSetting.length == 0 ">
+                  <td colspan="100%" class="table-warning text-center font-weight-bold"> {{message.NO_DATA}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPage > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalCount" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.pageSize" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5></pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

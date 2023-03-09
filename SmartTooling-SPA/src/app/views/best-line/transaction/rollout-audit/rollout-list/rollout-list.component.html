@@ -1,0 +1,111 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <form class="card-header" #searchForm="ngForm" autocomplete="off">
+            <div class="row">
+              <div class="col-md-2 col-sm-6">
+                <label class="badge badge-warning">Rollout Line No</label><span class="red_star">  *</span>
+                <ng-select2 width="100%" [data]="datalistRolloutLineNo"
+                    [value]="dataRolloutLineNo" name="lineno" id="lineNo"
+                    (valueChanged)="changeRolloutLineNo($event)" placeholder="Select Rollout Line No...">
+                </ng-select2>
+              </div>
+              <div class="col-md-2 col-sm-6">
+                <label class="badge badge-warning">Line Type</label><span class="red_star">  *</span>
+                <ng-select2 width="100%" [data]="datalistLineType" [disabled]="flag"
+                    [value]="dataLineType" name="linetype" id="linetype" placeholder="Select Line Type..."
+                    (valueChanged)="changeLineType($event)">
+                </ng-select2>
+              </div>
+              <div class="col-md-2 col-sm-6">
+                <label class="badge badge-warning">Model</label><span class="red_star"></span>
+                <input type="text"  name="modelno" id="modelno" class="form-control input-upper"
+                 [(ngModel)]="model" placeholder="Model..." />
+              </div>
+              <div class="col-md-2 col-sm-6">
+                <label class="badge badge-warning">Language</label><span class="red_star"></span>
+                <select [(ngModel)]="changeLang" name="lang" value="0" class="form-control" id="active">
+                  <option value="0">English</option>
+                  <option value="1">Local</option>
+                  <option value="2">Chinese</option>
+                </select>
+              </div>
+              <div class="col-md-4 btn-search-clear">
+                <label class="d-block">&nbsp;</label>
+                <button type="submit" class="btn btn-secondary mr-1" (click)="search(0)" >
+                  <i class="fa fa-search"></i> Query
+                </button>
+                <button type="button" class="btn btn-danger" (click)="clear()">
+                  <i class="fa fa-ban"></i> Clear
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="card-body">
+            <div class="row mb-2">
+              <div class="col-12">
+                <button class="btn btn-primary btn-sm"
+                  (click)="addNew()" [disabled] ="flagAdd">
+                  <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                </button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered text-center">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Audit Date</th>
+                    <th>Rollout Line</th>
+                    <th>Line Type</th>
+                    <th>Audit Count</th>
+                    <th>Model No</th>
+                    <th>Model Name</th>
+                    <th>Stage</th>
+                    <th>Operation</th>
+                    <th>Audit Result Line</th>
+                    <th>Audit Result Operation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of bL_Rollout_Audit">
+                    <td>
+                      <button class="btn btn-primary btn-sm"
+                      (click)="viewAudit(item)" >
+                      <i class="fa fa-eye"></i>
+                      </button>
+                    </td>
+                    <td>{{item.audit_date | date: 'yyyy/MM/dd'}}</td>
+                    <td>{{item.line_name}}</td>
+                    <td>{{item.line_type_name}}</td>
+                    <td>{{item.audit_count}}</td>
+                    <td>{{item.model_no}}</td>
+                    <td>{{item.model_name}}</td>
+                    <td>{{item.stage_name}}</td>
+                    <td *ngIf="changeLang == '0'">{{item.operation_name_en}}</td>
+                    <td *ngIf="changeLang == '1'">{{item.operation_name_local}}</td>
+                    <td *ngIf="changeLang == '2'">{{item.operation_name_zh}}</td>
+                    <td *ngIf="item.audit_result_line_is_pass" class="text-success pass">{{"PASS"}}</td>
+                    <td *ngIf="item.audit_result_line_is_pass ==false" class="text-danger fail">{{"FAIL"}}</td>
+                    <td *ngIf="item.audit_result_operation_is_pass" class="text-success pass">{{"PASS"}}</td>
+                    <td *ngIf="item.audit_result_operation_is_pass ==false" class="text-danger fail">{{"FAIL"}}</td>
+                  </tr>
+                  <tr *ngIf="bL_Rollout_Audit.length == 0 ">
+                    <td colspan="100%" class="table-warning text-center font-weight-bold"> {{message.NO_DATA}} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex" *ngIf="pagination.totalPage > 1">
+              <pagination [boundaryLinks]="true" [totalItems]="pagination.totalCount" [(ngModel)]="pagination.currentPage"
+                [itemsPerPage]="pagination.pageSize" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+                nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5></pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+  </ngx-spinner>

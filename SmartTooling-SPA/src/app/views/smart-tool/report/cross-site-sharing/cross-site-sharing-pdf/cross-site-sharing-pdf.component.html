@@ -1,0 +1,436 @@
+<div class="animated fadeIn">
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header header-style">
+          <strong class="font-title">SMART TOOLING & KAIZEN APPLICATION</strong>
+          <div class="float-right header-div-right">
+            <span class="header-docno-text">(DOC NO:{{models.doc_no}} )</span>
+          </div>
+        </div>
+      </div>
+      <form class="form-horizontal" #addAuditTypeForm="ngForm" (ngSubmit)="addAuditTypeForm.valid ">
+      <div class="card-body  body1">
+        <div class="table table-bordered">
+          <table class="table table1">
+            <tr style="font-weight: bold;">
+              <td class="center-content tr1-td1">Date</td>
+              <td class="center-content">Proposed By <span class="kitu">*</span></td>
+              <td class="center-content tr1-td3">Team Member <span class="kitu">*</span></td>
+              <td class="center-content tr1-td4">Kaizen Type</td>
+              <td class="center-content tr1-td5">Benefits Category <span class="kitu">*</span></td>
+              <td class="center-content tr1-td6">From</td>
+              <td class="center-content tr1-td7">To</td>
+            </tr>
+            <tr style="background-color: #e0dcd5;">
+              <td class="center-content">
+                <p>{{models.fill_in_date| date: "yyyy/MM/dd"}}</p>
+              </td>
+              <td class="body-style-list" style="text-align: left;">
+                <div style="text-align: left; width: 150px;">
+                  <div>   
+                      <li >Facility: {{models.proposed_by_facility}}</li>
+                      <li >Dept: {{models.proposed_by_dept}} </li>
+                      <li >Name/ID: {{models.proposed_by_name_id}}</li>
+                  </div>
+                </div>
+              </td>
+              <td>
+                {{models.team_member}}
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="kaizen.kaizen_type_smart_tool" type="checkbox" 
+                      name="smartTool" class="custom-control-input" [id]="models.doc_no+'smartTool'">
+                      <input  disabled *ngIf="!kaizen.kaizen_type_smart_tool" type="checkbox" 
+                      name="smartTool" class="custom-control-input" [id]="models.doc_no+'smartTool'">
+                      <label class="custom-control-label" [for]="models.doc_no+'smartTool'"></label>
+                      <span class="ul-li-text"> SMART TOOLING</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="kaizen.kaizen_type_eliminate" type="checkbox" 
+                      name="eliminate" class="custom-control-input"[id]="models.doc_no+'eliminate'">
+                      <input  disabled *ngIf="!kaizen.kaizen_type_eliminate" type="checkbox" 
+                      name="eliminate" class="custom-control-input"[id]="models.doc_no+'eliminate'">
+                      <label class="custom-control-label" [for]="models.doc_no+'eliminate'"></label>
+                      <span class="ul-li-text"> ELIMINATE</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="kaizen.kaizen_type_combine" type="checkbox" 
+                      name="combine" class="custom-control-input"[id]="models.doc_no+'combine'">
+                      <input  disabled *ngIf="!kaizen.kaizen_type_combine" type="checkbox" 
+                      name="combine" class="custom-control-input"[id]="models.doc_no+'combine'">
+                      <label class="custom-control-label" [for]="models.doc_no+ 'combine'"></label>
+                      <span class="ul-li-text"> COMBINE</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled  *ngIf="kaizen.kaizen_type_reduce" type="checkbox" name="reduce" 
+                      class="custom-control-input" [id]="models.doc_no +'reduce'">
+                      <input  disabled  *ngIf="!kaizen.kaizen_type_reduce" type="checkbox" name="reduce" 
+                      class="custom-control-input" [id]="models.doc_no +'reduce'">
+                      <label class="custom-control-label" [for]="models.doc_no +'reduce'"></label>
+                      <span class="ul-li-text"> REDUCE</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox"> 
+                      <input disabled *ngIf="models.benefits_category_hse" type="checkbox" class="custom-control-input"
+                       name="hse"  [id]="models.doc_no +'hse'"
+                      checked >
+                      <input disabled *ngIf="!models.benefits_category_hse" type="checkbox" class="custom-control-input"
+                      name="hse"  [id]="models.doc_no +'hse'"
+                       >
+                      <label class="custom-control-label" [for]="models.doc_no +'hse'"></label>
+                      <span class="ul-li-text"> HSE</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.benefits_category_quality"  type="checkbox" name="quality" class="custom-control-input" 
+                      [id]="models.doc_no +'quality'" >
+                      <input disabled *ngIf="!models.benefits_category_quality" type="checkbox" name="quality" class="custom-control-input"
+                      [id]="models.doc_no +'quality'"
+                       >
+                      <label class="custom-control-label" [for]="models.doc_no +'quality'"></label>
+                      <span class="ul-li-text"> QUALITY</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled *ngIf="models.benefits_category_delivery" type="checkbox"
+                       name="delivery" class="custom-control-input" [id]="models.doc_no +'delivery'"
+                      >
+                      <input disabled *ngIf="!models.benefits_category_delivery" type="checkbox" name="delivery" class="custom-control-input" 
+                      [id]="models.doc_no +'delivery'" >
+                      <label class="custom-control-label" [for]="models.doc_no +'delivery'"></label>
+                      <span class="ul-li-text"> DELIVERY</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.benefits_category_efficiency" type="checkbox" name="efficiency" class="custom-control-input" 
+                      [id]="models.doc_no +'efficiency'">
+                      <input disabled *ngIf="!models.benefits_category_efficiency"  type="checkbox" name="efficiency" class="custom-control-input" 
+                      [id]="models.doc_no +'efficiency'">
+                      <label class="custom-control-label" [for]="models.doc_no +'efficiency'"></label>
+                      <span class="ul-li-text"> EFFICIENCY</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.benefits_category_others" type="checkbox" name="others" class="custom-control-input" 
+                      [id]="models.doc_no +'others'" >
+                      <input  disabled *ngIf="!models.benefits_category_others" type="checkbox" name="others" class="custom-control-input" 
+                      [id]="models.doc_no +'others'" >
+                      <label class="custom-control-label" [for]="models.doc_no +'others'"></label>
+                      <span class="ul-li-text"> OTHERS</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.factory_id=='SHC'" type="checkbox" 
+                      name="fromSHW" class="custom-control-input" [id]="models.doc_no +'fromSHW'">
+                      <input  disabled *ngIf="models.factory_id!='SHC'" type="checkbox" 
+                      name="fromSHW" class="custom-control-input" [id]="models.doc_no +'fromSHW'">
+                      <label class="custom-control-label" [for]="models.doc_no +'fromSHW'"></label>
+                      <span class="ul-li-text"> SHW</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.factory_id=='CB'" type="checkbox" 
+                      name="fromSHD" class="custom-control-input" [id]="models.doc_no +'fromSHD'">
+                      <input  disabled *ngIf="models.factory_id!='CB'" type="checkbox" 
+                      name="fromSHD" class="custom-control-input" [id]="models.doc_no +'fromSHD'">
+                      <label class="custom-control-label" [for]="models.doc_no +'fromSHD'"></label>
+                      <span class="ul-li-text"> SHD</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.factory_id=='SPC'" type="checkbox"
+                       name="fromSHB" class="custom-control-input" [id]="models.doc_no +'fromSHB'">
+                       <input  disabled *ngIf="models.factory_id!='SPC'" type="checkbox"
+                       name="fromSHB" class="custom-control-input" [id]="models.doc_no +'fromSHB'">
+                      <label class="custom-control-label" [for]="models.doc_no +'fromSHB'"></label>
+                      <span class="ul-li-text"> SHB</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.factory_id=='TSH'" type="checkbox"
+                       name="fromSHI" class="custom-control-input" [id]="models.doc_no +'fromSHI'">
+                       <input  disabled *ngIf="models.factory_id!='TSH'" type="checkbox"
+                       name="fromSHI" class="custom-control-input" [id]="models.doc_no +'fromSHI'">
+                      <label class="custom-control-label" [for]="models.doc_no + 'fromSHI'"></label>
+                      <span class="ul-li-text"> SHI</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.to_factory_id=='SHC'" type="checkbox" 
+                      name="fromSHW" class="custom-control-input" [id]="models.doc_no +'toSHW'">
+                      <input  disabled *ngIf="models.to_factory_id!='SHC'" type="checkbox" 
+                      name="fromSHW" class="custom-control-input" [id]="models.doc_no +'toSHW'">
+                      <label class="custom-control-label" [for]="models.doc_no + 'toSHW'"></label>
+                      <span class="ul-li-text"> SHW</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.to_factory_id=='CB'" type="checkbox" 
+                      name="fromSHD" class="custom-control-input" [id]="models.doc_no +'toSHD'">
+                      <input  disabled *ngIf="models.to_factory_id!='CB'" type="checkbox" 
+                      name="fromSHD" class="custom-control-input" [id]="models.doc_no +'toSHD'">
+                      <label class="custom-control-label" [for]="models.doc_no + 'toSHD'"></label>
+                      <span class="ul-li-text"> SHD</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.to_factory_id=='SPC'" type="checkbox" 
+                      name="fromSHB" class="custom-control-input" [id]="models.doc_no +'toSHB'">
+                      <input  disabled *ngIf="models.to_factory_id!='SPC'" type="checkbox" 
+                      name="fromSHB" class="custom-control-input" [id]="models.doc_no +'toSHB'">
+                      <label class="custom-control-label" [for]="models.doc_no + 'toSHB'"></label>
+                      <span class="ul-li-text"> SHB</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input checked disabled *ngIf="models.to_factory_id=='TSH'" type="checkbox" 
+                      name="fromSHI" class="custom-control-input" [id]="models.doc_no +'toSHI'">
+                      <input  disabled *ngIf="models.to_factory_id!='TSH'" type="checkbox" 
+                      name="fromSHI" class="custom-control-input" [id]="models.doc_no +'toSHI'">
+                      <label class="custom-control-label" [for]="models.doc_no + 'toSHI'"></label>
+                      <span class="ul-li-text"> SHI</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+      <div class="card-body body1">
+        <div class="row" style="margin-top: -15px;">
+          <div class="col-md-9">
+            <div class="body-content1">
+              <div>
+                <strong>KAIZEN DESCRIPTION: </strong>
+                <span> <u>{{kaizen.kaizen_description}}</u> </span>
+              </div>
+              <div style="display: flex;">
+                <div>
+                  <strong>MODEL NAME: </strong>
+                  <span><u>{{kaizen.model_name}}</u></span>
+                </div>
+                <div style="margin-left: 50px;">
+                  <strong>PROCESS NAME: </strong>
+                </div>
+                  <div class="ml-1">
+                    <span> <u>{{kaizen.operation_name_en}}</u>  <br>
+                      <u>{{kaizen.operation_name_zh}}</u></span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-md-6 center-content">
+                <div class="style-content-1">
+                  <span>CURRENT PROCESS/SETUP</span>
+                </div>
+            
+                <div class="style-content-2 ">
+                  <img class="mt-1" *ngIf="!isvideoB4 " [src]="url_before" width="90%" height="90%"  width="120"height="100"/>
+                  <div *ngIf="isvideoB4 ">
+                    (No-Image) <br>
+                    {{kaizen.before_remarks}}
+                  </div>
+            </div>
+              </div>
+              <div class="col-md-6">
+                <div class="style-content-1">
+                  <span>FUTURE PROCESS/SETUP</span>
+                </div>
+                <div class="style-content-2 center-content">
+                    <img class="mt-1" *ngIf="!isvideoAfter" [src]="url_after" width="90%" height="90%" width="120"height="100" />
+                    <div *ngIf="isvideoAfter ">
+                      (No-Image) <br>
+                      {{kaizen.after_remarks}}
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 style-content-3">
+            <div>
+              <span>Benefits Descriptions: </span>
+            </div>
+            <div class="style-content-3-text">
+              <span>Efficlency: </span>
+            </div>
+            <div class="style-content-3-text">
+              <span>CT: <u>{{kaizen.ct_before_sec}}</u> to <u>{{kaizen.ct_after_sec}}</u> sec</span>
+            </div>
+            <div class="style-content-3-text">
+              <span>Quanlity: </span>
+              <span>RFT: <u>{{kaizen.rft_before_percent}}</u> to <u>{{kaizen.rft_after_percent}}</u> %</span>
+            </div>
+            <div class="style-content-3-text">
+              <span>Estimated Savings per month: </span>
+            </div>
+            <div class="style-content-3-text">
+              <span>$ {{models.estimated_savings_per_month==null?0:models.estimated_savings_per_month}}</span>
+            </div>
+            <div class="style-content-3-text">
+              <span>Estimated ROI: </span>
+            </div>
+            <div class="style-content-3-text">
+              <span> {{models.estimated_roi==null?0:models.estimated_roi}} years</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" style="margin-top: -35px !important;">
+        <table class="table  table-bordered">
+          <thead class ="theadter">
+            <tr style="color: #000; background-color: #5b9bd5;">
+              <th></th>
+              <th class="center-content">DEPARTMENT/CENTER HEAD</th>
+              <th class="center-content">ADM HEAD</th>
+              <th class="center-content">SEA HEAD</th>
+              <th class="center-content">ME HEAD</th>
+              <th class="center-content">FACTORY HEAD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Feedbacks/Comments</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Feasibility/ <br>Benefits</td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+              <td>
+                <div class="body-style-list">
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="YES1" class="custom-control-input" id="YES1">
+                      <label class="custom-control-label" for="YES1"></label>
+                      <span class="ul-li-text"> YES</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="custom-control custom-checkbox">
+                      <input disabled type="checkbox" name="NO1" class="custom-control-input" id="NO1">
+                      <label class="custom-control-label" for="NO1"></label>
+                      <span class="ul-li-text"> NO</span>
+                    </div>
+                  </li>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+

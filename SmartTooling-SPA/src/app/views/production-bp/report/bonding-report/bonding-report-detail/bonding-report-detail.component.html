@@ -1,0 +1,281 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Detail</strong>
+                    <button type="button" class="btn btn-sm btn-primary float-right" (click)="backList()"><i
+                            class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="model">Model No<span class="red_star">
+                                            *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="model_no"
+                                                [(ngModel)]="dataBondingProgramSetting.model_no" name="model_no"
+                                                class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="model_name">Model Name<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="model_name"
+                                                [(ngModel)]="dataBondingProgramSetting.model_name" name="model_name"
+                                                class="form-control" required disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="chemical">Chemical Process Type<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="chemical_id"
+                                                [(ngModel)]="dataBondingProgramSetting.chemical_process_type_name"
+                                                name="chemical_id" class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="auto">Auto Tech.<span class="red_star">
+                                            *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="auto_tech"
+                                                [(ngModel)]="dataBondingProgramSetting.auto_tech_name" name="auto_tech"
+                                                class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="chemical_name">Chemical Name<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="chemical_name"
+                                                [(ngModel)]="dataBondingProgramSetting.chemical_name"
+                                                name="chemical_name" class="form-control" required disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="adoption">Adoption Component<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="adoption_component"
+                                                [(ngModel)]="dataBondingProgramSetting.adoption_component_name"
+                                                name="adoption_component" class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="dev_season">Dev. Season<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="dev_season"
+                                                [(ngModel)]="dataBondingProgramSetting.dev_season" name="dev_season"
+                                                class="form-control" required disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="prod">Prod. Season<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="prod_season"
+                                                [(ngModel)]="dataBondingProgramSetting.production_season"
+                                                name="prod_season" class="form-control" required disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="chemical_sup">Chemical Supplier<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="supplier"
+                                                [(ngModel)]="dataBondingProgramSetting.chemical_supplier_id"
+                                                name="supplier" class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label aaa" for="process_scope">Process Adoption
+                                        Scope<span class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="process_scope"
+                                                [(ngModel)]="dataBondingProgramSetting.process_adoption_scope_name"
+                                                name="process_scope" class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label aaa" for="material">Main Upper Material
+                                        Type<span class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="material"
+                                                [(ngModel)]="dataBondingProgramSetting.main_upper_material_type_name"
+                                                name="material" class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="article">Article No<span
+                                            class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="checkbox" class="mt-1" onclick="return false"
+                                                [checked]="dataBondingProgramSetting.article_no_is_general" id="article"
+                                                name="article" required>
+                                            <div class="input-group-append ml-2">
+                                                <span> General </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="article_des">
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <textarea id="article_des" rows="4"
+                                                [(ngModel)]="dataBondingProgramSetting.article_no_remarks"
+                                                name="article_des" class="form-control" required disabled>
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label aaa" for="bottom_material">Main Bottom
+                                        Material Type<span class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <input type="text" id="bottom_material"
+                                                [(ngModel)]="dataBondingProgramSetting.main_bottom_material_type_name"
+                                                name="bottom_material" class="form-control" required disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text disable"> <i class="fa fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label aaa" for="fis_month">1<sup>st</sup> Month Of
+                                        Production Adoption<span class="red_star"> *</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <div class="form-control disable" name="fis_month">
+                                                {{dataBondingProgramSetting.first_month_of_production_adoption | date:
+                                                'yyyy/MM'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="prod">Shoe Photo
+                                    </label>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            <img class="img"
+                                                [src]="dataBondingProgramSetting.shoes_photo_url == null || dataBondingProgramSetting.shoes_photo_url == '' ? noImage : dataBondingProgramSetting.shoes_photo_url_result + '?v=' + random">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>
