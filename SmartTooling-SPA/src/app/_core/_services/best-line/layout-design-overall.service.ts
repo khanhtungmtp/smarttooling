@@ -26,6 +26,16 @@ export class LayoutDesignOverallService {
   setEdit = (item: BLLayoutDesignOverall) => this.paramSearchSource.next(item);
   setParamSearch = (item: BLLayoutDesignOverallParam) => this.layoutSearchSource.next(item);
 
+  getLineNoFromBL_Layout_Design_Overall() {
+    return this.http.get<any>(
+      this.baseUrl + "LayoutDesignOverall/getLineNoFromBL_Layout_Design_Overall"
+    );
+  }
+  getLineTypeBL_Layout_Design_Overall() {
+    return this.http.get<any>(
+      this.baseUrl + "LayoutDesignOverall/getLineTypeBL_Layout_Design_Overall"
+    );
+  }
   getAllLineNo() {
     return this.http.get<any>(
       this.baseUrl + "LayoutDesignOverall/getAllLineNo"
@@ -36,7 +46,6 @@ export class LayoutDesignOverallService {
       this.baseUrl + "LayoutDesignOverall/getAllLineType"
     );
   }
-
   getAllModelNo() {
     return this.http.get<any>(
       this.baseUrl + "LayoutDesignOverall/getAllModelNo"

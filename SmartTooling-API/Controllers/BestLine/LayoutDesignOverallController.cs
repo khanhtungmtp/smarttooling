@@ -32,6 +32,10 @@ namespace SmartTooling_API.Controllers.BestLine
         {
             return username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
+        [HttpGet("getLineNoFromBL_Layout_Design_Overall")]
+        public async Task<IActionResult> GetLineNoFromBL_Layout_Design_Overall() => Ok(await _service.GetLineNoFromBL_Layout_Design_Overall());
+        [HttpGet("getLineTypeBL_Layout_Design_Overall")]
+        public async Task<IActionResult> GetLineTypeBL_Layout_Design_Overall() => Ok(await _service.GetLineTypeBL_Layout_Design_Overall());
         [HttpGet("getAllLineNo")]
         public async Task<IActionResult> GetAllLineNo() => Ok(await _service.GetAllLineNo());
         [HttpGet("getAllLineType")]
@@ -57,6 +61,7 @@ namespace SmartTooling_API.Controllers.BestLine
             model.create_time = DateTime.Now;
             model.update_time = DateTime.Now;
             model.factory_id = factory;
+            model.prod_season = model.prod_season.ToUpper();
             string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Layout_Design_Overall\\";
             if (model.c2b_overall_image == null || model.c2b_overall_image == "")
             {
@@ -73,7 +78,7 @@ namespace SmartTooling_API.Controllers.BestLine
                 {
                     Directory.CreateDirectory(folder);
                 }
-                var fileName = model.guid + ".jpg";
+                var fileName = Guid.NewGuid() + ".jpg";
                 string filePathImages = Path.Combine(folder, fileName);
                 System.IO.File.WriteAllBytes(filePathImages, modelData);
                 model.c2b_overall_image = factory + "/Polit_Line/BL_Layout_Design_Overall/" + fileName;
@@ -86,8 +91,10 @@ namespace SmartTooling_API.Controllers.BestLine
             model.update_by = GetUserClaim();
             model.update_time = DateTime.Now;
             model.factory_id = factory;
+            model.prod_season = model.prod_season.ToUpper();
             var result = await _service.GetParamsEdit(factory, model.line_id, model.line_type_id, model.model_no);
-            string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Layout_Design_Overall\\";
+            string path = _webHostEnvironment.WebRootPath + "\\uploaded\\";
+            string folder = path + factory + "\\Polit_Line\\BL_Layout_Design_Overall\\";
             if (string.IsNullOrEmpty(model.c2b_overall_image))
             {
                 model.c2b_overall_image = result.c2b_overall_image;
@@ -102,15 +109,17 @@ namespace SmartTooling_API.Controllers.BestLine
                 {
                     Directory.CreateDirectory(folder);
                 }
-                var fileName = model.guid + ".jpg";
-                string filePathImages = Path.Combine(folder, fileName);
+                var fileNameOld = result.c2b_overall_image;
+                string filePathImages = Path.Combine(path, fileNameOld);
                 // kiểm tra file cũ có chưa xóa đi
                 if (System.IO.File.Exists(filePathImages))
                 {
                     System.IO.File.Delete(filePathImages);
                 }
-                System.IO.File.WriteAllBytes(filePathImages, modelData);
-                model.c2b_overall_image = factory + "/Polit_Line/BL_Layout_Design_Overall/" + fileName;
+                string fileUpdate = factory + "/Polit_Line/BL_Layout_Design_Overall/" + Guid.NewGuid() + ".jpg";
+                string pathUpdate = path + fileUpdate;
+                System.IO.File.WriteAllBytes(pathUpdate, modelData);
+                model.c2b_overall_image = fileUpdate;
             }
 
             if (await _service.UpdateLayoutDesignOverall(model))

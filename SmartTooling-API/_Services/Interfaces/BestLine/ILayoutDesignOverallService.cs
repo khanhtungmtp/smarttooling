@@ -12,6 +12,8 @@ namespace SmartTooling_API._Services.Interfaces.BestLine
         Task<object> GetAllLineType();
         Task<object> GetAllModelNo();
         Task<object> GetAllProdSeason();
+        Task<object> GetLineNoFromBL_Layout_Design_Overall();
+        Task<object> GetLineTypeBL_Layout_Design_Overall();
         Task<OperationResult> AddLayoutDesignOverall(BL_Layout_Design_OverallDTO model);
         Task<bool> UpdateLayoutDesignOverall(BL_Layout_Design_OverallDTO model);
         Task<BL_Layout_Design_OverallDTO> GetParamsEdit(string factory_id, string line_id, string line_type_id, string model_no);

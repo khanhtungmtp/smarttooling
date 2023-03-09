@@ -30,6 +30,5 @@ namespace SmartTooling_API.DTO.BestLine
         public DateTime create_time { get; set; }
         public string update_by { get; set; }
         public DateTime update_time { get; set; }
-        public Guid guid { get; set; }
     }
 }

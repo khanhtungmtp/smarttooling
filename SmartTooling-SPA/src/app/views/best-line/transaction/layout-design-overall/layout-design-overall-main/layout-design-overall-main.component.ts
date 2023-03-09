@@ -136,7 +136,7 @@ export class LayoutDesignOverallMainComponent implements OnInit {
     this.layoutDesignOverallService.setParamSearch(this.paramSearch);
   }
   getAllLineNo() {
-    this.layoutDesignOverallService.getAllLineNo().subscribe((res) => {
+    this.layoutDesignOverallService.getLineNoFromBL_Layout_Design_Overall().subscribe((res) => {
       this.lineNoList = res.map((item) => {
         return {
           id: item.line_id,
@@ -146,7 +146,7 @@ export class LayoutDesignOverallMainComponent implements OnInit {
     });
   }
   getAllLineType() {
-    this.layoutDesignOverallService.getAllLineType().subscribe((res) => {
+    this.layoutDesignOverallService.getLineTypeBL_Layout_Design_Overall().subscribe((res) => {
       this.lineTypeList = res.map((item) => {
         return {
           id: item.line_type_id,
