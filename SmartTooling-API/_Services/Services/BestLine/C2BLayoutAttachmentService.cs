@@ -32,11 +32,11 @@ namespace SmartTooling_API._Services.Services.BestLine
             _repoBLLayoutDesignOverall = repoBLLayoutDesignOverall;
         }
 
-        public async Task<List<KeyValuePair<string, string>>> GetAllAttachmentType()
-        {
-            var dataResult = await _repoBLAttachmentType.FindAll(x => x.is_active == true).OrderBy(x => x.sequence).Select(x => new KeyValuePair<string, string>(x.attachment_type_id.Trim(), x.attachment_type_name.Trim())).Distinct().ToListAsync();
-            return dataResult;
-        }
+        public async Task<List<KeyValuePair<string, string>>> GetAllAttachmentType() => await _repoBLAttachmentType.FindAll(x => x.is_active == true)
+        .OrderBy(x => x.sequence)
+        .Select(x => new KeyValuePair<string, string>(x.attachment_type_id.Trim(), x.attachment_type_name.Trim()))
+        .Distinct().ToListAsync();
+
 
         public async Task<object> GetAllLineNo()
         {
@@ -157,7 +157,8 @@ namespace SmartTooling_API._Services.Services.BestLine
             }
         }
 
-        public async Task<bool> DeleteAttachment(BL_AttachmentsDTO model)
+
+        public async Task<bool> DeleteAttachment(BL_AttachmentsParams model)
         {
             var item = _mapper.Map<BL_Attachments>(model);
             _repoBLAttachment.Remove(item);
@@ -169,11 +170,6 @@ namespace SmartTooling_API._Services.Services.BestLine
             {
                 return false;
             }
-        }
-
-        public Task<bool> IsExists(BL_AttachmentsDTO model)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<object> GetAllLineNoOfAdd() => await _repoBLLayoutDesignOverall.FindAll().GroupJoin(_repoBLLines.FindAll(x => x.is_active == true),
@@ -202,7 +198,7 @@ namespace SmartTooling_API._Services.Services.BestLine
                 .ToListAsync();
 
         public async Task<object> GetAllModelNoOfAdd(string line_id, string line_type_id) => await _repoBLLayoutDesignOverall
-        .FindAll(x => x.line_id.Trim() == line_id.Trim() && x.line_type_id == line_type_id.Trim()).AsNoTracking().GroupJoin(_repoModel.FindAll().AsNoTracking(),
+        .FindAll(x => x.line_id.Trim() == line_id.Trim() && x.line_type_id.Trim() == line_type_id.Trim()).AsNoTracking().GroupJoin(_repoModel.FindAll().AsNoTracking(),
         x => new { x.factory_id, x.model_no },
         y => new { y.factory_id, y.model_no },
         (x, y) => new { T1 = x, T2 = y })
@@ -221,16 +217,18 @@ namespace SmartTooling_API._Services.Services.BestLine
             prod_season = x.prod_season
         }).OrderBy(x => x.prod_season).ToListAsync();
 
-        // public async Task<bool> IsExists(BL_AttachmentsDTO model)
-        // {
-        //     var item = await _repoBLAttachment.FindAll(x => x.factory_id == model.factory_id &&
-        //                                           x.line_id == model.line_id &&
-        //                                           x.line_type_id == model.line_type_id &&
-        //                                           x.model_no == model.model_no && x.attachment_name == model.attachment_name)
-        //                                           .AsNoTracking()
-        //                                           .FirstOrDefaultAsync();
-        //     return item == null ? false : true;
-        // }
+        public async Task<bool> IsExists(BL_AttachmentsDTO model)
+        {
+            var item = await _repoBLAttachment.FindAll(x => x.attachment_type_id == model.attachment_type_id)
+                                                  .AsNoTracking()
+                                                  .FirstOrDefaultAsync();
+            return item == null ? false : true;
+        }
 
+        public long GetLayout_design_overall_id(BL_AttachmentsParams model) =>
+            _repoBLLayoutDesignOverall.FindSingle(x => x.line_id.Trim() == model.line_id.Trim()
+            && x.line_type_id.Trim() == model.line_type_id.Trim()
+             && x.model_no.Trim() == model.model_no.Trim()
+             && x.prod_season.Trim() == model.prod_season.Trim()).id;
     }
 }

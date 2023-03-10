@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -8,6 +8,7 @@ import {
   MessageConstants,
 } from "../../../../../_core/_constants/system.constants";
 import { BLAttachmentsDetail } from "../../../../../_core/_models/best-line/bl_attachments_detail";
+import { C2bLayoutAttachmentResult } from "../../../../../_core/_models/best-line/c2b_layout_attachment_result";
 import { C2BLayoutAttachmentService } from "../../../../../_core/_services/best-line/c2b-layout-attachment.service";
 import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.service";
 
@@ -17,13 +18,16 @@ import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.serv
   styleUrls: ["./add.component.scss"],
 })
 export class AddComponent implements OnInit {
-  modelName: string = "";
+  model_name: string = "";
   line_id: string = "";
   line_type_id: string = "";
-  modelNo: string = "";
+  model_no: string = "";
+  prod_season: string = "";
+  attachment_type_id: string = "";
   lineNoList: Array<Select2OptionData> = [];
   lineTypeList: Array<Select2OptionData> = [];
   modelNoList: Array<Select2OptionData> = [];
+  modelNoAndNameList: Array<Select2OptionData> = [];
   prodSeasonList: Array<Select2OptionData> = [];
   attachmentTypeList: Array<Select2OptionData> = [];
   data: BLAttachmentsDetail = {} as BLAttachmentsDetail;
@@ -33,8 +37,10 @@ export class AddComponent implements OnInit {
     private router: Router,
     private spinnerService: NgxSpinnerService,
     private snotify: NgSnotifyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) { }
+
   ngOnInit() {
     // this.service.currentParamSearch.subscribe(res => {
     //   if (res != null) {
@@ -48,7 +54,10 @@ export class AddComponent implements OnInit {
     //   }
     // }).unsubscribe();
     this.getAllLineNoOfAdd();
-    // this.getAllAttachmentType();
+    this.getAllAttachmentType();
+  }
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   getAllLineNoOfAdd() {
@@ -66,20 +75,67 @@ export class AddComponent implements OnInit {
       }
     })
   }
-  getAllLineTypeOfAdd() {
-    this.service.getAllLineTypeOfAdd(this.line_id).subscribe({
-      next: (res) => {
-        this.lineTypeList = res.map(item => ({
-          id: item.line_type_id,
-          text: item.line_type_name
-        }))
-        this.spinnerService.hide();
-      },
-      error: () => {
-        this.spinnerService.hide();
+  getAllLineTypeOfAdd(event: any) {
+    this.line_id = event
+    if (this.line_id !== '') {
+      this.service.getAllLineTypeOfAdd(this.line_id).subscribe({
+        next: (res) => {
+          this.lineTypeList = res.map(item => ({
+            id: item.line_type_id,
+            text: item.line_type_name
+          }))
+          this.spinnerService.hide();
+        },
+        error: () => {
+          this.spinnerService.hide();
 
-      }
-    })
+        }
+      })
+    }
+  }
+  getAllModelNoOfAdd(event: any) {
+    this.line_type_id = event
+    if (this.line_type_id !== '') {
+      this.service.getAllModelNoOfAdd(this.line_id, this.line_type_id).subscribe({
+        next: (res) => {
+          this.modelNoList = res.map(item => ({
+            id: item.model_no,
+            text: item.model_no
+          }))
+          this.modelNoAndNameList = res.map(item => ({
+            id: item.model_no,
+            text: item.model_name
+          }))
+          this.spinnerService.hide();
+        },
+        error: () => {
+          this.spinnerService.hide();
+
+        }
+      })
+    }
+  }
+  changeModelName(event: any) {
+    this.data.model_name = event ? this.modelNoAndNameList.find(x => x.id == event)?.text : ''
+
+  }
+  getAllProdSeasonOfAdd(event: any) {
+    this.model_no = event
+    if (this.model_no !== '') {
+      this.service.getAllProdSeasonOfAdd(this.line_id, this.line_type_id, this.model_no).subscribe({
+        next: (res) => {
+          this.prodSeasonList = res.map(item => ({
+            id: item.prod_season,
+            text: item.prod_season
+          }))
+          this.spinnerService.hide();
+        },
+        error: () => {
+          this.spinnerService.hide();
+
+        }
+      })
+    }
   }
   save() {
     this.spinnerService.show();
@@ -89,7 +145,9 @@ export class AddComponent implements OnInit {
         CaptionConstants.WARNING
       );
     }
-    this.setParam();
+    console.log(this.data);
+    console.log(this.file);
+
     this.service.create(this.data, this.file).subscribe((res) => {
       if (res) {
         this.spinnerService.hide();
@@ -115,7 +173,6 @@ export class AddComponent implements OnInit {
         CaptionConstants.WARNING
       );
     }
-    this.setParam();
     this.service.create(this.data, this.file).subscribe((res) => {
       if (res) {
         this.spinnerService.hide();
@@ -123,7 +180,7 @@ export class AddComponent implements OnInit {
           MessageConstants.CREATED_OK_MSG,
           ActionConstants.CREATE
         );
-        this.resetData();
+        //   this.resetData();
       } else {
         this.spinnerService.hide();
         return this.snotify.error(
@@ -142,19 +199,6 @@ export class AddComponent implements OnInit {
     });
   }
 
-  setParam() {
-    this.data.factory_id = "";
-    this.data.line_id = this.lineNo;
-    this.data.line_type_id = this.lineType;
-    this.data.model_no = this.modelNo;
-    this.data.attachment_type_id = this.attachmentTypeList.find(
-      (x) => x.id === this.data.attachment_type_id
-    ).id;
-    this.data.attachment_name = "";
-    this.data.attachment_file_url = "";
-    this.data.update_by = "";
-    this.data.update_time = "";
-  }
 
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
@@ -176,11 +220,11 @@ export class AddComponent implements OnInit {
     }
   }
 
-  resetData() {
-    this.data.attachment_name = "";
-    (<HTMLInputElement>document.getElementById("input_uploadFile")).value =
-      null;
-    this.file = null;
-    this.data.attachment_type_id = "";
-  }
+  // resetData() {
+  //   this.data.attachment_name = "";
+  //   (<HTMLInputElement>document.getElementById("input_uploadFile")).value =
+  //     null;
+  //   this.file = null;
+  //   this.data.attachment_type_id = "";
+  // }
 }

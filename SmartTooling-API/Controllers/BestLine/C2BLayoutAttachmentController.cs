@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Numerics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -59,36 +60,46 @@ namespace SmartTooling_API.Controllers.BestLine
             return Ok(result);
         }
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromQuery] BL_AttachmentsDTO model, IFormFile file)
+        public async Task<IActionResult> Create([FromQuery] BL_AttachmentsParams param, IFormFile file)
         {
-            model.update_by = GetUserClaim();
-            model.update_time = DateTime.Now;
-            model.factory_id = factory;
 
             if (file != null)
             {
                 string fileNameExtension = (file.FileName.Split("."))[(file.FileName.Split(".")).Length - 1];
-                string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\BestLine\\" + "/" + model.line_id + "/" + model.line_type_id + "/" + model.model_no + "\\Attachment\\";
+                string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Attachments\\";
 
                 if (!Directory.Exists(folder))
                 {
                     Directory.CreateDirectory(folder);
                 }
-                string filePath = Path.Combine(folder, file.FileName);
+                string name = Guid.NewGuid() + "." + fileNameExtension;
+                string filePath = Path.Combine(folder, name);
                 using (FileStream fs = System.IO.File.Create(filePath))
                 {
                     file.CopyTo(fs);
                     fs.Flush();
                 }
-                model.attachment_file_url = factory + "/BestLine/" + model.line_id + "/" + model.line_type_id + "/" + model.model_no + "/Attachment/" + file.FileName;
-                model.attachment_name = file.FileName;
+
+                param.attachment_file_url = factory + "/Polit_Line/BL_Attachments/" + name;
+
+                param.attachment_name = name;
             }
+            long layout_design_overall_id = _service.GetLayout_design_overall_id(param);
+            BL_AttachmentsDTO model = new BL_AttachmentsDTO()
+            {
+                layout_design_overall_id = layout_design_overall_id,
+                attachment_file_url = param.attachment_file_url,
+                attachment_name = param.attachment_name,
+                attachment_type_id = param.attachment_type_id,
+                update_by = GetUserClaim(),
+                update_time = DateTime.Now
+            };
             var resurl = await _service.Create(model);
             return Ok(resurl);
 
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteAttachment([FromQuery] BL_AttachmentsDTO model)
+        public async Task<IActionResult> DeleteAttachment([FromQuery] BL_AttachmentsParams model)
         {
             string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\BestLine\\" + "/" + model.line_id + "/" + model.line_type_id + "/" + model.model_no + "\\Attachment\\";
             string filePathImages = Path.Combine(folder, model.attachment_name);

@@ -22,7 +22,8 @@
               </label>
               <div class="col-md-2">
                 <ng-select2 id="line_id" name="line_id" [data]="lineNoList"
-                  width="100%" [(ngModel)]="data.line_id" required>
+                  (valueChanged)="getAllLineTypeOfAdd($event)" width="100%"
+                  [(ngModel)]="data.line_id" required>
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -32,6 +33,7 @@
               </label>
               <div class="col-md-2">
                 <ng-select2 id="line_type_id" name="line_type_id"
+                  (valueChanged)="getAllModelNoOfAdd($event)"
                   [data]="lineTypeList" width="100%"
                   [(ngModel)]="data.line_type_id" required>
                 </ng-select2>
@@ -45,7 +47,9 @@
               </label>
               <div class="col-md-2">
                 <ng-select2 id="model_no" name="model_no" [data]="modelNoList"
-                  width="100%" [(ngModel)]="data.attachment_type_id" required>
+                  (valueChanged)="changeModelName($event)" width="100%"
+                  (valueChanged)="getAllProdSeasonOfAdd($event)"
+                  [(ngModel)]="data.model_no" required>
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -55,7 +59,7 @@
               </label>
               <div class="col-md-2">
                 <input type="text" name="model_name" class="form-control"
-                  [(ngModel)]="modelName" disabled="true" required />
+                  [(ngModel)]="data.model_name" disabled="true" required />
               </div>
             </div>
             <div class="form-group row">
@@ -67,7 +71,7 @@
               <div class="col-md-2">
                 <ng-select2 id="prod_season" name="prod_season"
                   [data]="prodSeasonList" width="100%"
-                  [(ngModel)]="data.attachment_type_id" required>
+                  [(ngModel)]="data.prod_season" required>
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -80,6 +84,27 @@
                   [data]="attachmentTypeList" width="100%"
                   [(ngModel)]="data.attachment_type_id" required>
                 </ng-select2>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Upload file <font color="red">*
+                  </font>
+                  <p> <strong>(pdf,excel < 20MB)</strong>
+                  </p>
+                </span>
+              </label>
+              <div class="col-md-3">
+                <div class="b-form-file">
+                  <label data-browse="Select">
+                    <!-- <p *ngIf="file === null">Choose a file...</p> -->
+                    <input id="input_uploadFile" required
+                      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/pdf"
+                      type="file" (change)="onSelectFile($event)"
+                      class="form-control" />
+                  </label>
+                </div>
               </div>
             </div>
 

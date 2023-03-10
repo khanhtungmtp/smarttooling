@@ -40,7 +40,7 @@ export class C2BLayoutAttachmentService {
   }
   getAllAttachmentType() {
     return this.http.get<KeyValuePair[]>(
-      this.baseUrl + "C2BLayoutAttachment/getAllAttachmentType"
+      this.baseUrl + "getAllAttachmentType"
     );
   }
   getAllLineNoOfAdd() {
@@ -54,14 +54,14 @@ export class C2BLayoutAttachmentService {
     let params = new HttpParams()
       .set('line_id', line_id)
       .set('line_type_id', line_type_id)
-    return this.http.get(this.baseUrl + 'GetAllModelNoOfAdd', { params });
+    return this.http.get<any>(this.baseUrl + 'GetAllModelNoOfAdd', { params });
   }
   getAllProdSeasonOfAdd(line_id: string, line_type_id: string, model_no: string) {
     let params = new HttpParams()
       .set('line_id', line_id)
       .set('line_type_id', line_type_id)
       .set('model_no', model_no)
-    return this.http.get(this.baseUrl + 'GetAllProdSeasonOfAdd', { params });
+    return this.http.get<any>(this.baseUrl + 'GetAllProdSeasonOfAdd', { params });
   }
 
   search(pagination: Pagination, paramSearch: C2bLayoutAttachmentParam) {
@@ -94,32 +94,30 @@ export class C2BLayoutAttachmentService {
 
   create(model: BLAttachmentsDetail, file: File) {
     const params = new HttpParams()
-      .set("factory_id", model.factory_id)
       .set("line_id", model.line_id)
       .set("line_type_id", model.line_type_id)
       .set("model_no", model.model_no)
+      .set("model_name", model.model_name)
       .set("attachment_type_id", model.attachment_type_id)
-      .set("attachment_name", model.attachment_name)
+      .set("prod_season", model.prod_season)
+      //.set("attachment_name", model.attachment_name)
       .set("attachment_file_url", model.attachment_file_url)
-      .set("update_by", model.update_by)
-      .set("update_time", model.update_time);
     const formData = new FormData();
     formData.append("file", file);
 
     return this.http.post(
-      this.baseUrl + "C2BLayoutAttachment/create",
+      this.baseUrl + "create",
       formData,
       { params }
     );
   }
   delete(model: BLAttachmentsDetail) {
     const params = new HttpParams()
-      .set("factory_id", model.factory_id)
       .set("line_id", model.line_id)
       .set("line_type_id", model.line_type_id)
       .set("model_no", model.model_no)
       .set("attachment_type_id", model.attachment_type_id)
-      .set("attachment_name", model.attachment_name)
+      .set("prod_season", model.prod_season)
       .set("attachment_file_url", model.attachment_file_url);
     return this.http.delete<any>(this.baseUrl + "C2BLayoutAttachment/delete", { params });
   }
