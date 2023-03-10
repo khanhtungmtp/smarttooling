@@ -49,14 +49,14 @@ namespace SmartTooling_API._Services.Services.BestLine
             }
         }
         public async Task<object> GetLineNoFromBL_Layout_Design_Overall() => await _repoLayoutDesignOverall.FindAll().GroupJoin(_repoLines.FindAll(x => x.is_active == true),
-            x => x.line_id,
-            y => y.line_id,
-            (x, y) => new { T1 = x, T2 = y }).SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y }).Select(x => new
-            {
-                line_id = x.T1.line_id,
-                line_name = x.T2.line_name,
-                sequence = x.T2.sequence
-            }).Distinct().OrderBy(x => x.sequence).ToListAsync();
+           x => x.line_id,
+           y => y.line_id,
+           (x, y) => new { T1 = x, T2 = y }).SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y }).Select(x => new
+           {
+               line_id = x.T1.line_id,
+               line_name = x.T2.line_name,
+               sequence = x.T2.sequence
+           }).Distinct().OrderBy(x => x.sequence).ToListAsync();
 
         public async Task<object> GetLineTypeBL_Layout_Design_Overall()
         => await _repoLayoutDesignOverall
@@ -72,21 +72,6 @@ namespace SmartTooling_API._Services.Services.BestLine
                 })
                 .Distinct()
                 .ToListAsync();
-
-        public async Task<object> GetAllProdSeason() => await _repoLayoutDesignOverall.FindAll().OrderBy(x => x.prod_season).Select(x => new
-        {
-            prod_season = x.prod_season.Trim()
-        }).Distinct().ToListAsync();
-
-        public async Task<object> GetAllModelNo()
-        => await _repoModel
-        .FindAll(x => x.is_active == true && x.pilot_line == true)
-        .Select(x => new
-        {
-            model_no = x.model_no.Trim(),
-            model_name = x.model_name.Trim()
-        }).Distinct().ToListAsync();
-
         public async Task<object> GetAllLineNo()
         => await _repoLines
         .FindAll(x => x.is_active == true)
@@ -109,10 +94,24 @@ namespace SmartTooling_API._Services.Services.BestLine
                 .Distinct()
                 .ToListAsync();
 
+        public async Task<object> GetAllProdSeason() => await _repoLayoutDesignOverall.FindAll().OrderBy(x => x.prod_season).Select(x => new
+        {
+            prod_season = x.prod_season.Trim()
+        }).Distinct().ToListAsync();
+
+        public async Task<object> GetAllModelNo()
+        => await _repoModel
+        .FindAll(x => x.is_active == true && x.pilot_line == true)
+        .Select(x => new
+        {
+            model_no = x.model_no.Trim(),
+            model_name = x.model_name.Trim()
+        }).Distinct().ToListAsync();
+
         public async Task<bool> UpdateLayoutDesignOverall(BL_Layout_Design_OverallDTO model)
         {
             var result = await _repoLayoutDesignOverall.FindAll(x => x.factory_id == model.factory_id && x.line_id == model.line_id && x.line_type_id == model.line_type_id && x.model_no == model.model_no).FirstOrDefaultAsync();
-            result.prod_season = model.prod_season;
+            result.prod_season = model.prod_season.ToUpper();
             result.no_of_process_before = model.no_of_process_before;
             result.no_of_process_after = model.no_of_process_after;
             result.tct_before = model.tct_before;

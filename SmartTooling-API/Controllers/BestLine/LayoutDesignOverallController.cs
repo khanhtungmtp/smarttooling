@@ -91,10 +91,9 @@ namespace SmartTooling_API.Controllers.BestLine
             model.update_by = GetUserClaim();
             model.update_time = DateTime.Now;
             model.factory_id = factory;
-            model.prod_season = model.prod_season.ToUpper();
             var result = await _service.GetParamsEdit(factory, model.line_id, model.line_type_id, model.model_no);
-            string path = _webHostEnvironment.WebRootPath + "\\uploaded\\";
-            string folder = path + factory + "\\Polit_Line\\BL_Layout_Design_Overall\\";
+            string pathRoot = _webHostEnvironment.WebRootPath + "\\uploaded\\";
+            string folder = pathRoot + factory + "\\Polit_Line\\BL_Layout_Design_Overall\\";
             if (string.IsNullOrEmpty(model.c2b_overall_image))
             {
                 model.c2b_overall_image = result.c2b_overall_image;
@@ -110,14 +109,14 @@ namespace SmartTooling_API.Controllers.BestLine
                     Directory.CreateDirectory(folder);
                 }
                 var fileNameOld = result.c2b_overall_image;
-                string filePathImages = Path.Combine(path, fileNameOld);
+                string filePathImages = Path.Combine(pathRoot, fileNameOld);
                 // kiểm tra file cũ có chưa xóa đi
                 if (System.IO.File.Exists(filePathImages))
                 {
                     System.IO.File.Delete(filePathImages);
                 }
                 string fileUpdate = factory + "/Polit_Line/BL_Layout_Design_Overall/" + Guid.NewGuid() + ".jpg";
-                string pathUpdate = path + fileUpdate;
+                string pathUpdate = pathRoot + fileUpdate;
                 System.IO.File.WriteAllBytes(pathUpdate, modelData);
                 model.c2b_overall_image = fileUpdate;
             }

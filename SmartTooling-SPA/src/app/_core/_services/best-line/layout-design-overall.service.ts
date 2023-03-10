@@ -25,7 +25,6 @@ export class LayoutDesignOverallService {
   constructor(private http: HttpClient) { }
   setEdit = (item: BLLayoutDesignOverall) => this.paramSearchSource.next(item);
   setParamSearch = (item: BLLayoutDesignOverallParam) => this.layoutSearchSource.next(item);
-
   getLineNoFromBL_Layout_Design_Overall() {
     return this.http.get<any>(
       this.baseUrl + "LayoutDesignOverall/getLineNoFromBL_Layout_Design_Overall"
@@ -46,6 +45,7 @@ export class LayoutDesignOverallService {
       this.baseUrl + "LayoutDesignOverall/getAllLineType"
     );
   }
+
   getAllModelNo() {
     return this.http.get<any>(
       this.baseUrl + "LayoutDesignOverall/getAllModelNo"

@@ -9,7 +9,7 @@ namespace SmartTooling_API.Models.BestLine
     {
         [Key]
         public long id { get; set; }
-        public long? layout_design_overall_id { get; set; }
+        public long layout_design_overall_id { get; set; }
         [Required]
         [StringLength(10)]
         public string attachment_type_id { get; set; }

@@ -3,9 +3,9 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "../../../../environments/environment";
-import { BLAttachments } from "../../_models/best-line/bl_attachments";
+import { C2bLayoutAttachmentParam } from "../../_helpers/params/best-line/c2b-layout-attachment-param";
 import { BLAttachmentsDetail } from "../../_models/best-line/bl_attachments_detail";
-import { C2BLayoutAttachmentParam } from "../../_models/best-line/bl_attachments_param";
+import { C2bLayoutAttachmentResult } from "../../_models/best-line/c2b_layout_attachment_result";
 import { KeyValuePair } from "../../_models/key-value-pair";
 import {
   PaginatedResult,
@@ -16,7 +16,7 @@ import {
   providedIn: "root",
 })
 export class C2BLayoutAttachmentService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'C2BLayoutAttachment/';
   paramSearchSource = new BehaviorSubject<any>(null);
   currentParamSearch = this.paramSearchSource.asObservable();
   constructor(private http: HttpClient) { }
@@ -26,40 +26,56 @@ export class C2BLayoutAttachmentService {
   }
 
   getAllLineNo() {
-    return this.http.get<KeyValuePair[]>(
-      this.baseUrl + "C2BLayoutAttachment/GetAllLineNo"
+    return this.http.get<any>(
+      this.baseUrl + "GetAllLineNo"
     );
   }
-  getAllLineType(lindId: string) {
-    return this.http.get<KeyValuePair[]>(
-      this.baseUrl + "C2BLayoutAttachment/GetAllLineType?lineID=" + lindId
+  getAllLineType() {
+    return this.http.get<any>(
+      this.baseUrl + "GetAllLineType"
     );
   }
-  getAllModelNo(lindId: string, lineTypeId: string) {
-    return this.http.get<KeyValuePair[]>(
-      this.baseUrl +
-      `C2BLayoutAttachment/GetAllModelNo?lineId=${lindId}&lineTypeId=${lineTypeId}`
-    );
+  getAllProdSeason() {
+    return this.http.get<any>(this.baseUrl + 'getAllProdSeason')
   }
   getAllAttachmentType() {
     return this.http.get<KeyValuePair[]>(
       this.baseUrl + "C2BLayoutAttachment/getAllAttachmentType"
     );
   }
-  // changeParamSearch(paramSearch: C2BLayoutAttachmentParam) {
-  //   this.paramSearchSource.next(paramSearch);
-  // }
-  search(pagination: Pagination, paramSearch: C2BLayoutAttachmentParam) {
-    const paginatedResult: PaginatedResult<BLAttachments[]> =
-      new PaginatedResult<BLAttachments[]>();
+  getAllLineNoOfAdd() {
+    return this.http.get<any>(this.baseUrl + 'GetAllLineNoOfAdd')
+  }
+  getAllLineTypeOfAdd(line_id: string) {
+    let params = new HttpParams().set('line_id', line_id)
+    return this.http.get<any>(this.baseUrl + 'GetAllLineTypeOfAdd', { params });
+  }
+  getAllModelNoOfAdd(line_id: string, line_type_id: string) {
+    let params = new HttpParams()
+      .set('line_id', line_id)
+      .set('line_type_id', line_type_id)
+    return this.http.get(this.baseUrl + 'GetAllModelNoOfAdd', { params });
+  }
+  getAllProdSeasonOfAdd(line_id: string, line_type_id: string, model_no: string) {
+    let params = new HttpParams()
+      .set('line_id', line_id)
+      .set('line_type_id', line_type_id)
+      .set('model_no', model_no)
+    return this.http.get(this.baseUrl + 'GetAllProdSeasonOfAdd', { params });
+  }
+
+  search(pagination: Pagination, paramSearch: C2bLayoutAttachmentParam) {
+    const paginatedResult: PaginatedResult<C2bLayoutAttachmentResult[]> =
+      new PaginatedResult<C2bLayoutAttachmentResult[]>();
     const params = new HttpParams()
       .set("line_id", paramSearch.line_no)
       .set("line_type_id", paramSearch.line_type)
-      .set("model", paramSearch.modelNo)
+      .set("model", paramSearch.model)
+      .set("prod_season", paramSearch.prod_season)
       .set("pageNumber", pagination.currentPage.toString())
       .set("pageSize", pagination.itemsPerPage.toString());
     return this.http
-      .get<BLAttachments[]>(this.baseUrl + "C2BLayoutAttachment/Search", {
+      .get<C2bLayoutAttachmentResult[]>(this.baseUrl + "Search", {
         observe: "response",
         params,
       })

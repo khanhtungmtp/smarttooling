@@ -1,0 +1,116 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Add new</strong>
+          <button type="button" class="btn btn-primary float-right  btn-sm"
+            [routerLink]="['/best-line/transaction/layout-attachment/main']"
+            routerLinkActive="router-link-active">
+            <i class="fa fa-chevron-left"></i>
+            Back
+          </button>
+        </div>
+        <form class="form-horizontal" #addForm="ngForm"
+          (ngSubmit)="addForm.valid && saveAndNext()" required>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class=" offset-md-1 col-md-2 col-form-label">
+                <span class="float-sm-left">Pilot Line <font color="red">*
+                  </font>
+                </span>
+              </label>
+              <div class="col-md-3">
+                <input id="line_id" class="form-control" type="text"
+                  name="line_id" width="100%" [(ngModel)]="lineNo" required>
+              </div>
+              <div class="offset-md-4 col-md-2 col-form-label"></div>
+            </div>
+            <div class="form-group row">
+              <label class="offset-md-1 col-md-2 col-form-label">
+                <span class="float-sm-left">Line Type<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-3">
+                <input id="line_type" class="form-control" type="text"
+                  name="line_type" width="100%" [(ngModel)]="lineType" required>
+              </div>
+              <div class="offset-md-4 col-md-2 col-form-label"></div>
+            </div>
+            <div class="form-group row">
+              <label class="offset-md-1 col-md-2 col-form-label">
+                <span class="float-sm-left">Model No<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-3">
+                <input id="model_no" class="form-control" name="model_no"
+                  width="100%" [(ngModel)]="modelNo" required>
+              </div>
+              <div class="offset-md-4 col-md-2 col-form-label"></div>
+            </div>
+            <div class="form-group row">
+              <label class="offset-md-1 col-md-2 col-form-label">
+                <span class="float-sm-left">Model Name<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-3">
+                <input type="text" name="model_name" class="form-control"
+                  [(ngModel)]="modelName" disabled="true" required />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="offset-md-1 col-md-2 col-form-label">
+                <span class="float-sm-left">Attachment Type <font color="red">*
+                  </font>
+                </span>
+              </label>
+              <div class="col-md-3">
+                <ng-select2 id="attachment_type" name="attachment_type"
+                  [data]="attachmentTypeList" width="100%"
+                  [(ngModel)]="data.attachment_type_id" required>
+                </ng-select2>
+              </div>
+              <div class="offset-md-4 col-md-2 col-form-label"></div>
+            </div>
+            <div class="form-group row">
+              <label class="offset-md-1 col-md-2 col-form-label">
+                <span class="float-sm-left">Upload file <font color="red">*
+                  </font>
+                  <p> <strong>(pdf,excel < 20MB)</strong>
+                  </p>
+                </span>
+              </label>
+              <div class="col-md-3">
+                <div class="custom-file b-form-file">
+                  <label data-browse="Select" class="custom-file-label">
+                    <p *ngIf="file === null">Choose a file...</p>
+                    <input id="input_uploadFile" required
+                      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/pdf"
+                      type="file" (change)="onSelectFile($event)"
+                      style="line-height: 1 !important; outline: none"
+                      [ngClass]="file !== null ? 'opacity1' : 'opacity0'" />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="form-group row">
+              <div class="col">
+                <button type="button" class="btn btn-sm btn-success mr-1"
+                  (click)="save()" [disabled]="!addForm.valid">
+                  <i class="fa fa-check"></i>
+                  Save
+                </button>
+                <button type="button" class="btn btn-sm btn-primary"
+                  [disabled]="!addForm.valid" (click)="saveAndNext()">
+                  <i class="fa fa-check"></i> Save & Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

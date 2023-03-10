@@ -18,12 +18,13 @@ import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.serv
 })
 export class AddComponent implements OnInit {
   modelName: string = "";
-  lineNo: string = "";
-  lineType: string = "";
+  line_id: string = "";
+  line_type_id: string = "";
   modelNo: string = "";
   lineNoList: Array<Select2OptionData> = [];
   lineTypeList: Array<Select2OptionData> = [];
   modelNoList: Array<Select2OptionData> = [];
+  prodSeasonList: Array<Select2OptionData> = [];
   attachmentTypeList: Array<Select2OptionData> = [];
   data: BLAttachmentsDetail = {} as BLAttachmentsDetail;
   file: File = null;
@@ -33,20 +34,52 @@ export class AddComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private snotify: NgSnotifyService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
   ngOnInit() {
-    this.service.currentParamSearch.subscribe(res => {
-      if (res != null) {
-        this.lineNo = res.lineID;
-        this.lineType = res.lineTypeID;
-        this.modelNo = res.modelNo;
-        this.modelName = res.modelName;
+    // this.service.currentParamSearch.subscribe(res => {
+    //   if (res != null) {
+    //     this.lineNo = res.lineID;
+    //     this.lineType = res.lineTypeID;
+    //     this.modelNo = res.modelNo;
+    //     this.modelName = res.modelName;
+    //   }
+    //   else {
+    //     this.router.navigate(["/best-line/transaction/layout-attachment/main"]);
+    //   }
+    // }).unsubscribe();
+    this.getAllLineNoOfAdd();
+    // this.getAllAttachmentType();
+  }
+
+  getAllLineNoOfAdd() {
+    this.service.getAllLineNoOfAdd().subscribe({
+      next: (res) => {
+        this.lineNoList = res.map(item => ({
+          id: item.line_id,
+          text: item.line_name
+        }))
+        this.spinnerService.hide();
+      },
+      error: () => {
+        this.spinnerService.hide();
+
       }
-      else {
-        this.router.navigate(["/best-line/transaction/layout-attachment/main"]);
+    })
+  }
+  getAllLineTypeOfAdd() {
+    this.service.getAllLineTypeOfAdd(this.line_id).subscribe({
+      next: (res) => {
+        this.lineTypeList = res.map(item => ({
+          id: item.line_type_id,
+          text: item.line_type_name
+        }))
+        this.spinnerService.hide();
+      },
+      error: () => {
+        this.spinnerService.hide();
+
       }
-    }).unsubscribe();
-    this.getAllAttachmentType();
+    })
   }
   save() {
     this.spinnerService.show();

@@ -100,7 +100,7 @@ namespace SmartTooling_API.Configurations
 
             //best-line
             services.AddScoped<ILayoutDesignOverallService, LayoutDesignOverallService>();
-            // services.AddScoped<IC2BLayoutAttachmentService, C2BLayoutAttachmentService>();
+            services.AddScoped<IC2BLayoutAttachmentService, C2BLayoutAttachmentService>();
             // services.AddScoped<IC2BOverallLayoutReportService, C2BOverallLayoutReportService>();
             // services.AddScoped<IC2BLayoutByProcessReportService, C2BLayoutByProcessReportService>();
             // services.AddScoped<ICriticalProcessReportService, CriticalProcessReportService>();

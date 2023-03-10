@@ -3,7 +3,7 @@ import { BLAttachmentType } from './bL_Attachment_Type';
 
 export interface BLAttachments {
   id: number;
-  layout_design_overall_id: number | null;
+  layout_design_overall_id: number;
   attachment_type_id: string;
   attachment_name: string;
   attachment_file_url: string;

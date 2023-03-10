@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
@@ -25,151 +21,205 @@ namespace SmartTooling_API._Services.Services.BestLine
         private readonly IBLAttachmentTypeRepository _repoBLAttachmentType;
         private readonly IModelRepository _repoModel;
 
+        public C2BLayoutAttachmentService(IMapper mapper, IBLAttachmentsRepository repoBLAttachment, IBLLinesRepository repoBLLines, IBLLineTypeRepository repoBLLineType, IBLAttachmentTypeRepository repoBLAttachmentType, IModelRepository repoModel, IBLLayoutDesignOverallRepository repoBLLayoutDesignOverall)
+        {
+            _mapper = mapper;
+            _repoBLAttachment = repoBLAttachment;
+            _repoBLLines = repoBLLines;
+            _repoBLLineType = repoBLLineType;
+            _repoBLAttachmentType = repoBLAttachmentType;
+            _repoModel = repoModel;
+            _repoBLLayoutDesignOverall = repoBLLayoutDesignOverall;
+        }
 
-        // public C2BLayoutAttachmentService(IMapper mapper, IBLAttachmentsRepository repoBLAttachment, IBLLinesRepository repoBLLines, IBLLineTypeRepository repoBLLineType, IBLAttachmentTypeRepository repoBLAttachmentType, IModelRepository repoModel, IBLLayoutDesignOverallRepository repoBLLayoutDesignOverall)
-        // {
-        //     _mapper = mapper;
-        //     _repoBLAttachment = repoBLAttachment;
-        //     _repoBLLines = repoBLLines;
-        //     _repoBLLineType = repoBLLineType;
-        //     _repoBLAttachmentType = repoBLAttachmentType;
-        //     _repoModel = repoModel;
-        //     _repoBLLayoutDesignOverall = repoBLLayoutDesignOverall;
-        // }
+        public async Task<List<KeyValuePair<string, string>>> GetAllAttachmentType()
+        {
+            var dataResult = await _repoBLAttachmentType.FindAll(x => x.is_active == true).OrderBy(x => x.sequence).Select(x => new KeyValuePair<string, string>(x.attachment_type_id.Trim(), x.attachment_type_name.Trim())).Distinct().ToListAsync();
+            return dataResult;
+        }
 
-        // public async Task<List<KeyValuePair<string, string>>> GetAllAttachmentType()
-        // {
-        //     var dataResult = await _repoBLAttachmentType.FindAll(x => x.is_active == true).OrderBy(x => x.sequence).Select(x => new KeyValuePair<string, string>(x.attachment_type_id.Trim(), x.attachment_type_name.Trim())).Distinct().ToListAsync();
-        //     return dataResult;
-        // }
+        public async Task<object> GetAllLineNo()
+        {
+            var layoutDesignOverall = _repoBLLayoutDesignOverall.FindAll().AsNoTracking()
+            .GroupJoin(_repoBLAttachment.FindAll().AsNoTracking(),
+            x => x.id,
+            y => y.layout_design_overall_id,
+            (x, y) => new { T1 = x, T2 = y })
+            .SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y })
+            .GroupJoin(_repoBLLines.FindAll().AsNoTracking(),
+            x => new { x.T1.factory_id, x.T1.line_id },
+            y => new { y.factory_id, y.line_id },
+            (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = y })
+            .SelectMany(x => x.T3.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = y })
+            .Select(x => new
+            {
+                x.T1.line_id,
+                x.T3.line_name,
+                x.T3.sequence
+            }).Distinct().OrderBy(x => x.sequence).ToListAsync();
+            return await layoutDesignOverall;
+        }
 
-        // public async Task<List<KeyValuePair<string, string>>> GetAllLineNo()
-        // {
-        //     var layoutDesignOverall = _repoBLLayoutDesignOverall.FindAll();
-        //     var line = _repoBLLines.FindAll();
-        //     var dataResult = await layoutDesignOverall.GroupJoin(line, x => new { x.factory_id, x.line_id }, y => new { y.factory_id, y.line_id }, (x, y) => new { layoutDesignOverall = x, line = y }).SelectMany(x => x.line.DefaultIfEmpty(), (x, y) => new KeyValuePair<string, string>(x.layoutDesignOverall.line_id.Trim(), y.line_name.Trim())).Distinct().ToListAsync();
-        //     return dataResult;
-        // }
+        public async Task<object> GetAllLineType()
+        {
+            var layoutDesignOverall = _repoBLLayoutDesignOverall.FindAll().AsNoTracking().GroupJoin(_repoBLAttachment.FindAll().AsNoTracking(),
+            x => x.id,
+            y => y.layout_design_overall_id,
+            (x, y) => new { T1 = x, T2 = y })
+            .SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y })
+            .GroupJoin(_repoBLLineType.FindAll().AsNoTracking(),
+            x => x.T1.line_type_id,
+            y => y.line_type_id,
+            (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = y }).SelectMany(x => x.T3.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = y })
+            .Select(x => new
+            {
+                line_type_id = x.T1.line_type_id,
+                line_type_name = x.T3.line_type_name,
+                sequence = x.T3.sequence
+            }).Distinct().OrderBy(x => x.sequence).ToListAsync();
+            return await layoutDesignOverall;
+        }
 
-        // public async Task<List<KeyValuePair<string, string>>> GetAllLineType(string lineId)
-        // {
-        //     var layoutDesignOverall = _repoBLLayoutDesignOverall.FindAll(x => x.line_id == lineId);
-        //     var lineType = _repoBLLineType.FindAll();
-        //     var dataResult = await layoutDesignOverall.GroupJoin(lineType, x => new { x.factory_id, x.line_type_id }, y => new { y.factory_id, y.line_type_id }, (x, y) => new { layoutDesignOverall = x, lineType = y }).SelectMany(x => x.lineType.DefaultIfEmpty(), (x, y) => new KeyValuePair<string, string>(x.layoutDesignOverall.line_type_id.Trim(), y.line_type_name.Trim())).Distinct().ToListAsync();
-        //     return dataResult;
-        // }
+        public async Task<object> GetAllProdSeason() => await _repoBLLayoutDesignOverall.FindAll().OrderBy(x => x.prod_season).Select(x => new
+        {
+            prod_season = x.prod_season.Trim()
+        }).Distinct().ToListAsync();
 
-        // public async Task<List<KeyValuePair<string, string>>> GetAllModelNo(string lineId, string lineTypeId)
-        // {
-        //     var layoutDesignOverall = _repoBLLayoutDesignOverall.FindAll(x => x.line_id == lineId && x.line_type_id == lineTypeId);
-        //     var model = _repoModel.FindAll();
-        //     var dataResult = await layoutDesignOverall.GroupJoin(model, x => new { x.factory_id, x.model_no }, y => new { y.factory_id, y.model_no }, (x, y) => new { layoutDesignOverall = x, model = y }).SelectMany(x => x.model.DefaultIfEmpty(), (x, y) => new KeyValuePair<string, string>(x.layoutDesignOverall.model_no.Trim(), y.model_name.Trim())).Distinct().ToListAsync();
-        //     return dataResult;
-        // }
+        public async Task<PagedList<C2B_Layout_AttachmentDTO>> Search(PaginationParams pagination, C2BLayoutAttachmentParam filterParam)
+        {
+            var data = _repoBLAttachment.FindAll().AsNoTracking()
+          .GroupJoin(_repoBLLayoutDesignOverall.FindAll().AsNoTracking(),
+          x => x.layout_design_overall_id,
+          y => y.id,
+          (x, y) => new { T1 = x, T2 = y })
+          .SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y })
+          .GroupJoin(_repoBLLines.FindAll().AsNoTracking(),
+          x => new { x.T2.factory_id, x.T2.line_id },
+          y => new { y.factory_id, y.line_id },
+          (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = y })
+          .SelectMany(x => x.T3.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = y })
+          .GroupJoin(_repoBLLineType.FindAll().AsNoTracking(),
+          x => new { x.T2.factory_id, x.T2.line_type_id },
+          y => new { y.factory_id, y.line_type_id },
+          (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = x.T3, T4 = y })
+          .SelectMany(x => x.T4.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = x.T3, T4 = y })
+          .GroupJoin(_repoModel.FindAll().AsNoTracking(),
+          x => new { x.T2.factory_id, x.T2.model_no },
+          y => new { y.factory_id, y.model_no },
+          (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = x.T3, T4 = x.T4, T5 = y })
+          .SelectMany(x => x.T5.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = x.T3, T4 = x.T4, T5 = y })
+          .GroupJoin(_repoBLAttachmentType.FindAll().AsNoTracking(),
+          x => new { x.T2.factory_id, x.T1.attachment_type_id },
+          y => new { y.factory_id, y.attachment_type_id },
+          (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = x.T3, T4 = x.T4, T5 = x.T5, T6 = y }
+          ).SelectMany(x => x.T6.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = x.T2, T3 = x.T3, T4 = x.T4, T5 = x.T5, T6 = y })
+            .OrderBy(x => x.T2.line_id)
+            .ThenBy(x => x.T4.sequence)
+            .ThenBy(x => x.T2.model_no)
+            .ThenBy(x => x.T2.prod_season)
+          .Select(x => new C2B_Layout_AttachmentDTO
+          {
+              id = x.T1.id,
+              line_name = x.T3.line_name,
+              line_type_name = x.T4.line_type_name,
+              model_no = x.T2.model_no,
+              model_name = x.T5.model_name,
+              prod_season = x.T2.prod_season,
+              attachment_type_name = x.T6.attachment_type_name,
+              attachment_name = x.T1.attachment_name,
+              attachment_file_url = x.T1.attachment_file_url
+          });
+            var predicate = PredicateBuilder.New<C2B_Layout_AttachmentDTO>(true);
+            if (!string.IsNullOrWhiteSpace(filterParam.line_name))
+                predicate.And(x => x.line_name.Trim() == filterParam.line_name.Trim());
+            if (!string.IsNullOrWhiteSpace(filterParam.line_type_name))
+                predicate.And(x => x.line_type_name.Trim() == filterParam.line_type_name.Trim());
+            if (!string.IsNullOrWhiteSpace(filterParam.prod_season))
+                predicate.And(x => x.prod_season.Trim() == filterParam.prod_season.Trim());
+            if (!string.IsNullOrEmpty(filterParam.model))
+                predicate.And(x => x.model_no.Contains(filterParam.model) || x.model_name.Contains(filterParam.model));
+            data = data.Where(predicate);
+            return await PagedList<C2B_Layout_AttachmentDTO>.CreateAsync(data, pagination.PageNumber, pagination.PageSize, true);
+        }
 
-        // public async Task<PagedList<C2B_Layout_AttachmentDTO>> Search(PaginationParams param, C2BLayoutAttachmentParam filterParam)
-        // {
-        //     var attachmentPred = PredicateBuilder.New<BL_Attachments>(true);
-        //     if (!String.IsNullOrEmpty(filterParam.line_id))
-        //     {
-        //         attachmentPred = attachmentPred.And(x => x.line_id.Trim() == filterParam.line_id.Trim());
-        //     }
-        //     if (!String.IsNullOrEmpty(filterParam.line_type_id))
-        //     {
-        //         attachmentPred = attachmentPred.And(x => x.line_type_id.Trim() == filterParam.line_type_id.Trim());
-        //     }
-        //     if (!String.IsNullOrEmpty(filterParam.model))
-        //     {
-        //         attachmentPred = attachmentPred.And(x => x.model_no.Trim() == filterParam.model.Trim());
-        //     }
-        //     var attachments = _repoBLAttachment.FindAll(attachmentPred);
-        //     var attachmentType = _repoBLAttachmentType.FindAll();
-        //     var line = _repoBLLines.FindAll();
-        //     var lineType = _repoBLLineType.FindAll();
-        //     var model = _repoModel.FindAll();
+        public async Task<bool> Create(BL_AttachmentsDTO model)
+        {
+            if (await IsExists(model))
+            {
+                return false;
+            }
+            else
+            {
+                var models = _mapper.Map<BL_Attachments>(model);
+                _repoBLAttachment.Add(models);
+                var result = await _repoBLAttachment.SaveAll();
+                return result;
+            }
+        }
 
-        //     var dataResult = attachments.GroupJoin(
-        //         line,
-        //         x => new { x.factory_id, x.line_id },
-        //         y => new { y.factory_id, y.line_id },
-        //         (x, y) => new { attachments = x, line = y })
-        //         .SelectMany(
-        //             x => x.line.DefaultIfEmpty(),
-        //             (x, y) => new { x.attachments, line = y })
-        //             .GroupJoin(
-        //                 lineType,
-        //                 x => new { x.attachments.factory_id, x.attachments.line_type_id },
-        //                 y => new { y.factory_id, y.line_type_id },
-        //                 (x, y) => new { x.attachments, x.line, lineType = y })
-        //                 .SelectMany(
-        //                 x => x.lineType.DefaultIfEmpty(),
-        //                 (x, y) => new { x.attachments, x.line, lineType = y })
-        //                 .GroupJoin(
-        //                     model,
-        //                     x => new { x.attachments.factory_id, x.attachments.model_no },
-        //                     y => new { y.factory_id, y.model_no },
-        //                     (x, y) => new { x.attachments, x.line, x.lineType, model = y })
-        //                     .SelectMany(
-        //                         x => x.model.DefaultIfEmpty(),
-        //                         (x, y) => new
-        //                         {
-        //                             x.attachments,
-        //                             x.line,
-        //                             x.lineType,
-        //                             model = y
-        //                         }).GroupJoin(
-        //                             attachmentType,
-        //                             x => new { x.attachments.factory_id, x.attachments.attachment_type_id },
-        //                             y => new { y.factory_id, y.attachment_type_id },
-        //                             (x, y) => new { x.attachments, x.line, x.lineType, x.model, attachmentType = y }).SelectMany(
-        //                         x => x.attachmentType.DefaultIfEmpty(),
-        //                         (x, y) => new C2B_Layout_AttachmentDTO
-        //                         {
-        //                             factory_id = x.attachments.factory_id,
-        //                             line_id = x.attachments.line_id,
-        //                             line_name = x.line.line_name,
-        //                             line_type_id = x.attachments.line_type_id,
-        //                             line_type_name = x.lineType.line_type_name,
-        //                             model_no = x.attachments.model_no,
-        //                             model_name = x.model.model_name,
-        //                             attachment_type_name = y.attachment_type_name,
-        //                             attachment_name = x.attachments.attachment_name,
-        //                             attachment_file_url = x.attachments.attachment_file_url
-        //                         });
-        //     dataResult = dataResult.Where(x => x.line_id == filterParam.line_id && x.line_type_id == filterParam.line_type_id && x.model_no == filterParam.model);
-        //     return await PagedList<C2B_Layout_AttachmentDTO>.CreateAsync(dataResult, param.PageNumber, param.PageSize);
-        // }
+        public async Task<bool> DeleteAttachment(BL_AttachmentsDTO model)
+        {
+            var item = _mapper.Map<BL_Attachments>(model);
+            _repoBLAttachment.Remove(item);
+            try
+            {
+                return await _repoBLAttachment.SaveAll();
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
+
+        public Task<bool> IsExists(BL_AttachmentsDTO model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<object> GetAllLineNoOfAdd() => await _repoBLLayoutDesignOverall.FindAll().GroupJoin(_repoBLLines.FindAll(x => x.is_active == true),
+           x => new { x.line_id, x.factory_id },
+           y => new { y.line_id, y.factory_id },
+           (x, y) => new { T1 = x, T2 = y }).SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y }).Select(x => new
+           {
+               line_id = x.T1.line_id,
+               line_name = x.T2.line_name,
+               sequence = x.T2.sequence
+           }).Distinct().OrderBy(x => x.sequence).ToListAsync();
 
 
-        // public async Task<bool> Create(BL_AttachmentsDTO model)
-        // {
-        //     if (await IsExists(model))
-        //     {
-        //         return false;
-        //     }
-        //     else
-        //     {
-        //         var models = _mapper.Map<BL_Attachments>(model);
-        //         _repoBLAttachment.Add(models);
-        //         var result = await _repoBLAttachment.SaveAll();
-        //         return result;
-        //     }
-        // }
+        public async Task<object> GetAllLineTypeOfAdd(string line_id) => await _repoBLLayoutDesignOverall
+                .FindAll(x => x.line_id.Trim() == line_id.Trim()).GroupJoin(_repoBLLineType.FindAll(x => x.is_active == true),
+                x => new { x.line_type_id, x.factory_id },
+                y => new { y.line_type_id, y.factory_id },
+                (x, y) => new { T1 = x, T2 = y }).SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y })
+                .Select(x => new
+                {
+                    line_type_id = x.T1.line_type_id.Trim(),
+                    line_type_name = x.T2.line_type_name.Trim(),
+                    sequence = x.T2.sequence
+                })
+                .Distinct().OrderBy(x => x.sequence)
+                .ToListAsync();
 
-        // public async Task<bool> DeleteAttachment(BL_AttachmentsDTO model)
-        // {
-        //     var item = _mapper.Map<BL_Attachments>(model);
-        //     _repoBLAttachment.Remove(item);
-        //     try
-        //     {
-        //         return await _repoBLAttachment.SaveAll();
-        //     }
-        //     catch (System.Exception)
-        //     {
-        //         return false;
-        //     }
-        // }
+        public async Task<object> GetAllModelNoOfAdd(string line_id, string line_type_id) => await _repoBLLayoutDesignOverall
+        .FindAll(x => x.line_id.Trim() == line_id.Trim() && x.line_type_id == line_type_id.Trim()).AsNoTracking().GroupJoin(_repoModel.FindAll().AsNoTracking(),
+        x => new { x.factory_id, x.model_no },
+        y => new { y.factory_id, y.model_no },
+        (x, y) => new { T1 = x, T2 = y })
+        .SelectMany(x => x.T2.DefaultIfEmpty(), (x, y) => new { T1 = x.T1, T2 = y })
+        .Select(x => new
+        {
+            model_no = x.T1.model_no,
+            model_name = x.T2.model_name
+        }).Distinct().OrderBy(x => x.model_no).ToListAsync();
 
+        public async Task<object> GetAllProdSeasonOfAdd(string line_id, string line_type_id, string model_no) => await _repoBLLayoutDesignOverall.FindAll(x => x.line_id.Trim() == line_id.Trim()
+        && x.line_type_id.Trim() == line_type_id.Trim()
+        && x.model_no.Trim() == model_no.Trim()).AsNoTracking()
+        .Select(x => new
+        {
+            prod_season = x.prod_season
+        }).OrderBy(x => x.prod_season).ToListAsync();
 
         // public async Task<bool> IsExists(BL_AttachmentsDTO model)
         // {
