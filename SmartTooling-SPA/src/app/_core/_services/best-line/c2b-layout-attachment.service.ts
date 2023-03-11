@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "../../../../environments/environment";
-import { C2bLayoutAttachmentParam } from "../../_helpers/params/best-line/c2b-layout-attachment-param";
+import { C2bLayoutAttachmentDeleteParam, C2bLayoutAttachmentParam } from "../../_helpers/params/best-line/c2b-layout-attachment-param";
 import { BLAttachmentsDetail } from "../../_models/best-line/bl_attachments_detail";
 import { C2bLayoutAttachmentResult } from "../../_models/best-line/c2b_layout_attachment_result";
 import { KeyValuePair } from "../../_models/key-value-pair";
@@ -67,13 +67,7 @@ export class C2BLayoutAttachmentService {
   search(pagination: Pagination, paramSearch: C2bLayoutAttachmentParam) {
     const paginatedResult: PaginatedResult<C2bLayoutAttachmentResult[]> =
       new PaginatedResult<C2bLayoutAttachmentResult[]>();
-    const params = new HttpParams()
-      .set("line_id", paramSearch.line_no)
-      .set("line_type_id", paramSearch.line_type)
-      .set("model", paramSearch.model)
-      .set("prod_season", paramSearch.prod_season)
-      .set("pageNumber", pagination.currentPage.toString())
-      .set("pageSize", pagination.itemsPerPage.toString());
+    const params = new HttpParams().appendAll({ ...pagination, ...paramSearch })
     return this.http
       .get<C2bLayoutAttachmentResult[]>(this.baseUrl + "Search", {
         observe: "response",
@@ -100,7 +94,6 @@ export class C2BLayoutAttachmentService {
       .set("model_name", model.model_name)
       .set("attachment_type_id", model.attachment_type_id)
       .set("prod_season", model.prod_season)
-      //.set("attachment_name", model.attachment_name)
       .set("attachment_file_url", model.attachment_file_url)
     const formData = new FormData();
     formData.append("file", file);
@@ -111,14 +104,8 @@ export class C2BLayoutAttachmentService {
       { params }
     );
   }
-  delete(model: BLAttachmentsDetail) {
-    const params = new HttpParams()
-      .set("line_id", model.line_id)
-      .set("line_type_id", model.line_type_id)
-      .set("model_no", model.model_no)
-      .set("attachment_type_id", model.attachment_type_id)
-      .set("prod_season", model.prod_season)
-      .set("attachment_file_url", model.attachment_file_url);
-    return this.http.delete<any>(this.baseUrl + "C2BLayoutAttachment/delete", { params });
+  delete(model: C2bLayoutAttachmentDeleteParam) {
+    const params = new HttpParams().appendAll({ ...model })
+    return this.http.delete<any>(this.baseUrl + "delete", { params });
   }
 }

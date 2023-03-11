@@ -1,5 +1,3 @@
-using System;
-
 namespace SmartTooling_API.DTO.BestLine
 {
     public class BL_AttachmentsParams
@@ -14,6 +12,10 @@ namespace SmartTooling_API.DTO.BestLine
         public string attachment_file_url { get; set; }
         public string update_by { get; set; }
         public DateTime? update_time { get; set; }
+    }
+    public class BL_AttachmentsDeleteParams
+    {
+        public string attachment_file_url { get; set; }
     }
     public class BL_AttachmentsDTO
     {

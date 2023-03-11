@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Numerics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -62,12 +61,10 @@ namespace SmartTooling_API.Controllers.BestLine
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromQuery] BL_AttachmentsParams param, IFormFile file)
         {
-
             if (file != null)
             {
                 string fileNameExtension = (file.FileName.Split("."))[(file.FileName.Split(".")).Length - 1];
                 string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Attachments\\";
-
                 if (!Directory.Exists(folder))
                 {
                     Directory.CreateDirectory(folder);
@@ -79,10 +76,9 @@ namespace SmartTooling_API.Controllers.BestLine
                     file.CopyTo(fs);
                     fs.Flush();
                 }
-
                 param.attachment_file_url = factory + "/Polit_Line/BL_Attachments/" + name;
 
-                param.attachment_name = name;
+                param.attachment_name = file.FileName;
             }
             long layout_design_overall_id = _service.GetLayout_design_overall_id(param);
             BL_AttachmentsDTO model = new BL_AttachmentsDTO()
@@ -99,10 +95,11 @@ namespace SmartTooling_API.Controllers.BestLine
 
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteAttachment([FromQuery] BL_AttachmentsParams model)
+        public async Task<IActionResult> DeleteAttachment([FromQuery] BL_AttachmentsDeleteParams model)
         {
-            string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\BestLine\\" + "/" + model.line_id + "/" + model.line_type_id + "/" + model.model_no + "\\Attachment\\";
-            string filePathImages = Path.Combine(folder, model.attachment_name);
+            string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Attachments\\";
+            var file = model.attachment_file_url.Split('/')[model.attachment_file_url.Split('/').Length - 1];
+            string filePathImages = Path.Combine(folder, file);
             if (System.IO.File.Exists(filePathImages))
             {
                 System.IO.File.Delete(filePathImages);

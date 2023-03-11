@@ -12,7 +12,7 @@ import {
   MessageConstants,
 } from "../../../../../_core/_constants/system.constants";
 import { environment } from "../../../../../../environments/environment";
-import { C2bLayoutAttachmentParam } from "../../../../../_core/_helpers/params/best-line/c2b-layout-attachment-param";
+import { C2bLayoutAttachmentDeleteParam, C2bLayoutAttachmentParam } from "../../../../../_core/_helpers/params/best-line/c2b-layout-attachment-param";
 import { C2bLayoutAttachmentResult } from "../../../../../_core/_models/best-line/c2b_layout_attachment_result";
 @Component({
   selector: "app-main",
@@ -38,13 +38,13 @@ export class MainComponent implements OnInit {
     width: "100%",
   };
   optionsSelectprodSeason = {
-    placeholder: "Select Prod Season...",
     allowClear: true,
+    placeholder: "Select Prod Season...",
     width: "100%",
   };
   paramSearch: C2bLayoutAttachmentParam = {
-    line_no: '',
-    line_type: '',
+    line_name: '',
+    line_type_name: '',
     model: '',
     prod_season: ''
   };
@@ -85,8 +85,8 @@ export class MainComponent implements OnInit {
 
   search() {
     if (
-      this.paramSearch.line_no === "" ||
-      this.paramSearch.line_type === "" ||
+      this.paramSearch.line_name === "" ||
+      this.paramSearch.line_type_name === "" ||
       this.paramSearch.model === ""
     ) {
       return this.snotify.warning(MessageConstants.SELECT_ALL_QUERY_OPTION, CaptionConstants.WARNING);
@@ -107,19 +107,14 @@ export class MainComponent implements OnInit {
     })
   }
   add() {
-    this.service.changeSearchSource({
-      lineID: this.paramSearch.line_no,
-      lineTypeID: this.paramSearch.line_type,
-      model: this.paramSearch.model
-    });
     this.router.navigate([
       "/best-line/transaction/layout-attachment/add"
     ]);
   }
   clear() {
     this.paramSearch = {
-      line_no: '',
-      line_type: '',
+      line_name: '',
+      line_type_name: '',
       model: '',
       prod_season: ''
     };
@@ -134,7 +129,7 @@ export class MainComponent implements OnInit {
   getAllLineNo() {
     this.service.getAllLineNo().subscribe((res) => {
       this.lineNoList = res.map((item) => ({
-        id: item.line_id,
+        id: item.line_name,
         text: item.line_name
       }));
     });
@@ -143,7 +138,7 @@ export class MainComponent implements OnInit {
   getAllLineType() {
     this.service.getAllLineType().subscribe((res) => {
       this.lineTypeList = res.map((item) => ({
-        id: item.line_type_id,
+        id: item.line_type_name,
         text: item.line_type_name,
       }));
     });
@@ -165,11 +160,13 @@ export class MainComponent implements OnInit {
   }
 
 
-  delete(item: BLAttachmentsDetail) {
+  delete(item: C2bLayoutAttachmentDeleteParam) {
     this.snotify.confirm(
       MessageConstants.CONFIRM_DELETE,
       ActionConstants.DELETE,
       () => {
+        console.log(item);
+
         this.service.delete(item).subscribe(
           () => {
             this.search();

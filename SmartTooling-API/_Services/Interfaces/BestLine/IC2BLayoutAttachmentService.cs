@@ -15,10 +15,9 @@ namespace SmartTooling_API._Services.Interfaces.BestLine
         Task<object> GetAllModelNoOfAdd(string line_id, string line_type_id);
         Task<object> GetAllProdSeasonOfAdd(string line_id, string line_type_id, string model_no);
         Task<List<KeyValuePair<string, string>>> GetAllAttachmentType();
-
         Task<bool> Create(BL_AttachmentsDTO model);
         long GetLayout_design_overall_id(BL_AttachmentsParams model);
-        Task<bool> DeleteAttachment(BL_AttachmentsParams model);
+        Task<bool> DeleteAttachment(BL_AttachmentsDeleteParams model);
         Task<bool> IsExists(BL_AttachmentsDTO model);
 
     }

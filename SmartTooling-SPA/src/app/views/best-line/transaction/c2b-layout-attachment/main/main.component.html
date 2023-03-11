@@ -11,14 +11,14 @@
                 <label class="badge badge-warning">Pilot Line</label>
                 <ng-select2 name="lineNoList" [data]="lineNoList"
                   [options]="optionsSelectLineNo"
-                  [(ngModel)]="paramSearch.line_no" required>
+                  [(ngModel)]="paramSearch.line_name" required>
                 </ng-select2>
               </div>
               <div class="col-md-2">
                 <label class="badge badge-warning">Line Type</label>
                 <ng-select2 name="lineTypeList" [data]="lineTypeList"
                   [options]="optionsSelectLineType"
-                  [(ngModel)]="paramSearch.line_type" required>
+                  [(ngModel)]="paramSearch.line_type_name" required>
                 </ng-select2>
               </div>
               <div class="col-md-2">
@@ -30,7 +30,7 @@
                 <label class="badge badge-warning">Prod. Season</label>
                 <ng-select2 name="prodSeasonList" [data]="prodSeasonList"
                   [options]="optionsSelectprodSeason"
-                  [(ngModel)]="paramSearch.line_type" required>
+                  [(ngModel)]="paramSearch.prod_season" required>
                 </ng-select2>
               </div>
               <div class="col-md-4">
@@ -50,10 +50,7 @@
         <div class="card-body">
           <div class="form-group row">
             <div class="col-md-2">
-              <button type="button" class="btn btn-primary" (click)="add()"
-                [disabled]="
-                  paramSearch.model == ''
-                ">
+              <button type="button" class="btn btn-primary" (click)="add()">
                 <i class="fa fa-plus"></i> Add new
               </button>
             </div>

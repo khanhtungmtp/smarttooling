@@ -8,7 +8,6 @@ import {
   MessageConstants,
 } from "../../../../../_core/_constants/system.constants";
 import { BLAttachmentsDetail } from "../../../../../_core/_models/best-line/bl_attachments_detail";
-import { C2bLayoutAttachmentResult } from "../../../../../_core/_models/best-line/c2b_layout_attachment_result";
 import { C2BLayoutAttachmentService } from "../../../../../_core/_services/best-line/c2b-layout-attachment.service";
 import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.service";
 
@@ -40,7 +39,6 @@ export class AddComponent implements OnInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) { }
-
   ngOnInit() {
     // this.service.currentParamSearch.subscribe(res => {
     //   if (res != null) {
@@ -59,6 +57,7 @@ export class AddComponent implements OnInit {
   ngAfterViewChecked() {
     this.cdr.detectChanges();
   }
+
 
   getAllLineNoOfAdd() {
     this.service.getAllLineNoOfAdd().subscribe({
@@ -145,25 +144,31 @@ export class AddComponent implements OnInit {
         CaptionConstants.WARNING
       );
     }
+    // this.setParam();
     console.log(this.data);
-    console.log(this.file);
 
-    this.service.create(this.data, this.file).subscribe((res) => {
-      if (res) {
+    this.service.create(this.data, this.file).subscribe({
+      next: (res) => {
+        if (res) {
+          this.spinnerService.hide();
+          this.snotify.success(
+            MessageConstants.CREATED_OK_MSG,
+            ActionConstants.CREATE
+          );
+          this.router.navigate(["/best-line/transaction/layout-attachment/main"]);
+        } else {
+          this.spinnerService.hide();
+          return this.snotify.error(
+            MessageConstants.CREATED_ERROR_MSG,
+            CaptionConstants.ERROR
+          );
+        }
+      },
+      error: () => {
         this.spinnerService.hide();
-        this.snotify.success(
-          MessageConstants.CREATED_OK_MSG,
-          ActionConstants.CREATE
-        );
-        this.router.navigate(["/best-line/transaction/layout-attachment/main"]);
-      } else {
-        this.spinnerService.hide();
-        return this.snotify.error(
-          MessageConstants.CREATED_ERROR_MSG,
-          CaptionConstants.ERROR
-        );
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
       }
-    });
+    })
   }
   saveAndNext() {
     this.spinnerService.show();
@@ -173,6 +178,7 @@ export class AddComponent implements OnInit {
         CaptionConstants.WARNING
       );
     }
+    // this.setParam();
     this.service.create(this.data, this.file).subscribe((res) => {
       if (res) {
         this.spinnerService.hide();
@@ -180,7 +186,7 @@ export class AddComponent implements OnInit {
           MessageConstants.CREATED_OK_MSG,
           ActionConstants.CREATE
         );
-        //   this.resetData();
+        // this.resetData();
       } else {
         this.spinnerService.hide();
         return this.snotify.error(
@@ -199,6 +205,19 @@ export class AddComponent implements OnInit {
     });
   }
 
+  // setParam() {
+  //   this.data.factory_id = "";
+  //   this.data.line_id = this.lineNo;
+  //   this.data.line_type_id = this.lineType;
+  //   this.data.model_no = this.modelNo;
+  //   this.data.attachment_type_id = this.attachmentTypeList.find(
+  //     (x) => x.id === this.data.attachment_type_id
+  //   ).id;
+  //   this.data.attachment_name = "";
+  //   this.data.attachment_file_url = "";
+  //   this.data.update_by = "";
+  //   this.data.update_time = "";
+  // }
 
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
