@@ -1,13 +1,6 @@
-using System;
-using System.IO;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using SmartTooling_API._Services.Interfaces.BestLine;
-using SmartTooling_API._Services.Interfaces.SmartTool;
 using SmartTooling_API.DTO.BestLine;
 using SmartTooling_API.Helpers.Params;
 using SmartTooling_API.Helpers.Params.BestLine;
@@ -28,21 +21,25 @@ namespace SmartTooling_API.Controllers.BestLine
             _webHostEnvironment = webHostEnvironment;
             factory = configuration.GetSection("AppSettings:Factory").Value;
         }
-        private string GetUserClaim()
-        {
-            return username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        }
-        [HttpGet("getLineNoFromBL_Layout_Design_Overall")]
-        public async Task<IActionResult> GetLineNoFromBL_Layout_Design_Overall() => Ok(await _service.GetLineNoFromBL_Layout_Design_Overall());
-        [HttpGet("getLineTypeBL_Layout_Design_Overall")]
-        public async Task<IActionResult> GetLineTypeBL_Layout_Design_Overall() => Ok(await _service.GetLineTypeBL_Layout_Design_Overall());
+        private string GetUserClaim() => User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+        [HttpGet("getLineNoOfMain")]
+        public async Task<IActionResult> GetLineNoOfMain() => Ok(await _service.GetLineNoOfMain());
+
+        [HttpGet("getLineTypeOfMain")]
+
+        public async Task<IActionResult> GetLineTypeOfMain() => Ok(await _service.GetLineTypeOfMain());
         [HttpGet("getAllLineNo")]
+
         public async Task<IActionResult> GetAllLineNo() => Ok(await _service.GetAllLineNo());
         [HttpGet("getAllLineType")]
+
         public async Task<IActionResult> GetAllLineType() => Ok(await _service.GetAllLineType());
         [HttpGet("getAllModelNo")]
+
         public async Task<IActionResult> GetAllModelNo() => Ok(await _service.GetAllModelNo());
         [HttpGet("getAllProdSeason")]
+
         public async Task<IActionResult> GetAllProdSeason() => Ok(await _service.GetAllProdSeason());
 
         [HttpGet("search")]
@@ -64,10 +61,7 @@ namespace SmartTooling_API.Controllers.BestLine
             model.prod_season = model.prod_season.ToUpper();
             string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Layout_Design_Overall\\";
             if (model.c2b_overall_image == null || model.c2b_overall_image == "")
-            {
-                var fileName = "/no-image.jpg";
-                model.c2b_overall_image = factory + fileName;
-            }
+                model.c2b_overall_image = factory + "/no-image.jpg";
             else
             {
                 var source = model.c2b_overall_image;
@@ -85,6 +79,7 @@ namespace SmartTooling_API.Controllers.BestLine
             }
             return Ok(await _service.AddLayoutDesignOverall(model));
         }
+
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] BL_Layout_Design_OverallDTO model)
         {
@@ -95,9 +90,7 @@ namespace SmartTooling_API.Controllers.BestLine
             string pathRoot = _webHostEnvironment.WebRootPath + "\\uploaded\\";
             string folder = pathRoot + factory + "\\Polit_Line\\BL_Layout_Design_Overall\\";
             if (string.IsNullOrEmpty(model.c2b_overall_image))
-            {
                 model.c2b_overall_image = result.c2b_overall_image;
-            }
             else
             {
                 var source = model.c2b_overall_image;
@@ -105,34 +98,25 @@ namespace SmartTooling_API.Controllers.BestLine
                 base64 = base64.Trim('\0');
                 byte[] modelData = Convert.FromBase64String(base64);
                 if (!Directory.Exists(folder))
-                {
                     Directory.CreateDirectory(folder);
-                }
                 var fileNameOld = result.c2b_overall_image;
                 string filePathImages = Path.Combine(pathRoot, fileNameOld);
                 // kiểm tra file cũ có chưa xóa đi
                 if (System.IO.File.Exists(filePathImages))
-                {
                     System.IO.File.Delete(filePathImages);
-                }
                 string fileUpdate = factory + "/Polit_Line/BL_Layout_Design_Overall/" + Guid.NewGuid() + ".jpg";
                 string pathUpdate = pathRoot + fileUpdate;
                 System.IO.File.WriteAllBytes(pathUpdate, modelData);
                 model.c2b_overall_image = fileUpdate;
             }
 
-            if (await _service.UpdateLayoutDesignOverall(model))
-            {
-                return NoContent();
-            }
+            return Ok(await _service.UpdateLayoutDesignOverall(model));
             throw new Exception("Update the Model failed on save");
         }
+
         [HttpGet("edit")]
-        public async Task<ActionResult> GetParamsEdit(string line_id, string line_type_id, string model_no)
-        {
-            var data = await _service.GetParamsEdit(factory, line_id, line_type_id, model_no);
-            return Ok(data);
-        }
+        public async Task<ActionResult> GetParamsEdit(string line_id, string line_type_id, string model_no) =>
+             Ok(await _service.GetParamsEdit(factory, line_id, line_type_id, model_no));
 
     }
 }

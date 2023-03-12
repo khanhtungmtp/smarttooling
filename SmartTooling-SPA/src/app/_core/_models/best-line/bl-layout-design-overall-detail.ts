@@ -3,6 +3,8 @@ export interface BLLayoutDesignOverallDetail {
   line_id: string;
   line_type_id: string;
   model_no: string;
+  model_name: string;
+  prod_season: string;
   no_of_process_before: number | null;
   no_of_process_after: number | null;
   tct_before: number;
@@ -24,4 +26,5 @@ export interface BLLayoutDesignOverallDetail {
   update_time: string;
   create_by: string;
   create_time: string;
+  type: string;
 }

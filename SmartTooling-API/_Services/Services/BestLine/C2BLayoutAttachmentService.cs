@@ -37,9 +37,7 @@ namespace SmartTooling_API._Services.Services.BestLine
        .Select(x => new KeyValuePair<string, string>(x.attachment_type_id.Trim(), x.attachment_type_name.Trim()))
        .Distinct().ToListAsync();
 
-        public async Task<object> GetAllLineNo()
-        {
-            var layoutDesignOverall = _repoBLLayoutDesignOverall.FindAll().AsNoTracking()
+        public async Task<object> GetAllLineNo() => await _repoBLLayoutDesignOverall.FindAll().AsNoTracking()
             .GroupJoin(_repoBLAttachment.FindAll().AsNoTracking(),
             x => x.id,
             y => y.layout_design_overall_id,
@@ -56,12 +54,8 @@ namespace SmartTooling_API._Services.Services.BestLine
                 x.T3.line_name,
                 x.T3.sequence
             }).Distinct().OrderBy(x => x.sequence).ToListAsync();
-            return await layoutDesignOverall;
-        }
 
-        public async Task<object> GetAllLineType()
-        {
-            var layoutDesignOverall = _repoBLLayoutDesignOverall.FindAll().AsNoTracking().GroupJoin(_repoBLAttachment.FindAll().AsNoTracking(),
+        public async Task<object> GetAllLineType() => await _repoBLLayoutDesignOverall.FindAll().AsNoTracking().GroupJoin(_repoBLAttachment.FindAll().AsNoTracking(),
             x => x.id,
             y => y.layout_design_overall_id,
             (x, y) => new { T1 = x, T2 = y })
@@ -76,8 +70,6 @@ namespace SmartTooling_API._Services.Services.BestLine
                 line_type_name = x.T3.line_type_name,
                 sequence = x.T3.sequence
             }).Distinct().OrderBy(x => x.sequence).ToListAsync();
-            return await layoutDesignOverall;
-        }
 
         public async Task<object> GetAllProdSeason() => await _repoBLLayoutDesignOverall.FindAll().OrderBy(x => x.prod_season).Select(x => new
         {
@@ -141,18 +133,16 @@ namespace SmartTooling_API._Services.Services.BestLine
             return await PagedList<C2B_Layout_AttachmentDTO>.CreateAsync(data, pagination.PageNumber, pagination.PageSize, true);
         }
 
-        public async Task<bool> Create(BL_AttachmentsDTO model)
+        public async Task<OperationResult> Create(BL_AttachmentsDTO model)
         {
             if (await IsExists(model))
-            {
-                return false;
-            }
+                return new OperationResult { Success = false };
             else
             {
                 var models = _mapper.Map<BL_Attachments>(model);
                 _repoBLAttachment.Add(models);
                 var result = await _repoBLAttachment.SaveAll();
-                return result;
+                return new OperationResult { Success = true };
             }
         }
 

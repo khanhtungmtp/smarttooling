@@ -12,7 +12,7 @@
           </button>
         </div>
 
-        <form class="form-horizontal" [formGroup]="addForm" autocomplete="off">
+        <form class="form-horizontal" #addForm="ngForm" autocomplete="off">
           <div class="card-body">
             <div class="form-group row">
               <label class="col-md-2 col-form-label">
@@ -21,9 +21,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <ng-select2 id="line_id" name="line_id" [data]="lineNoList"
-                  width="100%" [options]="optionsSelectLineNo"
-                  formControlName="line_id">
+                <ng-select2 id="line_id" name="line_id" required
+                  [(ngModel)]="param.line_id" [data]="lineNoList" width="100%"
+                  [options]="optionsSelectLineNo">
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -31,9 +31,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <ng-select2 id="line_type_id" name="line_type_id"
-                  [data]="lineTypeList" [options]="optionsSelectLineType"
-                  formControlName="line_type_id" width="100%">
+                <ng-select2 id="line_type_id" name="line_type_id" required
+                  [(ngModel)]="param.line_type_id" [data]="lineTypeList"
+                  [options]="optionsSelectLineType" width="100%">
                 </ng-select2>
               </div>
             </div>
@@ -43,9 +43,11 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <ng-select2 id="model_no" name="model_no" [data]="modelNoList"
+                <ng-select2 id="model_no" name="model_no" required
+                  [(ngModel)]="param.model_no" [data]="modelNoList"
+                  (valueChanged)="changeModelName($event)"
                   [options]="optionsSelectModelNo" width="100%"
-                  formControlName="model_no" selected="modelNo">
+                  selected="modelNo">
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -53,8 +55,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="text" name="model_name" class="form-control"
-                  autocomplete="off" formControlName="model_name" />
+                <input type="text" name="model_name"
+                  [(ngModel)]="param.model_name" class="form-control"
+                  disabled />
               </div>
             </div>
             <div class="form-group row">
@@ -64,8 +67,8 @@
               </label>
               <div class="col-md-2">
                 <input type="number" name="no_of_process_before"
-                  id="no_of_process_before" class="form-control"
-                  autocomplete="off" formControlName="no_of_process_before" />
+                  [(ngModel)]="param.no_of_process_before"
+                  id="no_of_process_before" class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">No of Process After
@@ -73,8 +76,8 @@
               </label>
               <div class="col-md-2">
                 <input type="number" name="no_of_process_after"
-                  id="no_of_process_after" class="form-control"
-                  autocomplete="off" formControlName="no_of_process_after" />
+                  [(ngModel)]="param.no_of_process_after"
+                  id="no_of_process_after" class="form-control" />
               </div>
             </div>
             <div class="form-group row">
@@ -84,9 +87,8 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="tct_before" id="tct_before"
-                  class="form-control" autocomplete="off"
-                  formControlName="tct_before" />
+                <input type="number" name="tct_before" id="tct_before" required
+                  [(ngModel)]="param.tct_before" class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">TCT After
@@ -94,9 +96,8 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="tct_after" id="tct_after"
-                  class="form-control" autocomplete="off"
-                  formControlName="tct_after" />
+                <input type="number" name="tct_after" id="tct_after" required
+                  [(ngModel)]="param.tct_after" class="form-control" />
               </div>
             </div>
             <div class="form-group row">
@@ -107,8 +108,8 @@
               </label>
               <div class="col-md-2">
                 <input type="number" name="cps_mp_before" id="cps_mp_before"
-                  class="form-control" autocomplete="off"
-                  formControlName="cps_mp_before" />
+                  required [(ngModel)]="param.cps_mp_before"
+                  class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">CPS MP After
@@ -117,8 +118,8 @@
               </label>
               <div class="col-md-2">
                 <input type="number" name="cps_mp_after" id="cps_mp_after"
-                  class="form-control" autocomplete="off"
-                  formControlName="cps_mp_after" />
+                  required [(ngModel)]="param.cps_mp_after"
+                  class="form-control" />
               </div>
             </div>
 
@@ -129,9 +130,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="assembly_mp_before"
-                  id="assembly_mp_before" class="form-control"
-                  autocomplete="off" formControlName="assembly_mp_before" />
+                <input type="number" name="assembly_mp_before" required
+                  [(ngModel)]="param.assembly_mp_before" id="assembly_mp_before"
+                  class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">Assembly MP After
@@ -139,9 +140,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="assembly_mp_after"
-                  id="assembly_mp_after" class="form-control" autocomplete="off"
-                  formControlName="assembly_mp_after" />
+                <input type="number" name="assembly_mp_after" required
+                  [(ngModel)]="param.assembly_mp_after" id="assembly_mp_after"
+                  class="form-control" />
               </div>
             </div>
             <div class="form-group row">
@@ -152,8 +153,8 @@
               </label>
               <div class="col-md-2">
                 <input type="number" name="eolr_before" id="eolr_before"
-                  class="form-control" autocomplete="off"
-                  formControlName="eolr_before" />
+                  required [(ngModel)]="param.eolr_before"
+                  class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">EOLR After
@@ -161,9 +162,8 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="eolr_after" id="eolr_after"
-                  class="form-control" autocomplete="off"
-                  formControlName="eolr_after" />
+                <input type="number" name="eolr_after" id="eolr_after" required
+                  [(ngModel)]="param.eolr_after" class="form-control" />
               </div>
             </div>
             <div class="form-group row">
@@ -173,9 +173,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="ller_before_percent"
-                  id="ller_before_percent" class="form-control"
-                  autocomplete="off" formControlName="ller_before_percent" />
+                <input type="number" name="ller_before_percent" required
+                  [(ngModel)]="param.ller_before_percent"
+                  id="ller_before_percent" class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">LLER After
@@ -183,9 +183,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="ller_after_percent"
-                  id="ller_after_percent" class="form-control"
-                  autocomplete="off" formControlName="ller_after_percent" />
+                <input type="number" name="ller_after_percent" required
+                  [(ngModel)]="param.ller_after_percent" id="ller_after_percent"
+                  class="form-control" />
               </div>
             </div>
             <div class="form-group row">
@@ -195,9 +195,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="tentative_pph_before"
-                  id="tentative_pph_before" class="form-control"
-                  autocomplete="off" formControlName="tentative_pph_before" />
+                <input type="number" name="tentative_pph_before" required
+                  [(ngModel)]="param.tentative_pph_before"
+                  id="tentative_pph_before" class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">Tentative PPH After
@@ -205,9 +205,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="number" name="tentative_pph_after"
-                  id="tentative_pph_after" class="form-control"
-                  autocomplete="off" formControlName="tentative_pph_after" />
+                <input type="number" name="tentative_pph_after" required
+                  [(ngModel)]="param.tentative_pph_after"
+                  id="tentative_pph_after" class="form-control" />
               </div>
             </div>
             <div class="form-group row">
@@ -217,9 +217,9 @@
               </label>
               <div class="col-md-2">
                 <input type="number" name="tentative_efficiency_before_percent"
-                  id="tentative_efficiency_before_percent" class="form-control"
-                  autocomplete="off"
-                  formControlName="tentative_efficiency_before_percent" />
+                  [(ngModel)]="param.tentative_efficiency_before_percent"
+                  id="tentative_efficiency_before_percent"
+                  class="form-control" />
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
                 <span class="float-sm-left">Tentative Efficiency After
@@ -227,9 +227,9 @@
               </label>
               <div class="col-md-2">
                 <input type="number" name="tentative_efficiency_after_percent"
-                  id="tentative_efficiency_after_percent" class="form-control"
-                  autocomplete="off"
-                  formControlName="tentative_efficiency_after_percent" />
+                  [(ngModel)]="param.tentative_efficiency_after_percent"
+                  id="tentative_efficiency_after_percent"
+                  class="form-control" />
               </div>
             </div>
             <div class="form-group row">
@@ -239,9 +239,9 @@
                 </span>
               </label>
               <div class="col-md-2">
-                <input type="text" name="prod_season" id="prod_season"
-                  style="text-transform:uppercase" class="form-control"
-                  autocomplete="off" formControlName="prod_season" />
+                <input type="text" name="prod_season" id="prod_season" required
+                  [(ngModel)]="param.prod_season"
+                  class="form-control text-uppercase" />
               </div>
             </div>
 
@@ -251,17 +251,9 @@
                   <strong>(jpg,jpeg,png < 5MB) </strong></span>
               </label>
               <div class="col-md-2">
-                <img [src]="
-                    addForm.value.c2b_overall_image === ''
-                      ? defaultImage
-                      : addForm.value.c2b_overall_image
-                  " width="100%" width="60" />
-                <label class="btn btn-primary upload">
-                  Upload
-                  <input type="file" class="uploadFile img" value="Upload Photo"
-                    style="width: 0px; height: 0px; overflow: hidden"
-                    (change)="onSelectFile($event)" #fileImageB4 />
-                </label>
+                <media-upload #image [acceptKey]="'image'" #fileInput
+                  [isImageOrVideo]="true"
+                  [url]="defaultImage ?? param.c2b_overall_image"></media-upload>
               </div>
             </div>
           </div>
@@ -274,7 +266,7 @@
                   Save
                 </button>
                 <button type="button" class="btn btn-sm btn-primary"
-                  [disabled]="!addForm.valid" (click)="saveAndNext()">
+                  (click)="save('next')" [disabled]="!addForm.valid">
                   <i class="fa fa-check"></i> Save & Next
                 </button>
               </div>

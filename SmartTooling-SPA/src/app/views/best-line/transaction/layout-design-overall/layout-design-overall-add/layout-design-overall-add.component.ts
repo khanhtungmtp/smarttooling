@@ -1,6 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { NgxSpinnerService } from "ngx-spinner";
 import { LayoutDesignOverallService } from "../../../../../_core/_services/best-line/layout-design-overall.service";
@@ -11,6 +10,8 @@ import {
   MessageConstants,
 } from "../../../../../_core/_constants/system.constants";
 import { environment } from "../../../../../../environments/environment";
+import { BLLayoutDesignOverallDetail } from "../../../../../_core/_models/best-line/bl-layout-design-overall-detail";
+import { MediaUploadComponent } from "../../../../commons/media-upload/media-upload.component";
 
 @Component({
   selector: "app-layout-design-overall-add",
@@ -18,10 +19,16 @@ import { environment } from "../../../../../../environments/environment";
   styleUrls: ["./layout-design-overall-add.component.scss"],
 })
 export class LayoutDesignOverallAddComponent implements OnInit {
-  addForm: FormGroup;
   baseUrl: string = environment.imageUrl;
   defaultImage: string =
     this.baseUrl + localStorage.getItem('factorySmartTooling') + "/Model/no-image.jpg";
+  param: BLLayoutDesignOverallDetail = <BLLayoutDesignOverallDetail>{
+    line_id: '',
+    line_type_id: '',
+    model_no: '',
+    c2b_overall_image: ''
+  }
+  @ViewChild('image') image!: MediaUploadComponent;
   modelNoList: Array<Select2OptionData> = [];
   lineNoList: Array<Select2OptionData> = [];
   lineTypeList: Array<Select2OptionData> = [];
@@ -45,37 +52,32 @@ export class LayoutDesignOverallAddComponent implements OnInit {
     private layoutDesignOverallService: LayoutDesignOverallService,
     private snotify: NgSnotifyService,
     private spinnerService: NgxSpinnerService,
-    private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private cdr: ChangeDetectorRef
   ) { }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
+  }
 
   ngOnInit() {
     this.spinnerService.show();
-    this.initForm();
     this.getAllLineNo();
     this.getAllLineType();
     this.getAllModelNo();
-    this.addForm.get("model_no").valueChanges.subscribe((value) => {
-      if (value) {
-        const modelName = this.modelNoList.find(
-          (x) => x.id === value
-        ).additional;
-        this.addForm.get("model_name").patchValue(modelName);
-      }
-    });
     this.spinnerService.hide();
   }
-  save() {
+  save(type?: string) {
     this.spinnerService.show();
-    this.layoutDesignOverallService.create(this.addForm.value).subscribe(
+    this.layoutDesignOverallService.create(this.param).subscribe(
       res => {
         this.spinnerService.hide();
         if (res.success) {
           this.snotify.success(MessageConstants.CREATED_OK_MSG, ActionConstants.CREATE);
-          this.router.navigate([
-            "/best-line/transaction/layout-design-overall/main",
-          ]);
+          if (type == 'next')
+            this.resetForm()
+          else
+            this.back()
         }
         else {
           if (!res.success && res.caption != null) {
@@ -87,115 +89,73 @@ export class LayoutDesignOverallAddComponent implements OnInit {
         }
       });
   }
-  initForm() {
-    this.addForm = this.fb.group({
-      line_id: ["", Validators.compose([Validators.required])],
-      line_type_id: ["", Validators.compose([Validators.required])],
-      model_no: ["", Validators.compose([Validators.required])],
-      model_name: [
-        { value: this.modelName, disabled: true },
-        Validators.compose([Validators.required]),
-      ],
-      no_of_process_before: null,
-      no_of_process_after: null,
-      tct_before: ["", Validators.compose([Validators.required])],
-      tct_after: ["", Validators.compose([Validators.required])],
-      cps_mp_before: ["", Validators.compose([Validators.required])],
-      cps_mp_after: ["", Validators.compose([Validators.required])],
-      assembly_mp_before: ["", Validators.compose([Validators.required])],
-      assembly_mp_after: ["", Validators.compose([Validators.required])],
-      eolr_before: ["", Validators.compose([Validators.required])],
-      eolr_after: ["", Validators.compose([Validators.required])],
-      ller_before_percent: ["", Validators.compose([Validators.required])],
-      ller_after_percent: ["", Validators.compose([Validators.required])],
-      tentative_pph_before: ["", Validators.compose([Validators.required])],
-      tentative_pph_after: ["", Validators.compose([Validators.required])],
-      tentative_efficiency_before_percent: null,
-      tentative_efficiency_after_percent: null,
-      prod_season: ["", Validators.compose([Validators.required, Validators.maxLength(4)])],
-      c2b_overall_image: "",
-    });
+
+  back() {
+    this.router.navigate([
+      "/best-line/transaction/layout-design-overall/main",
+    ]);
   }
   getAllLineNo() {
-    this.layoutDesignOverallService.getAllLineNo().subscribe((res) => {
-      this.lineNoList = res.map((item) => {
-        return { id: item.line_id, text: item.line_name };
-      });
-    });
+    this.layoutDesignOverallService.getAllLineNo().subscribe({
+      next: (res) => {
+        this.lineNoList = res.map((item) => {
+          return { id: item.line_id, text: item.line_name };
+        });
+        this.spinnerService.hide();
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
+      }
+    })
   }
   getAllLineType() {
-    this.layoutDesignOverallService.getAllLineType().subscribe((res) => {
-      this.lineTypeList = res.map((item) => {
-        return {
-          id: item.line_type_id,
-          text: item.line_type_name,
-        };
-      });
-    });
+    this.layoutDesignOverallService.getAllLineType().subscribe({
+      next: (res) => {
+        this.lineTypeList = res.map((item) => {
+          return {
+            id: item.line_type_id,
+            text: item.line_type_name,
+          };
+        });
+        this.spinnerService.hide();
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
+      }
+    })
   }
   getAllModelNo() {
-    this.layoutDesignOverallService.getAllModelNo().subscribe((res) => {
-      this.modelNoList = res.map((item) => {
-        return {
-          id: item.model_no,
-          text: item.model_no,
-          additional: item.model_name,
-        };
-      });
-    });
-  }
-  saveAndNext() {
-    this.spinnerService.show();
-    this.layoutDesignOverallService.create(this.addForm.value).subscribe(
-      res => {
+    this.layoutDesignOverallService.getAllModelNo().subscribe({
+      next: (res) => {
+        this.modelNoList = res.map((item) => {
+          return {
+            id: item.model_no,
+            text: item.model_no,
+            additional: item.model_name,
+          };
+        });
         this.spinnerService.hide();
-        if (res.success) {
-          this.snotify.success(MessageConstants.CREATED_OK_MSG, ActionConstants.CREATE);
-          this.resetForm();
-        }
-        else {
-          if (!res.success && res.caption != null) {
-            this.snotify.error(MessageConstants.CREATED_ERROR_MSG, CaptionConstants.ERROR);
-          }
-          else {
-            this.snotify.error(res.message, CaptionConstants.ERROR);
-          }
-        }
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
       }
-    );
+    })
   }
-  changeToUppercase() {
-    this.addForm.patchValue({
-      line_id: this.addForm.value.model_no.toUpperCase(),
-      line_type_id: this.addForm.value.line_type_id.toUpperCase(),
-      model_no: this.addForm.value.model_no.toUpperCase(),
-      model_name: this.addForm.value.model_name.toUpperCase(),
-    });
+  changeModelName(e: any) {
+    this.param.model_name = this.modelNoList.find(x => x.id == e)?.additional
   }
+
   resetForm() {
-    this.addForm.setValue({
-      line_id: "",
-      line_type_id: "",
-      model_no: "",
-      model_name: "",
-      no_of_process_before: "",
-      no_of_process_after: "",
-      tct_before: "",
-      tct_after: "",
-      cps_mp_before: "",
-      cps_mp_after: "",
-      assembly_mp_before: "",
-      assembly_mp_after: "",
-      eolr_before: "",
-      eolr_after: "",
-      ller_before_percent: "",
-      ller_after_percent: "",
-      tentative_pph_before: "",
-      tentative_pph_after: "",
-      tentative_efficiency_before_percent: "",
-      tentative_efficiency_after_percent: "",
-      c2b_overall_image: "",
-    });
+    this.param = <BLLayoutDesignOverallDetail>{
+      line_id: '',
+      line_type_id: '',
+      model_no: '',
+      c2b_overall_image: ''
+    };
+    this.image.reset();
   }
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
@@ -214,9 +174,7 @@ export class LayoutDesignOverallAddComponent implements OnInit {
       ) {
         if (fileZise <= 5242880) {
           reader.onload = (e) => {
-            this.addForm.patchValue({
-              c2b_overall_image: e.target.result.toString(),
-            });
+            this.param.c2b_overall_image = e.target.result.toString()
           };
         } else {
           this.snotify.error(
@@ -224,6 +182,10 @@ export class LayoutDesignOverallAddComponent implements OnInit {
             CaptionConstants.ERROR
           );
         }
+      } else {
+        return this.snotify.warning(
+          MessageConstants.INVALID_FILE + "'.jpg', '.jpeg' or '.png'"
+        );
       }
     }
   }

@@ -47,11 +47,9 @@ export class MainComponent implements OnInit {
     model: '',
     prod_season: ''
   };
-  pagination: Pagination = {
+  pagination: Pagination = <Pagination>{
     currentPage: 1,
     itemsPerPage: 10,
-    totalItems: 0,
-    totalPages: 0,
   };
   message = MessageConstants;
   constructor(
@@ -74,7 +72,6 @@ export class MainComponent implements OnInit {
   }
 
   search() {
-    this.spinnerService.show();
     this.pagination.currentPage == 1 ? this.getData() : this.pagination.currentPage = 1;
   }
 
@@ -111,7 +108,7 @@ export class MainComponent implements OnInit {
 
   pageChanged(e: any): void {
     this.pagination.currentPage = e.page;
-    this.search();
+    this.getData();
   }
 
   getAllLineNo() {

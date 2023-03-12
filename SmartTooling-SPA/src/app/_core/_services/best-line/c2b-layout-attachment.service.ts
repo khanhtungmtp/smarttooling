@@ -64,7 +64,11 @@ export class C2BLayoutAttachmentService {
   search(pagination: Pagination, paramSearch: C2bLayoutAttachmentParam) {
     const paginatedResult: PaginatedResult<C2bLayoutAttachmentResult[]> =
       new PaginatedResult<C2bLayoutAttachmentResult[]>();
-    const params = new HttpParams().appendAll({ ...pagination, ...paramSearch })
+    const paginations = {
+      'PageNumber': pagination.currentPage,
+      'PageSize': pagination.itemsPerPage
+    }
+    const params = new HttpParams().appendAll({ ...paginations, ...paramSearch })
     return this.http
       .get<C2bLayoutAttachmentResult[]>(this.baseUrl + "Search", {
         observe: "response",

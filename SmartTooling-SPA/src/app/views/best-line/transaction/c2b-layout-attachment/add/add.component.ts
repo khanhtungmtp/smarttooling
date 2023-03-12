@@ -192,7 +192,7 @@ export class AddComponent implements OnInit {
         fileNameExtension !== "pdf"
       ) {
         return this.snotify.warning(
-          MessageConstants.INVALID_FILE + "'.xlsx', '.xls' or 'pdf'"
+          MessageConstants.INVALID_FILE + "'.xlsx', '.xls' or '.pdf'"
         );
       }
       this.file = files;

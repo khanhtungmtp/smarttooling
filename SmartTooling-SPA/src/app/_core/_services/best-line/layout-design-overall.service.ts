@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { environment } from "../../../../environments/environment";
 import { BLLayoutDesignOverall } from "../../_models/best-line/bl-layout-design-overall";
 import { BLLayoutDesignOverallDetail } from "../../_models/best-line/bl-layout-design-overall-detail";
-import { BLLayoutDesignOverallParam } from "../../_models/best-line/bl-layout-design-overall-param";
+import { BLLayoutDesignOverallParam } from "../../_helpers/params/best-line/bl-layout-design-overall-param";
 import { OperationResult } from "../../_models/smart-tool/operation-result";
 import { PaginatedResult, Pagination } from "../../_models/smart-tool/pagination";
 
@@ -13,59 +13,53 @@ import { PaginatedResult, Pagination } from "../../_models/smart-tool/pagination
   providedIn: "root",
 })
 export class LayoutDesignOverallService {
-  baseUrl = environment.apiUrl;
-
-  paramSearchSource = new BehaviorSubject<BLLayoutDesignOverall>(null);
+  baseUrl = environment.apiUrl + 'LayoutDesignOverall/';
+  paramSearchSource = new BehaviorSubject<BLLayoutDesignOverallDetail>(null);
   currentParamSearch = this.paramSearchSource.asObservable();
-
   layoutSearchSource = new BehaviorSubject<BLLayoutDesignOverallParam>(null);
   currentModelSearch = this.layoutSearchSource.asObservable();
 
-
   constructor(private http: HttpClient) { }
-  setEdit = (item: BLLayoutDesignOverall) => this.paramSearchSource.next(item);
+  setEdit = (item: BLLayoutDesignOverallDetail) => this.paramSearchSource.next(item);
   setParamSearch = (item: BLLayoutDesignOverallParam) => this.layoutSearchSource.next(item);
-  getLineNoFromBL_Layout_Design_Overall() {
+  getLineNoOfMain() {
     return this.http.get<any>(
-      this.baseUrl + "LayoutDesignOverall/getLineNoFromBL_Layout_Design_Overall"
+      this.baseUrl + "getLineNoOfMain"
     );
   }
-  getLineTypeBL_Layout_Design_Overall() {
+  getLineTypeOfMain() {
     return this.http.get<any>(
-      this.baseUrl + "LayoutDesignOverall/getLineTypeBL_Layout_Design_Overall"
+      this.baseUrl + "getLineTypeOfMain"
     );
   }
   getAllLineNo() {
     return this.http.get<any>(
-      this.baseUrl + "LayoutDesignOverall/getAllLineNo"
+      this.baseUrl + "getAllLineNo"
     );
   }
   getAllLineType() {
     return this.http.get<any>(
-      this.baseUrl + "LayoutDesignOverall/getAllLineType"
+      this.baseUrl + "getAllLineType"
     );
   }
-
   getAllModelNo() {
     return this.http.get<any>(
-      this.baseUrl + "LayoutDesignOverall/getAllModelNo"
+      this.baseUrl + "getAllModelNo"
     );
   }
   getAllProdSeason() {
     return this.http.get<any>(
-      this.baseUrl + "LayoutDesignOverall/getAllProdSeason"
+      this.baseUrl + "getAllProdSeason"
     );
   }
   search(pagination: Pagination, paramSearch: BLLayoutDesignOverallParam) {
     const paginatedResult: PaginatedResult<BLLayoutDesignOverall[]> = new PaginatedResult<BLLayoutDesignOverall[]>();
-    const params = new HttpParams()
-      .set("line_no", paramSearch.line_no)
-      .set("line_type", paramSearch.line_type)
-      .set("model", paramSearch.model)
-      .set("prod_season", paramSearch.prodSeason)
-      .set("pageNumber", pagination.currentPage.toString())
-      .set("pageSize", pagination.itemsPerPage.toString());
-    return this.http.get<BLLayoutDesignOverall[]>(this.baseUrl + "LayoutDesignOverall/search", { observe: "response", params })
+    const paginations = {
+      'PageNumber': pagination.currentPage,
+      'PageSize': pagination.itemsPerPage
+    }
+    const params = new HttpParams().appendAll({ ...paginations, ...paramSearch })
+    return this.http.get<BLLayoutDesignOverall[]>(this.baseUrl + "search", { observe: "response", params })
       .pipe(
         map(response => {
           paginatedResult.result = response.body;
@@ -77,9 +71,9 @@ export class LayoutDesignOverallService {
       );
   }
   create(model: BLLayoutDesignOverallDetail) {
-    return this.http.post<OperationResult>(this.baseUrl + "LayoutDesignOverall/add", model);
+    return this.http.post<OperationResult>(this.baseUrl + "add", model);
   }
   update(model: BLLayoutDesignOverallDetail) {
-    return this.http.put(this.baseUrl + "LayoutDesignOverall/update", model);
+    return this.http.put<OperationResult>(this.baseUrl + "update", model);
   }
 }

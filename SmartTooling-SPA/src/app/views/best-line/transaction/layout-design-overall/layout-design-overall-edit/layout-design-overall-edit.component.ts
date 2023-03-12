@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { NgxSpinnerService } from "ngx-spinner";
 import { environment } from "../../../../../../environments/environment";
@@ -38,7 +38,6 @@ export class LayoutDesignOverallEditComponent implements OnInit {
     private layoutDesignOverallService: LayoutDesignOverallService,
     private snotify: NgSnotifyService,
     private spinnerService: NgxSpinnerService,
-    private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
   ) { }

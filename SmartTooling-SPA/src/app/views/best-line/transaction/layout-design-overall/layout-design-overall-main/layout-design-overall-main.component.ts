@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -7,10 +7,11 @@ import {
   MessageConstants,
 } from "../../../../../_core/_constants/system.constants";
 import { BLLayoutDesignOverall } from "../../../../../_core/_models/best-line/bl-layout-design-overall";
-import { BLLayoutDesignOverallParam } from "../../../../../_core/_models/best-line/bl-layout-design-overall-param";
+import { BLLayoutDesignOverallParam } from "../../../../../_core/_helpers/params/best-line/bl-layout-design-overall-param";
 import { Pagination } from "../../../../../_core/_models/smart-tool/pagination";
 import { LayoutDesignOverallService } from "../../../../../_core/_services/best-line/layout-design-overall.service";
 import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.service";
+import { BLLayoutDesignOverallDetail } from "../../../../../_core/_models/best-line/bl-layout-design-overall-detail";
 
 @Component({
   selector: "app-layout-design-overall-main",
@@ -19,10 +20,6 @@ import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.serv
 })
 export class LayoutDesignOverallMainComponent implements OnInit {
   data: BLLayoutDesignOverall[] = [];
-  model: string = "";
-  lineNo: string = "";
-  lineType: string = "";
-  modelName: string = "";
   lineNoList: Array<Select2OptionData> = [];
   lineTypeList: Array<Select2OptionData> = [];
   prodSeasonList: Select2OptionData[] = []
@@ -41,119 +38,121 @@ export class LayoutDesignOverallMainComponent implements OnInit {
     allowClear: true,
     width: "100%",
   };
-  pagination: Pagination = {
+  pagination: Pagination = <Pagination>{
     currentPage: 1,
     itemsPerPage: 10,
-    totalItems: 0,
-    totalPages: 0,
   };
-  paramSearch: BLLayoutDesignOverallParam = {
+  paramSearch: BLLayoutDesignOverallParam = <BLLayoutDesignOverallParam>{
     line_no: "",
     line_type: "",
     model: "",
-    prodSeason: ""
-  } as BLLayoutDesignOverallParam;
+    prod_season: "",
+  };
 
-  checkNotifySearch: boolean = false;
-  message = MessageConstants;
+  message: typeof MessageConstants = MessageConstants;
   constructor(
     private layoutDesignOverallService: LayoutDesignOverallService,
     private snotify: NgSnotifyService,
     private spinnerService: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
+  }
 
   ngOnInit() {
     this.spinnerService.show();
     this.getAllLineNo();
     this.getAllLineType();
     this.getAllProdSeason();
-    this.layoutDesignOverallService.currentModelSearch.subscribe((res) => {
-      if (res != null) {
-        this.paramSearch = res;
-        this.pagination.currentPage = res.currentPage;
-        this.getData();
-      } else {
-        this.getData();
-      }
-    });
+    this.getData();
     this.spinnerService.hide();
   }
+
   getData() {
     this.spinnerService.show();
-    this.paramSearch.model = this.paramSearch.model.toUpperCase();
-    this.layoutDesignOverallService.search(this.pagination, this.paramSearch).subscribe((res) => {
-      this.spinnerService.hide();
-      this.pagination = res.pagination;
-      this.data = res.result;
-      if (this.checkNotifySearch) {
+    this.layoutDesignOverallService.search(this.pagination, this.paramSearch).subscribe({
+      next: (res) => {
         this.spinnerService.hide();
-        this.checkNotifySearch = false;
+        this.pagination = res.pagination;
+        this.data = res.result;
+        this.spinnerService.hide();
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
       }
-    }, (error) => {
-      this.spinnerService.hide();
-      this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
-    }
-    );
+    })
   }
+
   search() {
-    this.spinnerService.show();
-    this.pagination.currentPage = 1;
-    this.checkNotifySearch = true;
-    this.getData();
-    this.paramSearch.currentPage = this.pagination.currentPage;
-    this.layoutDesignOverallService.setParamSearch(this.paramSearch);
-    this.spinnerService.hide();
+    this.pagination.currentPage == 1 ? this.getData() : this.pagination.currentPage = 1
   }
+
   clear() {
-    this.paramSearch = {
+    this.paramSearch = <BLLayoutDesignOverallParam>{
       line_no: "",
       line_type: "",
       model: "",
-      prodSeason: ""
-    } as BLLayoutDesignOverallParam;
-    this.pagination = {
-      currentPage: 1,
-      itemsPerPage: 10,
-    } as Pagination;
+      prod_season: ""
+    };
     this.getData();
-    this.paramSearch.currentPage = this.pagination.currentPage;
     this.layoutDesignOverallService.setParamSearch(this.paramSearch);
   }
+
   add() {
     this.router.navigate(["/best-line/transaction/layout-design-overall/add"]);
   }
-  update(item: BLLayoutDesignOverall) {
+
+  update(item: BLLayoutDesignOverallDetail) {
+    item.type = 'edit'
     this.layoutDesignOverallService.setEdit(item);
     this.router.navigate([
       "/best-line/transaction/layout-design-overall/edit/",
     ]);
   }
+
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.getData();
-    this.paramSearch.currentPage = this.pagination.currentPage;
-    this.layoutDesignOverallService.setParamSearch(this.paramSearch);
   }
+
   getAllLineNo() {
-    this.layoutDesignOverallService.getLineNoFromBL_Layout_Design_Overall().subscribe((res) => {
-      this.lineNoList = res.map((item) => {
-        return {
-          id: item.line_id,
-          text: item.line_name,
-        };
-      });
-    });
+    this.layoutDesignOverallService.getLineNoOfMain().subscribe({
+      next: (res) => {
+        this.lineNoList = res.map((item) => {
+          return {
+            id: item.line_id,
+            text: item.line_name,
+          };
+        });
+        this.spinnerService.hide();
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
+      }
+    })
   }
+
   getAllLineType() {
-    this.layoutDesignOverallService.getLineTypeBL_Layout_Design_Overall().subscribe((res) => {
-      this.lineTypeList = res.map((item) => {
-        return {
-          id: item.line_type_id,
-          text: item.line_type_name,
-        };
-      });
-    });
+    this.layoutDesignOverallService.getLineTypeOfMain().subscribe({
+      next: (res) => {
+        this.lineTypeList = res.map((item) => {
+          return {
+            id: item.line_type_id,
+            text: item.line_type_name,
+          };
+        });
+        this.spinnerService.hide();
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
+      }
+    })
   }
 
   getAllProdSeason() {
@@ -165,7 +164,6 @@ export class LayoutDesignOverallMainComponent implements OnInit {
             text: item.prod_season,
           };
         });
-
         this.spinnerService.hide();
       },
       error: () => {
