@@ -6,7 +6,7 @@ import {
 } from "../../../../../_core/_constants/system.constants";
 import { environment } from "../../../../../../environments/environment";
 import { Select2OptionData } from 'ng-select2';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgSnotifyService } from '../../../../../_core/_services/ng-snotify.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ import { ModelList } from '../../../../../_core/_models/smart-tool/modelList';
 })
 export class BondingProgramSettingAddComponent implements OnInit {
   initialValues: string;
-  addForm: FormGroup;
+  addForm: UntypedFormGroup;
   baseUrl: string = environment.imageUrl;
   defaultImage: string =
     this.baseUrl + localStorage.getItem('factorySmartTooling') + "/Model/no-image.jpg";
@@ -93,7 +93,7 @@ export class BondingProgramSettingAddComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private shareService: SharedResourcesService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit(): void {

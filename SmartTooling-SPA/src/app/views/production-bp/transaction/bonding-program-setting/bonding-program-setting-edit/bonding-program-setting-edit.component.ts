@@ -6,7 +6,7 @@ import {
 } from "../../../../../_core/_constants/system.constants";
 import { environment } from "../../../../../../environments/environment";
 import { Select2OptionData } from 'ng-select2';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgSnotifyService } from '../../../../../_core/_services/ng-snotify.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +20,7 @@ import * as moment from 'moment';
 })
 export class BondingProgramSettingEditComponent implements OnInit {
   initialValues: string;
-  editForm: FormGroup;
+  editForm: UntypedFormGroup;
   baseUrl: string = environment.imageUrl;
   defaultImage: string =
     this.baseUrl + localStorage.getItem('factorySmartTooling') + "/Model/no-image.jpg";
@@ -91,7 +91,7 @@ export class BondingProgramSettingEditComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit(): void {

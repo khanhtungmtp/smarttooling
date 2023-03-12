@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -19,7 +19,7 @@ import { MediaUploadComponent } from "../../../../commons/media-upload/media-upl
   styleUrls: ["./layout-design-overall-edit.component.scss"],
 })
 export class LayoutDesignOverallEditComponent implements OnInit {
-  editForm: FormGroup;
+  editForm: UntypedFormGroup;
   modelNoList: Array<Select2OptionData> = [];
   lineNoList: Array<Select2OptionData> = [];
   lineTypeList: Array<Select2OptionData> = [];
@@ -39,7 +39,7 @@ export class LayoutDesignOverallEditComponent implements OnInit {
     private snotify: NgSnotifyService,
     private spinnerService: NgxSpinnerService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit() {

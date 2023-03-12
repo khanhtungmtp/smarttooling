@@ -1,5 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select2OptionData } from 'ng-select2';
@@ -28,7 +28,7 @@ export class RolloutAddComponent implements OnInit, AfterViewChecked  {
 
   @ViewChild('mediaUploadVideo') mediaUploadVideo: MediaUploadComponent;
   @ViewChild('mediaUploadImage') mediaUploadImage: MediaUploadComponent;
-  formBL_Rollout_Prrogress: FormGroup;
+  formBL_Rollout_Prrogress: UntypedFormGroup;
   bl_rollout_prrogress: BL_Rollout_Progress = {} as BL_Rollout_Progress;
   params_rollout_progress: Params_Rollout_Progress = {
     line_id: '',
@@ -70,7 +70,7 @@ export class RolloutAddComponent implements OnInit, AfterViewChecked  {
     private ngSnotifyService: NgSnotifyService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private functionUtility: FunctionUtility,
     private cdr: ChangeDetectorRef
   ) { }

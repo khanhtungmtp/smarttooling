@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -16,7 +16,7 @@ import { Model} from '../../../../../_core/_models/smart-tool/model';
   styleUrls: ["./edit.component.scss"],
 })
 export class EditComponent implements OnInit {
-  editModelForm: FormGroup;
+  editModelForm: UntypedFormGroup;
   url: string = environment.imageUrl;
   modelTypeList: Array<Select2OptionData>;
   constructor(
@@ -25,7 +25,7 @@ export class EditComponent implements OnInit {
     private snotifyAlert: NgSnotifyService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit() {

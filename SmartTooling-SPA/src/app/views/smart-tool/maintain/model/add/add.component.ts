@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { environment } from "../../../../../../environments/environment";
@@ -15,7 +15,7 @@ import { ModelService } from "../../../../../_core/_services/smart-tool/model.se
   styleUrls: ["./add.component.scss"],
 })
 export class AddComponent implements OnInit {
-  addModelForm: FormGroup;
+  addModelForm: UntypedFormGroup;
   baseUrl: string = environment.imageUrl;
   defaultImage: string =
     this.baseUrl + localStorage.getItem('factorySmartTooling') + "/Model/no-image.jpg";
@@ -25,7 +25,7 @@ export class AddComponent implements OnInit {
     private modelService: ModelService,
     private snotifyAlert: NgSnotifyService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit() {
