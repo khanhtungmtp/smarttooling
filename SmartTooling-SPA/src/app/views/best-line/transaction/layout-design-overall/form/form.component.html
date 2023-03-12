@@ -1,0 +1,288 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Add new</strong>
+          <button type="button" class="btn btn-primary float-right btn-sm"
+            (click)="back()">
+            <i class="fa fa-chevron-left"></i>
+            Back
+          </button>
+        </div>
+
+        <form class="form-horizontal" #addForm="ngForm" autocomplete="off">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Pilot Line <font color="red">*
+                  </font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="line_id" name="line_id" required
+                  [(ngModel)]="param.line_id" [data]="lineNoList" width="100%"
+                  [options]="optionsSelectLineNo">
+                </ng-select2>
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Line Type <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="line_type_id" name="line_type_id" required
+                  [(ngModel)]="param.line_type_id" [data]="lineTypeList"
+                  [options]="optionsSelectLineType" width="100%">
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Model No<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <ng-select2 id="model_no" name="model_no" required
+                  [(ngModel)]="param.model_no" [data]="modelNoList"
+                  (valueChanged)="changeModelName($event)"
+                  [options]="optionsSelectModelNo" width="100%"
+                  selected="modelNo">
+                </ng-select2>
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Model Name<font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="text" name="model_name"
+                  [(ngModel)]="param.model_name" class="form-control"
+                  disabled />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">No of Process Before
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="no_of_process_before"
+                  [(ngModel)]="param.no_of_process_before"
+                  id="no_of_process_before" class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">No of Process After
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="no_of_process_after"
+                  [(ngModel)]="param.no_of_process_after"
+                  id="no_of_process_after" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">TCT Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tct_before" id="tct_before" required
+                  [(ngModel)]="param.tct_before" class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">TCT After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tct_after" id="tct_after" required
+                  [(ngModel)]="param.tct_after" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">CPS MP Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="cps_mp_before" id="cps_mp_before"
+                  required [(ngModel)]="param.cps_mp_before"
+                  class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">CPS MP After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="cps_mp_after" id="cps_mp_after"
+                  required [(ngModel)]="param.cps_mp_after"
+                  class="form-control" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Assembly MP Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="assembly_mp_before" required
+                  [(ngModel)]="param.assembly_mp_before" id="assembly_mp_before"
+                  class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Assembly MP After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="assembly_mp_after" required
+                  [(ngModel)]="param.assembly_mp_after" id="assembly_mp_after"
+                  class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">EOLR Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="eolr_before" id="eolr_before"
+                  required [(ngModel)]="param.eolr_before"
+                  class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">EOLR After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="eolr_after" id="eolr_after" required
+                  [(ngModel)]="param.eolr_after" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">LLER Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="ller_before_percent" required
+                  [(ngModel)]="param.ller_before_percent"
+                  id="ller_before_percent" class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">LLER After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="ller_after_percent" required
+                  [(ngModel)]="param.ller_after_percent" id="ller_after_percent"
+                  class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative PPH Before
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_pph_before" required
+                  [(ngModel)]="param.tentative_pph_before"
+                  id="tentative_pph_before" class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative PPH After
+                  <font color="red">*</font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_pph_after" required
+                  [(ngModel)]="param.tentative_pph_after"
+                  id="tentative_pph_after" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative Efficiency Before
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_efficiency_before_percent"
+                  [(ngModel)]="param.tentative_efficiency_before_percent"
+                  id="tentative_efficiency_before_percent"
+                  class="form-control" />
+              </div>
+              <label class="offset-md-2 col-md-2 col-form-label">
+                <span class="float-sm-left">Tentative Efficiency After
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" name="tentative_efficiency_after_percent"
+                  [(ngModel)]="param.tentative_efficiency_after_percent"
+                  id="tentative_efficiency_after_percent"
+                  class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">Prod. Season <font color="red">*
+                  </font>
+                </span>
+              </label>
+              <div class="col-md-2">
+                <input type="text" name="prod_season" id="prod_season" required
+                  [(ngModel)]="param.prod_season" maxlength="4"
+                  class="form-control text-uppercase" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">
+                <span class="float-sm-left">C2B Overall image
+                  <strong>(jpg,jpeg,png < 5MB) </strong></span>
+              </label>
+              <div class="upload-img">
+                <ng-container
+                  *ngIf="currentUrl == 'edit'; else elseAddTemplate">
+                  <media-upload #image [acceptKey]="'image'"
+                    [isImageOrVideo]="true"
+                    [url]="param.c2b_overall_image.includes('base64') || param.c2b_overall_image === '' ? '': baseUrl + param.c2b_overall_image"></media-upload>
+                </ng-container>
+                <ng-template #elseAddTemplate>
+                  <media-upload #image [acceptKey]="'image'"
+                    [isImageOrVideo]="true"
+                    [url]="defaultImage ?? param.c2b_overall_image"></media-upload>
+                </ng-template>
+
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="form-group row">
+              <div class="col">
+                <button type="button" class="btn btn-sm btn-success mr-1"
+                  (click)="save()" [disabled]="!addForm.valid">
+                  <i class="fa fa-check"></i>
+                  Save
+                </button>
+                <button *ngIf="param.type !=='edit'" type="button"
+                  class="btn btn-sm btn-primary" (click)="save('next')"
+                  [disabled]="!addForm.valid">
+                  <i class="fa fa-check"></i> Save & Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

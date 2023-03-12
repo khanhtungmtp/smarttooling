@@ -49,6 +49,7 @@ export class LayoutDesignOverallMainComponent implements OnInit {
     prod_season: "",
   };
 
+
   message: typeof MessageConstants = MessageConstants;
   constructor(
     private layoutDesignOverallService: LayoutDesignOverallService,
@@ -99,7 +100,6 @@ export class LayoutDesignOverallMainComponent implements OnInit {
       prod_season: ""
     };
     this.getData();
-    this.layoutDesignOverallService.setParamSearch(this.paramSearch);
   }
 
   add() {

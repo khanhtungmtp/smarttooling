@@ -108,6 +108,7 @@ export class LayoutDesignOverallEditComponent implements OnInit {
       this.image.url.includes('base64')
         ? this.image.url
         : "";
+    console.log(this.editForm.value);
 
     this.layoutDesignOverallService.update(this.editForm.value).subscribe(
       () => {

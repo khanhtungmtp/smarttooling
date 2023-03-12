@@ -16,12 +16,12 @@ export class LayoutDesignOverallService {
   baseUrl = environment.apiUrl + 'LayoutDesignOverall/';
   paramSearchSource = new BehaviorSubject<BLLayoutDesignOverallDetail>(null);
   currentParamSearch = this.paramSearchSource.asObservable();
-  layoutSearchSource = new BehaviorSubject<BLLayoutDesignOverallParam>(null);
-  currentModelSearch = this.layoutSearchSource.asObservable();
+  // layoutSearchSource = new BehaviorSubject<BLLayoutDesignOverallParam>(null);
+  // currentModelSearch = this.layoutSearchSource.asObservable();
 
   constructor(private http: HttpClient) { }
   setEdit = (item: BLLayoutDesignOverallDetail) => this.paramSearchSource.next(item);
-  setParamSearch = (item: BLLayoutDesignOverallParam) => this.layoutSearchSource.next(item);
+  //setParamSearch = (item: BLLayoutDesignOverallParam) => this.layoutSearchSource.next(item);
   getLineNoOfMain() {
     return this.http.get<any>(
       this.baseUrl + "getLineNoOfMain"
