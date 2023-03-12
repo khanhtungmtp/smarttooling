@@ -162,9 +162,9 @@ namespace SmartTooling_API._Services.Services.BestLine
             && x.model_no.Trim() == model.model_no.Trim()
             && x.prod_season.Trim() == model.prod_season.Trim()).id;
 
-        public async Task<bool> DeleteAttachment(BL_AttachmentsDeleteParams model)
+        public async Task<bool> DeleteAttachment(string attachment_file_url)
         {
-            var item = _repoBLAttachment.FindSingle(x => x.attachment_file_url == model.attachment_file_url);
+            var item = _repoBLAttachment.FindSingle(x => x.attachment_file_url == attachment_file_url);
             _repoBLAttachment.Remove(item);
             try
             {
@@ -193,7 +193,6 @@ namespace SmartTooling_API._Services.Services.BestLine
                line_name = x.T2.line_name,
                sequence = x.T2.sequence
            }).Distinct().OrderBy(x => x.sequence).ToListAsync();
-
 
         public async Task<object> GetAllLineTypeOfAdd(string line_id) => await _repoBLLayoutDesignOverall
                 .FindAll(x => x.line_id.Trim() == line_id.Trim()).GroupJoin(_repoBLLineType.FindAll(x => x.is_active == true),

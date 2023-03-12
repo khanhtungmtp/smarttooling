@@ -5,14 +5,13 @@
         <div class="card-header">
           <strong>Add new</strong>
           <button type="button" class="btn btn-primary float-right btn-sm"
-            [routerLink]="['/best-line/transaction/layout-design-overall/main']"
-            routerLinkActive="router-link-active">
+            (click)="back()">
             <i class="fa fa-chevron-left"></i>
             Back
           </button>
         </div>
 
-        <form class="form-horizontal" autocomplete="off">
+        <form class="form-horizontal" autocomplete="off" #form="ngForm">
           <div class="card-body">
             <div class="form-group row">
               <label class="col-md-2 col-form-label">
@@ -23,7 +22,7 @@
               <div class="col-md-2">
                 <ng-select2 id="line_id" name="line_id" [data]="lineNoList"
                   width="100%" (valueChanged)="getAllLineTypeOfAdd($event)"
-                  width="100%" [(ngModel)]="data.line_id" required>
+                  width="100%" [(ngModel)]="param.line_id" required>
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -35,7 +34,7 @@
                 <ng-select2 id="line_type_id" name="line_type_id"
                   (valueChanged)="getAllModelNoOfAdd($event)"
                   [data]="lineTypeList" width="100%"
-                  [(ngModel)]="data.line_type_id" required>
+                  [(ngModel)]="param.line_type_id" required>
                 </ng-select2>
               </div>
             </div>
@@ -49,7 +48,7 @@
                 <ng-select2 id="model_no" name="model_no" [data]="modelNoList"
                   width="100%" (valueChanged)="changeModelName($event)"
                   width="100%" (valueChanged)="getAllProdSeasonOfAdd($event)"
-                  [(ngModel)]="data.model_no" required>
+                  [(ngModel)]="param.model_no" required>
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -59,7 +58,7 @@
               </label>
               <div class="col-md-2">
                 <input type="text" name="model_name" class="form-control"
-                  [(ngModel)]="data.model_name" disabled="true" required />
+                  [(ngModel)]="param.model_name" disabled="true" />
               </div>
             </div>
             <div class="form-group row">
@@ -71,7 +70,7 @@
               <div class="col-md-2">
                 <ng-select2 id="prod_season" name="prod_season"
                   [data]="prodSeasonList" width="100%"
-                  [(ngModel)]="data.prod_season" required>
+                  [(ngModel)]="param.prod_season" required>
                 </ng-select2>
               </div>
               <label class="offset-md-2 col-md-2 col-form-label">
@@ -82,7 +81,7 @@
               <div class="col-md-2">
                 <ng-select2 id="attachment_type" name="attachment_type"
                   [data]="attachmentTypeList" width="100%"
-                  [(ngModel)]="data.attachment_type_id" required>
+                  [(ngModel)]="param.attachment_type_id" required>
                 </ng-select2>
               </div>
             </div>
@@ -98,7 +97,7 @@
                 <div class="b-form-file">
                   <label data-browse="Select">
                     <!-- <p *ngIf="file === null">Choose a file...</p> -->
-                    <input id="input_uploadFile" required
+                    <input id="input_uploadFile" name="file"
                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/pdf"
                       type="file" (change)="onSelectFile($event)"
                       class="form-control" />
@@ -112,11 +111,13 @@
             <div class="form-group row">
               <div class="col">
                 <button type="button" class="btn btn-sm btn-success mr-1"
-                  (click)="save()">
+                  (click)="save()" [disabled]="!form.valid || file===null">
                   <i class="fa fa-check"></i>
                   Save
                 </button>
-                <button type="button" class="btn btn-sm btn-primary">
+                <button type="button" class="btn btn-sm btn-primary"
+                  (click)="save('next')"
+                  [disabled]="!form.valid || file===null">
                   <i class="fa fa-check"></i> Save & Next
                 </button>
               </div>

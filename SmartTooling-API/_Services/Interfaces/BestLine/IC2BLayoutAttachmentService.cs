@@ -17,7 +17,7 @@ namespace SmartTooling_API._Services.Interfaces.BestLine
         Task<List<KeyValuePair<string, string>>> GetAllAttachmentType();
         Task<bool> Create(BL_AttachmentsDTO model);
         long GetLayout_design_overall_id(BL_AttachmentsParams model);
-        Task<bool> DeleteAttachment(BL_AttachmentsDeleteParams model);
+        Task<bool> DeleteAttachment(string attachment_file_url);
         Task<bool> IsExists(BL_AttachmentsDTO model);
 
     }

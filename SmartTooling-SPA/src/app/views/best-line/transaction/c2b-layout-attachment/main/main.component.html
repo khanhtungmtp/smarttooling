@@ -23,8 +23,8 @@
               </div>
               <div class="col-md-2">
                 <label class="badge badge-warning">Model</label>
-                <input type="text" name="model" class="form-control"
-                  [(ngModel)]="paramSearch.model" />
+                <input type="text" placeholder="model..." name="model"
+                  class="form-control" [(ngModel)]="paramSearch.model" />
               </div>
               <div class="col-md-2">
                 <label class="badge badge-warning">Prod. Season</label>
@@ -86,7 +86,7 @@
                     </td>
                     <td>
                       <button type="button" class="btn btn-danger btn-sm"
-                        (click)="delete(item)">
+                        (click)="delete(item.attachment_file_url)">
                         <i class="fa fa-trash fa-lg"></i>
                       </button>
                     </td>

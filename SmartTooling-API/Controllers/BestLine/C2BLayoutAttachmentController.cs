@@ -1,19 +1,9 @@
-using System;
-using System.IO;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using SmartTooling_API._Repositories.Interfaces.BestLine;
-using SmartTooling_API._Repositories.Repositories.BestLine;
 using SmartTooling_API._Services.Interfaces.BestLine;
 using SmartTooling_API.DTO.BestLine;
 using SmartTooling_API.Helpers.Params;
 using SmartTooling_API.Helpers.Params.BestLine;
-using SmartTooling_API.Helpers.Params.SmartTool;
 
 namespace SmartTooling_API.Controllers.BestLine
 {
@@ -66,9 +56,7 @@ namespace SmartTooling_API.Controllers.BestLine
                 string fileNameExtension = (file.FileName.Split("."))[(file.FileName.Split(".")).Length - 1];
                 string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Attachments\\";
                 if (!Directory.Exists(folder))
-                {
                     Directory.CreateDirectory(folder);
-                }
                 string name = Guid.NewGuid() + "." + fileNameExtension;
                 string filePath = Path.Combine(folder, name);
                 using (FileStream fs = System.IO.File.Create(filePath))
@@ -95,16 +83,14 @@ namespace SmartTooling_API.Controllers.BestLine
 
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteAttachment([FromQuery] BL_AttachmentsDeleteParams model)
+        public async Task<IActionResult> DeleteAttachment([FromQuery] string attachment_file_url)
         {
             string folder = _webHostEnvironment.WebRootPath + "\\uploaded\\" + factory + "\\Polit_Line\\BL_Attachments\\";
-            var file = model.attachment_file_url.Split('/')[model.attachment_file_url.Split('/').Length - 1];
+            var file = attachment_file_url.Split('/')[attachment_file_url.Split('/').Length - 1];
             string filePathImages = Path.Combine(folder, file);
             if (System.IO.File.Exists(filePathImages))
-            {
                 System.IO.File.Delete(filePathImages);
-            }
-            var result = await _service.DeleteAttachment(model);
+            var result = await _service.DeleteAttachment(attachment_file_url);
             if (result)
                 return Ok(result);
             else

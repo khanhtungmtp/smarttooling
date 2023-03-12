@@ -19,7 +19,8 @@ import { MainComponent } from "./main/main.component";
     C2BLayoutAttachmentRouting,
     PaginationModule,
     NgSelect2Module,
+
   ],
   declarations: [MainComponent, AddComponent],
 })
-export class C2BLayoutAttachmentModule {}
+export class C2BLayoutAttachmentModule { }

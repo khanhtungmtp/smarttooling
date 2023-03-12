@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { Select2OptionData } from "ng-select2";
 import { NgxSpinnerService } from "ngx-spinner";
 import {
@@ -7,7 +7,7 @@ import {
   CaptionConstants,
   MessageConstants,
 } from "../../../../../_core/_constants/system.constants";
-import { BLAttachmentsDetail } from "../../../../../_core/_models/best-line/bl_attachments_detail";
+import { C2bLayoutAttachmentAddParam } from "../../../../../_core/_helpers/params/best-line/c2b-layout-attachment-param";
 import { C2BLayoutAttachmentService } from "../../../../../_core/_services/best-line/c2b-layout-attachment.service";
 import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.service";
 
@@ -17,47 +17,35 @@ import { NgSnotifyService } from "../../../../../_core/_services/ng-snotify.serv
   styleUrls: ["./add.component.scss"],
 })
 export class AddComponent implements OnInit {
-  model_name: string = "";
-  line_id: string = "";
-  line_type_id: string = "";
-  model_no: string = "";
-  prod_season: string = "";
-  attachment_type_id: string = "";
+  param: C2bLayoutAttachmentAddParam = <C2bLayoutAttachmentAddParam>{}
   lineNoList: Array<Select2OptionData> = [];
   lineTypeList: Array<Select2OptionData> = [];
   modelNoList: Array<Select2OptionData> = [];
   modelNoAndNameList: Array<Select2OptionData> = [];
   prodSeasonList: Array<Select2OptionData> = [];
   attachmentTypeList: Array<Select2OptionData> = [];
-  data: BLAttachmentsDetail = {} as BLAttachmentsDetail;
   file: File = null;
+
   constructor(
     private service: C2BLayoutAttachmentService,
     private router: Router,
     private spinnerService: NgxSpinnerService,
     private snotify: NgSnotifyService,
-    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) { }
+
   ngOnInit() {
-    // this.service.currentParamSearch.subscribe(res => {
-    //   if (res != null) {
-    //     this.lineNo = res.lineID;
-    //     this.lineType = res.lineTypeID;
-    //     this.modelNo = res.modelNo;
-    //     this.modelName = res.modelName;
-    //   }
-    //   else {
-    //     this.router.navigate(["/best-line/transaction/layout-attachment/main"]);
-    //   }
-    // }).unsubscribe();
     this.getAllLineNoOfAdd();
     this.getAllAttachmentType();
   }
+
   ngAfterViewChecked() {
     this.cdr.detectChanges();
   }
 
+  back() {
+    this.router.navigate(["/best-line/transaction/layout-attachment/main"]);
+  }
 
   getAllLineNoOfAdd() {
     this.service.getAllLineNoOfAdd().subscribe({
@@ -70,14 +58,15 @@ export class AddComponent implements OnInit {
       },
       error: () => {
         this.spinnerService.hide();
-
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
       }
     })
   }
+
   getAllLineTypeOfAdd(event: any) {
-    this.line_id = event
-    if (this.line_id !== '') {
-      this.service.getAllLineTypeOfAdd(this.line_id).subscribe({
+    this.param.line_id = event
+    if (this.param.line_id !== '') {
+      this.service.getAllLineTypeOfAdd(this.param.line_id).subscribe({
         next: (res) => {
           this.lineTypeList = res.map(item => ({
             id: item.line_type_id,
@@ -87,15 +76,16 @@ export class AddComponent implements OnInit {
         },
         error: () => {
           this.spinnerService.hide();
-
+          this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
         }
       })
     }
   }
+
   getAllModelNoOfAdd(event: any) {
-    this.line_type_id = event
-    if (this.line_type_id !== '') {
-      this.service.getAllModelNoOfAdd(this.line_id, this.line_type_id).subscribe({
+    this.param.line_type_id = event
+    if (this.param.line_type_id !== '') {
+      this.service.getAllModelNoOfAdd(this.param.line_id, this.param.line_type_id).subscribe({
         next: (res) => {
           this.modelNoList = res.map(item => ({
             id: item.model_no,
@@ -109,19 +99,20 @@ export class AddComponent implements OnInit {
         },
         error: () => {
           this.spinnerService.hide();
-
+          this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
         }
       })
     }
   }
-  changeModelName(event: any) {
-    this.data.model_name = event ? this.modelNoAndNameList.find(x => x.id == event)?.text : ''
 
+  changeModelName(event: any) {
+    this.param.model_name = event ? this.modelNoAndNameList.find(x => x.id == event)?.text : ''
   }
+
   getAllProdSeasonOfAdd(event: any) {
-    this.model_no = event
-    if (this.model_no !== '') {
-      this.service.getAllProdSeasonOfAdd(this.line_id, this.line_type_id, this.model_no).subscribe({
+    this.param.model_no = event
+    if (this.param.model_no !== '') {
+      this.service.getAllProdSeasonOfAdd(this.param.line_id, this.param.line_type_id, this.param.model_no).subscribe({
         next: (res) => {
           this.prodSeasonList = res.map(item => ({
             id: item.prod_season,
@@ -131,23 +122,22 @@ export class AddComponent implements OnInit {
         },
         error: () => {
           this.spinnerService.hide();
-
+          this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
         }
       })
     }
   }
-  save() {
+
+  save(type?: string) {
     this.spinnerService.show();
     if (this.file == null) {
+      this.spinnerService.hide();
       return this.snotify.warning(
         MessageConstants.INVALID_FILE,
         CaptionConstants.WARNING
       );
     }
-    // this.setParam();
-    console.log(this.data);
-
-    this.service.create(this.data, this.file).subscribe({
+    this.service.create(this.param, this.file).subscribe({
       next: (res) => {
         if (res) {
           this.spinnerService.hide();
@@ -155,7 +145,10 @@ export class AddComponent implements OnInit {
             MessageConstants.CREATED_OK_MSG,
             ActionConstants.CREATE
           );
-          this.router.navigate(["/best-line/transaction/layout-attachment/main"]);
+          if (type == 'next')
+            this.resetData()
+          else
+            this.back();
         } else {
           this.spinnerService.hide();
           return this.snotify.error(
@@ -170,54 +163,21 @@ export class AddComponent implements OnInit {
       }
     })
   }
-  saveAndNext() {
-    this.spinnerService.show();
-    if (this.file == null) {
-      return this.snotify.warning(
-        MessageConstants.INVALID_FILE,
-        CaptionConstants.WARNING
-      );
-    }
-    // this.setParam();
-    this.service.create(this.data, this.file).subscribe((res) => {
-      if (res) {
-        this.spinnerService.hide();
-        this.snotify.success(
-          MessageConstants.CREATED_OK_MSG,
-          ActionConstants.CREATE
-        );
-        // this.resetData();
-      } else {
-        this.spinnerService.hide();
-        return this.snotify.error(
-          MessageConstants.FILE_IMAGE_SIZE,
-          CaptionConstants.ERROR
-        );
-      }
-    });
-  }
-  getAllAttachmentType() {
-    this.service.getAllAttachmentType().subscribe((res) => {
-      this.attachmentTypeList = res.map((item) => ({
-        id: item.key,
-        text: item.value,
-      }));
-    });
-  }
 
-  // setParam() {
-  //   this.data.factory_id = "";
-  //   this.data.line_id = this.lineNo;
-  //   this.data.line_type_id = this.lineType;
-  //   this.data.model_no = this.modelNo;
-  //   this.data.attachment_type_id = this.attachmentTypeList.find(
-  //     (x) => x.id === this.data.attachment_type_id
-  //   ).id;
-  //   this.data.attachment_name = "";
-  //   this.data.attachment_file_url = "";
-  //   this.data.update_by = "";
-  //   this.data.update_time = "";
-  // }
+  getAllAttachmentType() {
+    this.service.getAllAttachmentType().subscribe({
+      next: (res) => {
+        this.attachmentTypeList = res.map((item) => ({
+          id: item.key,
+          text: item.value,
+        }));
+      },
+      error: () => {
+        this.spinnerService.hide();
+        this.snotify.error(MessageConstants.SYSTEM_ERROR_MSG, CaptionConstants.ERROR);
+      }
+    })
+  }
 
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
@@ -236,14 +196,15 @@ export class AddComponent implements OnInit {
         );
       }
       this.file = files;
-    }
+    } else
+      this.file = null
   }
 
-  // resetData() {
-  //   this.data.attachment_name = "";
-  //   (<HTMLInputElement>document.getElementById("input_uploadFile")).value =
-  //     null;
-  //   this.file = null;
-  //   this.data.attachment_type_id = "";
-  // }
+  resetData() {
+    this.param.attachment_name = "";
+    (<HTMLInputElement>document.getElementById("input_uploadFile")).value =
+      null;
+    this.file = null;
+    this.param.attachment_type_id = "";
+  }
 }
